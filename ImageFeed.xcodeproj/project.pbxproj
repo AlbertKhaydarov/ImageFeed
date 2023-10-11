@@ -77,6 +77,7 @@
 		84EC42452AD0646F009BE44E /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				841BF5512AD70074001C919E /* GradientView.swift */,
 				84EC42462AD064C0009BE44E /* UIColors+Extensions.swift */,
 			);
 			path = Helpers;
@@ -87,7 +88,6 @@
 			children = (
 				84EC42352ACFE2CC009BE44E /* ImagesListViewController.swift */,
 				84EC42682AD08AD5009BE44E /* ImagesListCell.swift */,
-				841BF5512AD70074001C919E /* GradientView.swift */,
 			);
 			path = ImageList;
 			sourceTree = "<group>";
