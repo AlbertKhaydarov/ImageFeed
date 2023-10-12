@@ -16,7 +16,7 @@ final class GradientView: UIView {
     }
     
     override func layoutSubviews() {
-        let layer = layer as! CAGradientLayer
+        guard let layer = layer as? CAGradientLayer else {return}
         layer.colors = [firstColor.cgColor, secondColor.cgColor]
         layer.startPoint = CGPointMake(0.5, 0.0)
         layer.endPoint = CGPointMake(0.5, 1.0)
