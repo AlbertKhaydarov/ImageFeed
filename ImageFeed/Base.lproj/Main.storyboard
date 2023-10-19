@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="oZ0-Io-yRd">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eBs-Wv-H7k">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -95,6 +95,7 @@
                     <navigationItem key="navigationItem" id="p3c-jQ-jZq"/>
                     <connections>
                         <outlet property="tableView" destination="d6u-bX-qp6" id="sH0-Cr-ntY"/>
+                        <segue destination="oZ0-Io-yRd" kind="show" identifier="ShowSingleImage" id="Ym9-Ec-xrQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -110,7 +111,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="vjg-yx-vJd" userLabel="Image View">
-                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="VKA-V8-FmR"/>
@@ -122,8 +123,9 @@
                             <constraint firstItem="vjg-yx-vJd" firstAttribute="leading" secondItem="VKA-V8-FmR" secondAttribute="leading" id="r8m-Td-mT0"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="7kA-dy-heY"/>
                     <connections>
-                        <outlet property="imageVie" destination="vjg-yx-vJd" id="uwc-S0-CHm"/>
+                        <outlet property="imageView" destination="vjg-yx-vJd" id="qvM-HZ-r0s"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A84-xk-Hsq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -9,6 +9,8 @@ import UIKit
 
 class ImagesListViewController: UIViewController {
     
+    private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
+    
     @IBOutlet private var tableView: UITableView!
     
     private let photosName: [String] = Array(0..<20).map{ "\($0)" }
@@ -25,6 +27,17 @@ class ImagesListViewController: UIViewController {
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == ShowSingleImageSegueIdentifier {
+                let viewController = segue.destination as! SingleImageViewController
+                let indexPath = sender as! IndexPath
+                let image = UIImage(named: photosName[indexPath.row])
+                viewController.image = image
+            } else {
+                super.prepare(for: segue, sender: sender)
+            }
+        }
+
     private func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         let imageName = String(indexPath.row)
         guard let imageForCell = UIImage(named: imageName) else {return}
@@ -39,6 +52,9 @@ class ImagesListViewController: UIViewController {
         }
         cell.favoriteActiveButton.setImage(favoriteActiveImage, for: .normal)
     }
+        
+  
+    
 }
 
 extension ImagesListViewController: UITableViewDataSource {
@@ -60,6 +76,7 @@ extension ImagesListViewController: UITableViewDataSource {
 
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: ShowSingleImageSegueIdentifier, sender: indexPath)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -69,6 +86,8 @@ extension ImagesListViewController: UITableViewDelegate {
         let heightForCell = image.size.height * (imageViewWidth / image.size.width) + imageInsets.top + imageInsets.bottom
         return heightForCell
     }
+    
+    
 }
 
 
