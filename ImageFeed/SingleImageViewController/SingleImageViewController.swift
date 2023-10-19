@@ -14,6 +14,9 @@ class SingleImageViewController: UIViewController {
             imageView.image = image
         }
     }
+    @IBAction private func backButtonTapped(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
     
     @IBOutlet weak var imageView: UIImageView!
     
