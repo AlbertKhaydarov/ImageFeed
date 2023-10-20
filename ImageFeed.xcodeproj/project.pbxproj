@@ -11,8 +11,8 @@
 		7C1611532AE16743000E6B9E /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1611522AE16743000E6B9E /* SingleImageViewController.swift */; };
 		7C1611562AE2517B000E6B9E /* SharingActivityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1611552AE2517B000E6B9E /* SharingActivityPresenter.swift */; };
 		7C1611582AE25200000E6B9E /* SharingActivityPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1611572AE25200000E6B9E /* SharingActivityPresenterProtocol.swift */; };
-		7C16115A2AE25288000E6B9E /* SharingActivityPresenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1611592AE25288000E6B9E /* SharingActivityPresenterDelegate.swift */; };
 		841BF5522AD70074001C919E /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841BF5512AD70074001C919E /* GradientView.swift */; };
+		84957CF12AE2D40F00C59155 /* SharingActivityPresenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84957CF02AE2D40F00C59155 /* SharingActivityPresenterDelegate.swift */; };
 		84EC42322ACFE2CC009BE44E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EC42312ACFE2CC009BE44E /* AppDelegate.swift */; };
 		84EC42342ACFE2CC009BE44E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EC42332ACFE2CC009BE44E /* SceneDelegate.swift */; };
 		84EC42362ACFE2CC009BE44E /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EC42352ACFE2CC009BE44E /* ImagesListViewController.swift */; };
@@ -28,8 +28,8 @@
 		7C1611522AE16743000E6B9E /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		7C1611552AE2517B000E6B9E /* SharingActivityPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingActivityPresenter.swift; sourceTree = "<group>"; };
 		7C1611572AE25200000E6B9E /* SharingActivityPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingActivityPresenterProtocol.swift; sourceTree = "<group>"; };
-		7C1611592AE25288000E6B9E /* SharingActivityPresenterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingActivityPresenterDelegate.swift; sourceTree = "<group>"; };
 		841BF5512AD70074001C919E /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		84957CF02AE2D40F00C59155 /* SharingActivityPresenterDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharingActivityPresenterDelegate.swift; sourceTree = "<group>"; };
 		84EC422E2ACFE2CC009BE44E /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84EC42312ACFE2CC009BE44E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84EC42332ACFE2CC009BE44E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -73,8 +73,8 @@
 			isa = PBXGroup;
 			children = (
 				7C1611552AE2517B000E6B9E /* SharingActivityPresenter.swift */,
-				7C1611592AE25288000E6B9E /* SharingActivityPresenterDelegate.swift */,
 				7C1611572AE25200000E6B9E /* SharingActivityPresenterProtocol.swift */,
+				84957CF02AE2D40F00C59155 /* SharingActivityPresenterDelegate.swift */,
 			);
 			path = SharingActivityPresenter;
 			sourceTree = "<group>";
@@ -212,7 +212,7 @@
 				7C1611562AE2517B000E6B9E /* SharingActivityPresenter.swift in Sources */,
 				7C1611532AE16743000E6B9E /* SingleImageViewController.swift in Sources */,
 				84EC42472AD064C0009BE44E /* UIColors+Extensions.swift in Sources */,
-				7C16115A2AE25288000E6B9E /* SharingActivityPresenterDelegate.swift in Sources */,
+				84957CF12AE2D40F00C59155 /* SharingActivityPresenterDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

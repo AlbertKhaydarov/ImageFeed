@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ImagesListViewController: UIViewController {
+final class ImagesListViewController: UIViewController {
     
     private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
     
@@ -29,15 +29,15 @@ class ImagesListViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == ShowSingleImageSegueIdentifier {
-                let viewController = segue.destination as! SingleImageViewController
-                let indexPath = sender as! IndexPath
-                let image = UIImage(named: photosName[indexPath.row])
-                viewController.image = image
-            } else {
-                super.prepare(for: segue, sender: sender)
-            }
+            let viewController = segue.destination as! SingleImageViewController
+            let indexPath = sender as! IndexPath
+            let image = UIImage(named: photosName[indexPath.row])
+            viewController.image = image
+        } else {
+            super.prepare(for: segue, sender: sender)
         }
-
+    }
+    
     private func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         let imageName = String(indexPath.row)
         guard let imageForCell = UIImage(named: imageName) else {return}
@@ -52,9 +52,6 @@ class ImagesListViewController: UIViewController {
         }
         cell.favoriteActiveButton.setImage(favoriteActiveImage, for: .normal)
     }
-        
-  
-    
 }
 
 extension ImagesListViewController: UITableViewDataSource {
@@ -85,9 +82,7 @@ extension ImagesListViewController: UITableViewDelegate {
         let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
         let heightForCell = image.size.height * (imageViewWidth / image.size.width) + imageInsets.top + imageInsets.bottom
         return heightForCell
-    }
-    
-    
+    }   
 }
 
 

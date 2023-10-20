@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SharingActivityPresenter: SharingActivityPresenterProtocol {
+final class SharingActivityPresenter: SharingActivityPresenterProtocol {
     
     weak var delegate: SharingActivityPresenterDelegate?
     
@@ -16,11 +16,8 @@ class SharingActivityPresenter: SharingActivityPresenterProtocol {
     }
     
     func showSharingActivity(activityItems: [UIImage?], on viewController: UIViewController) {
-        let sharingActivityViewController = UIActivityViewController(activityItems: activityItems,  applicationActivities: nil)
         
-        sharingActivityViewController.excludedActivityTypes = [UIActivity.ActivityType.airDrop,
-                                                               UIActivity.ActivityType.copyToPasteboard,
-                                                               UIActivity.ActivityType.postToVimeo]
+        let sharingActivityViewController = UIActivityViewController(activityItems: activityItems,  applicationActivities: nil)
         
         viewController.present(sharingActivityViewController, animated: true, completion: nil)
     }

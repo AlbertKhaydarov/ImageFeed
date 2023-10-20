@@ -7,13 +7,13 @@
 
 import UIKit
 
-class SingleImageViewController: UIViewController {
+final class SingleImageViewController: UIViewController {
     
-    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet private weak var scrollView: UIScrollView!
     
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet private weak var imageView: UIImageView!
     
-    @IBOutlet weak var sharingButton: UIButton!
+    @IBOutlet private weak var sharingButton: UIButton!
     
     var image: UIImage! {
         didSet {
@@ -33,7 +33,6 @@ class SingleImageViewController: UIViewController {
         imageView.image = image
         
         rescaleAndCenterImageInScrollView(image: image)
-        
         sharingActivityPresenter = SharingActivityPresenter(delegate: self)
     }
     
@@ -73,6 +72,7 @@ extension SingleImageViewController: UIScrollViewDelegate {
 }
 
 extension SingleImageViewController: SharingActivityPresenterDelegate {
-    func finishShowSharing(){
+    func finishShowSharing(image: UIImage){
+        rescaleAndCenterImageInScrollView(image: image)
     }
 }

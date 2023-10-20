@@ -8,5 +8,5 @@
 import UIKit
 
 protocol SharingActivityPresenterDelegate: AnyObject {
-    func finishShowSharing()
+    func finishShowSharing(image: UIImage)
 }
