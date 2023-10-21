@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C1611502AE144BD000E6B9E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C16114F2AE144BD000E6B9E /* ProfileViewController.swift */; };
+		7C1611532AE16743000E6B9E /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1611522AE16743000E6B9E /* SingleImageViewController.swift */; };
+		7C1611562AE2517B000E6B9E /* SharingActivityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1611552AE2517B000E6B9E /* SharingActivityPresenter.swift */; };
+		7C1611582AE25200000E6B9E /* SharingActivityPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1611572AE25200000E6B9E /* SharingActivityPresenterProtocol.swift */; };
 		841BF5522AD70074001C919E /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841BF5512AD70074001C919E /* GradientView.swift */; };
+		84957CF12AE2D40F00C59155 /* SharingActivityPresenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84957CF02AE2D40F00C59155 /* SharingActivityPresenterDelegate.swift */; };
 		84EC42322ACFE2CC009BE44E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EC42312ACFE2CC009BE44E /* AppDelegate.swift */; };
 		84EC42342ACFE2CC009BE44E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EC42332ACFE2CC009BE44E /* SceneDelegate.swift */; };
 		84EC42362ACFE2CC009BE44E /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EC42352ACFE2CC009BE44E /* ImagesListViewController.swift */; };
@@ -19,7 +24,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7C16114F2AE144BD000E6B9E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		7C1611522AE16743000E6B9E /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
+		7C1611552AE2517B000E6B9E /* SharingActivityPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingActivityPresenter.swift; sourceTree = "<group>"; };
+		7C1611572AE25200000E6B9E /* SharingActivityPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingActivityPresenterProtocol.swift; sourceTree = "<group>"; };
 		841BF5512AD70074001C919E /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		84957CF02AE2D40F00C59155 /* SharingActivityPresenterDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharingActivityPresenterDelegate.swift; sourceTree = "<group>"; };
 		84EC422E2ACFE2CC009BE44E /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84EC42312ACFE2CC009BE44E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84EC42332ACFE2CC009BE44E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -43,6 +53,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7C1611512AE14E82000E6B9E /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				7C16114F2AE144BD000E6B9E /* ProfileViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		7C1611542AE16A5F000E6B9E /* SingleImageViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7C1611522AE16743000E6B9E /* SingleImageViewController.swift */,
+			);
+			path = SingleImageViewController;
+			sourceTree = "<group>";
+		};
+		7C16115B2AE2604A000E6B9E /* SharingActivityPresenter */ = {
+			isa = PBXGroup;
+			children = (
+				7C1611552AE2517B000E6B9E /* SharingActivityPresenter.swift */,
+				7C1611572AE25200000E6B9E /* SharingActivityPresenterProtocol.swift */,
+				84957CF02AE2D40F00C59155 /* SharingActivityPresenterDelegate.swift */,
+			);
+			path = SharingActivityPresenter;
+			sourceTree = "<group>";
+		};
 		84EC42252ACFE2CC009BE44E = {
 			isa = PBXGroup;
 			children = (
@@ -65,7 +101,10 @@
 				84EC42312ACFE2CC009BE44E /* AppDelegate.swift */,
 				84EC42332ACFE2CC009BE44E /* SceneDelegate.swift */,
 				84EC426A2AD08AF5009BE44E /* ImageList */,
+				7C1611542AE16A5F000E6B9E /* SingleImageViewController */,
+				7C16115B2AE2604A000E6B9E /* SharingActivityPresenter */,
 				84EC42372ACFE2CC009BE44E /* Main.storyboard */,
+				7C1611512AE14E82000E6B9E /* Profile */,
 				84EC423A2ACFE2CF009BE44E /* Assets.xcassets */,
 				84EC42452AD0646F009BE44E /* Helpers */,
 				84EC423C2ACFE2CF009BE44E /* LaunchScreen.storyboard */,
@@ -167,8 +206,13 @@
 				84EC42322ACFE2CC009BE44E /* AppDelegate.swift in Sources */,
 				841BF5522AD70074001C919E /* GradientView.swift in Sources */,
 				84EC42692AD08AD5009BE44E /* ImagesListCell.swift in Sources */,
+				7C1611502AE144BD000E6B9E /* ProfileViewController.swift in Sources */,
 				84EC42342ACFE2CC009BE44E /* SceneDelegate.swift in Sources */,
+				7C1611582AE25200000E6B9E /* SharingActivityPresenterProtocol.swift in Sources */,
+				7C1611562AE2517B000E6B9E /* SharingActivityPresenter.swift in Sources */,
+				7C1611532AE16743000E6B9E /* SingleImageViewController.swift in Sources */,
 				84EC42472AD064C0009BE44E /* UIColors+Extensions.swift in Sources */,
+				84957CF12AE2D40F00C59155 /* SharingActivityPresenterDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
