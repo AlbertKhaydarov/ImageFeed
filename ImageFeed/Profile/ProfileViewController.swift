@@ -11,7 +11,7 @@ final class ProfileViewController: UIViewController {
 
     private lazy var userProfileImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "IMG_9139")
+        imageView.image = UIImage(named: "myAvatar")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -48,6 +48,7 @@ final class ProfileViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "exitButtonImage"), for: .normal)
         button.tintColor = UIColor(named: "YP Red")
+        button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
         return button
     }()
        
@@ -65,7 +66,8 @@ final class ProfileViewController: UIViewController {
         userProfileImageView.layer.masksToBounds = true
     }
     
-    private func logoutButtonTapped(_ sender: UIButton) {
+    @objc private func logoutButtonTapped(_ sender: UIButton) {
+        print(#function)
     }
     
     private func setupSubview() {
