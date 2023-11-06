@@ -55,7 +55,6 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "YP Black")
-        
         setupSubview()
         layoutSubviews()
     }
