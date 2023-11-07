@@ -257,7 +257,7 @@
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
                             </wkWebView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bt3-r1-xii">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bt3-r1-xii" userLabel="Back Navigation Button">
                                 <rect key="frame" x="0.0" y="0.0" width="64" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="REI-Ts-LUd"/>
@@ -272,20 +272,28 @@
                                     <action selector="didTapBackButton:" destination="IIe-fH-Bkd" eventType="touchUpInside" id="QWB-xM-JpU"/>
                                 </connections>
                             </button>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="TG6-bO-G1F">
+                                <rect key="frame" x="0.0" y="44" width="393" height="4"/>
+                                <color key="progressTintColor" name="YP Black"/>
+                            </progressView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6mi-d0-fZi"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="TG6-bO-G1F" firstAttribute="leading" secondItem="6mi-d0-fZi" secondAttribute="leading" id="Cj2-TV-8Sj"/>
                             <constraint firstItem="bt3-r1-xii" firstAttribute="leading" secondItem="6mi-d0-fZi" secondAttribute="leading" id="F7W-gZ-LGk"/>
                             <constraint firstItem="uQn-By-SAG" firstAttribute="top" secondItem="6mi-d0-fZi" secondAttribute="top" id="KVh-5g-8Z2"/>
                             <constraint firstItem="6mi-d0-fZi" firstAttribute="bottom" secondItem="uQn-By-SAG" secondAttribute="bottom" id="Llb-6a-1bA"/>
-                            <constraint firstItem="bt3-r1-xii" firstAttribute="top" secondItem="yOT-jj-rmj" secondAttribute="topMargin" id="Vdm-SN-vcw"/>
+                            <constraint firstItem="TG6-bO-G1F" firstAttribute="top" secondItem="bt3-r1-xii" secondAttribute="bottom" id="MPv-XV-WK7"/>
+                            <constraint firstItem="bt3-r1-xii" firstAttribute="top" secondItem="6mi-d0-fZi" secondAttribute="top" id="Vdm-SN-vcw"/>
                             <constraint firstItem="6mi-d0-fZi" firstAttribute="trailing" secondItem="uQn-By-SAG" secondAttribute="trailing" id="oQS-01-L11"/>
+                            <constraint firstItem="6mi-d0-fZi" firstAttribute="trailing" secondItem="TG6-bO-G1F" secondAttribute="trailing" id="oox-rb-r66"/>
                             <constraint firstItem="uQn-By-SAG" firstAttribute="leading" secondItem="6mi-d0-fZi" secondAttribute="leading" id="tt4-EV-NCQ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="TKF-bb-12i"/>
                     <connections>
+                        <outlet property="progressView" destination="TG6-bO-G1F" id="46y-un-4yM"/>
                         <outlet property="webView" destination="uQn-By-SAG" id="DZQ-GI-6cy"/>
                     </connections>
                 </viewController>
