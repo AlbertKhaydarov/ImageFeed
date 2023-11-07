@@ -219,6 +219,7 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
+                                    <action selector="signInButtonTapped:" destination="t06-nq-efl" eventType="touchUpInside" id="o0j-5s-26l"/>
                                     <segue destination="IIe-fH-Bkd" kind="presentation" identifier="ShowWebView" modalPresentationStyle="overFullScreen" id="y3p-zd-csr"/>
                                 </connections>
                             </button>
