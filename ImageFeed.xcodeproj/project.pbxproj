@@ -13,6 +13,7 @@
 		7C1611582AE25200000E6B9E /* SharingActivityPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1611572AE25200000E6B9E /* SharingActivityPresenterProtocol.swift */; };
 		7C5DD5C72AF91083003F95B2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5DD5C62AF91083003F95B2 /* Constants.swift */; };
 		7C5DD5C92AFA22E5003F95B2 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5DD5C82AFA22E5003F95B2 /* AuthViewController.swift */; };
+		7C5DD5CC2AFA2E60003F95B2 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5DD5CB2AFA2E60003F95B2 /* WebViewViewController.swift */; };
 		841BF5522AD70074001C919E /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841BF5512AD70074001C919E /* GradientView.swift */; };
 		84957CF12AE2D40F00C59155 /* SharingActivityPresenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84957CF02AE2D40F00C59155 /* SharingActivityPresenterDelegate.swift */; };
 		84EC42322ACFE2CC009BE44E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EC42312ACFE2CC009BE44E /* AppDelegate.swift */; };
@@ -32,6 +33,7 @@
 		7C1611572AE25200000E6B9E /* SharingActivityPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingActivityPresenterProtocol.swift; sourceTree = "<group>"; };
 		7C5DD5C62AF91083003F95B2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7C5DD5C82AFA22E5003F95B2 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		7C5DD5CB2AFA2E60003F95B2 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 		841BF5512AD70074001C919E /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		84957CF02AE2D40F00C59155 /* SharingActivityPresenterDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharingActivityPresenterDelegate.swift; sourceTree = "<group>"; };
 		84EC422E2ACFE2CC009BE44E /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				7C5DD5C82AFA22E5003F95B2 /* AuthViewController.swift */,
+				7C5DD5CB2AFA2E60003F95B2 /* WebViewViewController.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -216,6 +219,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C5DD5CC2AFA2E60003F95B2 /* WebViewViewController.swift in Sources */,
 				84EC42362ACFE2CC009BE44E /* ImagesListViewController.swift in Sources */,
 				84EC42322ACFE2CC009BE44E /* AppDelegate.swift in Sources */,
 				841BF5522AD70074001C919E /* GradientView.swift in Sources */,

@@ -218,6 +218,9 @@
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="IIe-fH-Bkd" kind="presentation" identifier="ShowWebView" modalPresentationStyle="overFullScreen" id="y3p-zd-csr"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="wFq-GJ-6bc"/>
@@ -235,7 +238,59 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lFd-f1-AEg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1765.6488549618321" y="453.52112676056339"/>
+            <point key="canvasLocation" x="-1876" y="-304"/>
+        </scene>
+        <!--Web View View Controller-->
+        <scene sceneID="2yN-yD-TFf">
+            <objects>
+                <viewController id="IIe-fH-Bkd" customClass="WebViewViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yOT-jj-rmj">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uQn-By-SAG">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <color key="backgroundColor" name="YP White"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bt3-r1-xii">
+                                <rect key="frame" x="0.0" y="0.0" width="64" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="REI-Ts-LUd"/>
+                                    <constraint firstAttribute="width" constant="64" id="dH4-25-8Ip"/>
+                                </constraints>
+                                <color key="tintColor" name="YP Black"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="navBackButton">
+                                    <color key="titleColor" name="YP Black"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapBackButton:" destination="IIe-fH-Bkd" eventType="touchUpInside" id="QWB-xM-JpU"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6mi-d0-fZi"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="bt3-r1-xii" firstAttribute="leading" secondItem="6mi-d0-fZi" secondAttribute="leading" id="F7W-gZ-LGk"/>
+                            <constraint firstItem="uQn-By-SAG" firstAttribute="top" secondItem="6mi-d0-fZi" secondAttribute="top" id="KVh-5g-8Z2"/>
+                            <constraint firstItem="6mi-d0-fZi" firstAttribute="bottom" secondItem="uQn-By-SAG" secondAttribute="bottom" id="Llb-6a-1bA"/>
+                            <constraint firstItem="bt3-r1-xii" firstAttribute="top" secondItem="yOT-jj-rmj" secondAttribute="topMargin" id="Vdm-SN-vcw"/>
+                            <constraint firstItem="6mi-d0-fZi" firstAttribute="trailing" secondItem="uQn-By-SAG" secondAttribute="trailing" id="oQS-01-L11"/>
+                            <constraint firstItem="uQn-By-SAG" firstAttribute="leading" secondItem="6mi-d0-fZi" secondAttribute="leading" id="tt4-EV-NCQ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="TKF-bb-12i"/>
+                    <connections>
+                        <outlet property="webView" destination="uQn-By-SAG" id="DZQ-GI-6cy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="29D-Ow-AGG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1016" y="-304"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="oiz-mQ-eA2">
@@ -314,7 +369,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UDY-TN-MPR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2692.3664122137402" y="453.52112676056339"/>
+            <point key="canvasLocation" x="-2715" y="-304"/>
         </scene>
     </scenes>
     <resources>
@@ -322,6 +377,7 @@
         <image name="authScreenLogo" width="60" height="60"/>
         <image name="backwardArrow" width="24" height="24"/>
         <image name="favoriteActive" width="30" height="27.333333969116211"/>
+        <image name="navBackButton" width="24" height="24"/>
         <image name="sharing" width="50.333332061767578" height="50"/>
         <image name="tabEditorialActive" width="30" height="30"/>
         <image name="tabProfileActive " width="30" height="30"/>
