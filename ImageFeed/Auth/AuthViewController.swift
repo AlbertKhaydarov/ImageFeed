@@ -10,9 +10,12 @@ import UIKit
 class AuthViewController: UIViewController {
     
     let showWebViewSegueIdentifier = "ShowWebView"
+    
+    let oauthService = OAuth2Service()
   
     override func viewDidLoad() {
         super.viewDidLoad()
+        let oauthService = OAuth2Service.shared
     }
     
     @IBAction func signInButtonTapped(_ sender: UIButton) {
@@ -30,7 +33,15 @@ class AuthViewController: UIViewController {
 
 extension AuthViewController: WebViewViewControllerDelegate {
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
-        
+        oauthService.fetchOAuthToken(code) { result in
+            switch result {
+            case .success(let authToken):
+                let authToken = authToken
+                print(authToken)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
