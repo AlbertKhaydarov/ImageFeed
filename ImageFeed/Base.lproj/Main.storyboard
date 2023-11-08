@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="811-N4-v6Q">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="79L-Ib-saR">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -202,7 +202,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HwD-hO-K2B" userLabel="SignIn Button">
-                                <rect key="frame" x="16" y="680" width="361" height="48"/>
+                                <rect key="frame" x="16" y="714" width="361" height="48"/>
                                 <color key="backgroundColor" name="YP White"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="tef-0m-kTs"/>
@@ -219,8 +219,7 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="signInButtonTapped:" destination="t06-nq-efl" eventType="touchUpInside" id="o0j-5s-26l"/>
-                                    <segue destination="IIe-fH-Bkd" kind="presentation" identifier="ShowWebView" modalPresentationStyle="overFullScreen" id="y3p-zd-csr"/>
+                                    <segue destination="IIe-fH-Bkd" kind="presentation" identifier="ShowWebView" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="y3p-zd-csr"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -230,7 +229,6 @@
                             <constraint firstItem="uQh-XG-6aN" firstAttribute="centerY" secondItem="7Jk-dK-jc0" secondAttribute="centerY" id="06U-Hn-bko"/>
                             <constraint firstItem="wFq-GJ-6bc" firstAttribute="bottom" secondItem="HwD-hO-K2B" secondAttribute="bottom" constant="90" id="1OR-Zu-zVG"/>
                             <constraint firstItem="uQh-XG-6aN" firstAttribute="centerX" secondItem="7Jk-dK-jc0" secondAttribute="centerX" id="Kmu-Mg-0q0"/>
-                            <constraint firstItem="HwD-hO-K2B" firstAttribute="centerX" secondItem="7Jk-dK-jc0" secondAttribute="centerX" id="bj7-x3-DHl"/>
                             <constraint firstItem="wFq-GJ-6bc" firstAttribute="trailing" secondItem="HwD-hO-K2B" secondAttribute="trailing" constant="16" id="fk5-SG-Nb4"/>
                             <constraint firstItem="HwD-hO-K2B" firstAttribute="leading" secondItem="wFq-GJ-6bc" secondAttribute="leading" constant="16" id="wbU-um-NDG"/>
                         </constraints>
@@ -251,7 +249,7 @@
                         <subviews>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uQn-By-SAG">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                                <color key="backgroundColor" name="YP White"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                     <wkPreferences key="preferences"/>
@@ -272,23 +270,24 @@
                                     <action selector="didTapBackButton:" destination="IIe-fH-Bkd" eventType="touchUpInside" id="QWB-xM-JpU"/>
                                 </connections>
                             </button>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="TG6-bO-G1F">
-                                <rect key="frame" x="0.0" y="44" width="393" height="4"/>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="TG6-bO-G1F">
+                                <rect key="frame" x="0.0" y="40" width="393" height="2.6666666666666643"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="progressTintColor" name="YP Black"/>
                             </progressView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6mi-d0-fZi"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="TG6-bO-G1F" firstAttribute="leading" secondItem="6mi-d0-fZi" secondAttribute="leading" id="Cj2-TV-8Sj"/>
-                            <constraint firstItem="bt3-r1-xii" firstAttribute="leading" secondItem="6mi-d0-fZi" secondAttribute="leading" id="F7W-gZ-LGk"/>
-                            <constraint firstItem="uQn-By-SAG" firstAttribute="top" secondItem="6mi-d0-fZi" secondAttribute="top" id="KVh-5g-8Z2"/>
-                            <constraint firstItem="6mi-d0-fZi" firstAttribute="bottom" secondItem="uQn-By-SAG" secondAttribute="bottom" id="Llb-6a-1bA"/>
-                            <constraint firstItem="TG6-bO-G1F" firstAttribute="top" secondItem="bt3-r1-xii" secondAttribute="bottom" id="MPv-XV-WK7"/>
-                            <constraint firstItem="bt3-r1-xii" firstAttribute="top" secondItem="6mi-d0-fZi" secondAttribute="top" id="Vdm-SN-vcw"/>
-                            <constraint firstItem="6mi-d0-fZi" firstAttribute="trailing" secondItem="uQn-By-SAG" secondAttribute="trailing" id="oQS-01-L11"/>
-                            <constraint firstItem="6mi-d0-fZi" firstAttribute="trailing" secondItem="TG6-bO-G1F" secondAttribute="trailing" id="oox-rb-r66"/>
-                            <constraint firstItem="uQn-By-SAG" firstAttribute="leading" secondItem="6mi-d0-fZi" secondAttribute="leading" id="tt4-EV-NCQ"/>
+                            <constraint firstItem="TG6-bO-G1F" firstAttribute="trailing" secondItem="6mi-d0-fZi" secondAttribute="trailing" id="09i-W9-nZE"/>
+                            <constraint firstAttribute="bottom" secondItem="uQn-By-SAG" secondAttribute="bottom" id="7pR-en-48u"/>
+                            <constraint firstAttribute="leading" secondItem="uQn-By-SAG" secondAttribute="leading" id="HTV-Mt-A3n"/>
+                            <constraint firstItem="bt3-r1-xii" firstAttribute="top" secondItem="6mi-d0-fZi" secondAttribute="top" id="NjA-mD-mKO"/>
+                            <constraint firstItem="TG6-bO-G1F" firstAttribute="leading" secondItem="6mi-d0-fZi" secondAttribute="leading" id="R4D-3l-Khy"/>
+                            <constraint firstItem="bt3-r1-xii" firstAttribute="leading" secondItem="6mi-d0-fZi" secondAttribute="leading" id="UlZ-9p-Eb5"/>
+                            <constraint firstItem="TG6-bO-G1F" firstAttribute="top" secondItem="bt3-r1-xii" secondAttribute="bottom" constant="-4" id="bg2-7c-IGh" userLabel="Progress View.top = Safe Area.top "/>
+                            <constraint firstAttribute="top" secondItem="uQn-By-SAG" secondAttribute="top" id="dZT-Sm-fX6"/>
+                            <constraint firstAttribute="trailing" secondItem="uQn-By-SAG" secondAttribute="trailing" id="zyD-Va-VDf"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="TKF-bb-12i"/>
@@ -304,7 +303,8 @@
         <!--Tab Bar Controller-->
         <scene sceneID="oiz-mQ-eA2">
             <objects>
-                <tabBarController id="eBs-Wv-H7k" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarViewController" id="eBs-Wv-H7k" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="39w-0f-5Ci"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="qqp-5y-RHN">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -362,13 +362,41 @@
             </objects>
             <point key="canvasLocation" x="941.22137404580144" y="-27.464788732394368"/>
         </scene>
+        <!--Splash View Controller-->
+        <scene sceneID="zhT-eD-IYc">
+            <objects>
+                <viewController id="79L-Ib-saR" customClass="SplashViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vUw-5z-WX9">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashScreenLogo" translatesAutoresizingMaskIntoConstraints="NO" id="BpG-uK-P4K">
+                                <rect key="frame" x="159" y="387" width="75" height="78"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Ftx-xv-vvT"/>
+                        <color key="backgroundColor" name="YP Black"/>
+                        <constraints>
+                            <constraint firstItem="BpG-uK-P4K" firstAttribute="centerX" secondItem="vUw-5z-WX9" secondAttribute="centerX" id="82C-v7-TZq"/>
+                            <constraint firstItem="BpG-uK-P4K" firstAttribute="centerY" secondItem="vUw-5z-WX9" secondAttribute="centerY" id="aCm-EN-XgJ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <segue destination="811-N4-v6Q" kind="presentation" identifier="ShowAuthenticationScreenSegueIdentifier" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="rRh-6D-fpN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qhd-N5-d6s" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4085" y="-4"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="B0i-Ko-cFS">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="811-N4-v6Q" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="FtM-RC-gNa"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="jGm-TT-3Sk">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -388,6 +416,7 @@
         <image name="favoriteActive" width="30" height="27.333333969116211"/>
         <image name="navBackButton" width="24" height="24"/>
         <image name="sharing" width="50.333332061767578" height="50"/>
+        <image name="splashScreenLogo" width="75" height="78"/>
         <image name="tabEditorialActive" width="30" height="30"/>
         <image name="tabProfileActive " width="30" height="30"/>
         <namedColor name="YP Black">

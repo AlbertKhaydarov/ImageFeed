@@ -9,8 +9,10 @@ import Foundation
 
 final class OAuth2Service {
     
+    //MARK: - use Singlton
     static let shared = OAuth2Service()
     
+    //MARK: -  add protocol for storage (todo  a keychain)
     private var storage: StorageProtocol? = OAuth2TokenStorage()
     
     private let urlSession = URLSession.shared
@@ -42,28 +44,30 @@ final class OAuth2Service {
 }
 
 extension OAuth2Service {
+    
+    //MARK: - handling the server response
     private func object(for request: URLRequest, completion: @escaping (Result<OAuthTokenResponseBody, Error>) -> Void) -> URLSessionTask {
         let decoder = JSONDecoder()
         return urlSession.data(for: request) { (result: Result<Data, Error>) in
             let response = result.flatMap { data -> Result<OAuthTokenResponseBody, Error> in
                 Result {try decoder.decode(OAuthTokenResponseBody.self, from: data)}
             }
-                completion(response)
+            completion(response)
         }
     }
     
+    //MARK: - make a request
     private func authTokenRequest(code: String) -> URLRequest {
         URLRequest.makeHTTPRequest(
             path: "/oauth/token"
-                        + "?client_id=\(accessKey)"
-                        + "&&client_secret=\(secretKey)"
-                        + "&&redirect_uri=\(redirectURI)"
-                        + "&&code=\(code)"
-                        + "&&grant_type=authorization_code",
+            + "?client_id=\(AccessKey)"
+            + "&&client_secret=\(SecretKey)"
+            + "&&redirect_uri=\(RedirectURI)"
+            + "&&code=\(code)"
+            + "&&grant_type=authorization_code",
             httpMethod: "POST",
-            baseUrl: baseURL)
+            baseUrl: BaseURL)
     }
-    
 }
 
 // MARK: - HTTP Request
@@ -71,9 +75,12 @@ extension URLRequest {
     static func makeHTTPRequest(
         path: String,
         httpMethod: String,
-        baseUrl: URL? = defaultBaseURL
+        baseUrl: URL? = DefaultBaseURL
     ) -> URLRequest {
-        var request = URLRequest(url: URL(string: path, relativeTo: baseUrl) ?? URL(fileURLWithPath: "https://api.unsplash.com/"))
+        
+        //MARK: - Unwrap optional URL
+        guard let fullUrl = URL(string: path, relativeTo: baseUrl) else {fatalError("Failed to create full URL \(NetworkError.invalidURL)")}
+        var request = URLRequest(url: fullUrl)
         request.httpMethod = httpMethod
         return request
     }
@@ -85,6 +92,7 @@ enum NetworkError: Error {
     case httpStatusCode(Int)
     case urlRequestError(Error)
     case urlSessionError
+    case invalidURL
 }
 
 extension URLSession {
@@ -96,11 +104,11 @@ extension URLSession {
             DispatchQueue.main.async {
                 completion(result)
             }
-}
+        }
         let task = dataTask(with: request, completionHandler: { data, response, error in
             if let data = data,
-                let response = response,
-                let statusCode = (response as? HTTPURLResponse)?.statusCode
+               let response = response,
+               let statusCode = (response as? HTTPURLResponse)?.statusCode
             {
                 if 200 ..< 300 ~= statusCode {
                     fulfillCompletion(.success(data))
@@ -115,4 +123,5 @@ extension URLSession {
         })
         task.resume()
         return task
-} }
+    }
+}

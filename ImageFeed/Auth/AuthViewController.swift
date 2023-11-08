@@ -7,46 +7,34 @@
 
 import UIKit
 
-class AuthViewController: UIViewController {
+final class AuthViewController: UIViewController {
     
-    let showWebViewSegueIdentifier = "ShowWebView"
+    private let showWebViewSegueIdentifier = "ShowWebView"
     
-    let oauthService = OAuth2Service()
-  
+    weak var delegate: AuthViewControllerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let oauthService = OAuth2Service.shared
     }
     
-    @IBAction func signInButtonTapped(_ sender: UIButton) {
-     
-    }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == showWebViewSegueIdentifier {
-            guard let destinationVC = segue.destination as? WebViewViewController else { return }
-                destinationVC.delegate = self
+            guard let destinationVC = segue.destination as? WebViewViewController else {
+                fatalError("Failed to prepare for \(showWebViewSegueIdentifier)") }
+            destinationVC.delegate = self
         } else {
             super.prepare(for: segue, sender: sender)
         }
     }
 }
 
+// MARK: - WebViewViewControllerDelegate
 extension AuthViewController: WebViewViewControllerDelegate {
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
-        oauthService.fetchOAuthToken(code) { result in
-            switch result {
-            case .success(let authToken):
-                let authToken = authToken
-                print(authToken)
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
+        delegate?.authViewController(self, didAuthenticateWithCode: code)
     }
     
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
         dismiss(animated: true, completion: nil)
     }
-    
-    
 }

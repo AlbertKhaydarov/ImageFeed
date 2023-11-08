@@ -8,11 +8,12 @@
 import Foundation
 
 enum StorageKeys: String {
-  case storageKey
+    case storageKey
 }
 
+//MARK: -  add protocol for storage (todo  a keychain)
 protocol StorageProtocol {
-  var token: String? { get set }
+    var token: String? { get set }
 }
 
 final class OAuth2TokenStorage: StorageProtocol {
