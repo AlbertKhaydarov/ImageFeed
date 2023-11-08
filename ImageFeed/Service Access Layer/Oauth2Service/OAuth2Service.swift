@@ -48,6 +48,8 @@ extension OAuth2Service {
     //MARK: - handling the server response
     private func object(for request: URLRequest, completion: @escaping (Result<OAuthTokenResponseBody, Error>) -> Void) -> URLSessionTask {
         let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        
         return urlSession.data(for: request) { (result: Result<Data, Error>) in
             let response = result.flatMap { data -> Result<OAuthTokenResponseBody, Error> in
                 Result {try decoder.decode(OAuthTokenResponseBody.self, from: data)}
@@ -60,13 +62,13 @@ extension OAuth2Service {
     private func authTokenRequest(code: String) -> URLRequest {
         URLRequest.makeHTTPRequest(
             path: "/oauth/token"
-            + "?client_id=\(AccessKey)"
-            + "&&client_secret=\(SecretKey)"
-            + "&&redirect_uri=\(RedirectURI)"
+            + "?client_id=\(AuthConsts.accessKey)"
+            + "&&client_secret=\(AuthConsts.secretKey)"
+            + "&&redirect_uri=\(AuthConsts.redirectURI)"
             + "&&code=\(code)"
             + "&&grant_type=authorization_code",
             httpMethod: "POST",
-            baseUrl: BaseURL)
+            baseUrl: AuthConsts.baseURL)
     }
 }
 
@@ -75,7 +77,7 @@ extension URLRequest {
     static func makeHTTPRequest(
         path: String,
         httpMethod: String,
-        baseUrl: URL? = DefaultBaseURL
+        baseUrl: URL? = AuthConsts.defaultBaseURL
     ) -> URLRequest {
         
         //MARK: - Unwrap optional URL

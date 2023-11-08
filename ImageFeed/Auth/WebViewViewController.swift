@@ -24,10 +24,10 @@ final class WebViewViewController: UIViewController {
         
         var urlComponents = URLComponents(string: UnsplashAuthorizeURLString)!
         urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: AccessKey),
-            URLQueryItem(name: "redirect_uri", value: RedirectURI),
+            URLQueryItem(name: "client_id", value: AuthConsts.accessKey),
+            URLQueryItem(name: "redirect_uri", value: AuthConsts.redirectURI),
             URLQueryItem(name: "response_type", value: "code"),
-            URLQueryItem(name: "scope", value: AccessScope)
+            URLQueryItem(name: "scope", value: AuthConsts.accessScope)
         ]
         let url = urlComponents.url!
         let request = URLRequest(url: url)
