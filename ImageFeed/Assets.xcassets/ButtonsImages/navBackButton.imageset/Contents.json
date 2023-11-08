@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "splashScreenLogo.png",
+      "filename" : "navBackButton.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "splashScreenLogo@2x.png",
+      "filename" : "navBackButton@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "splashScreenLogo@3x.png",
+      "filename" : "navBackButton@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
