@@ -26,19 +26,25 @@ final class ProfileService: ProfileServiceProtocol {
         
         var requestForBaseUserProfile = baseUserProfileRequest(token: token)
         requestForBaseUserProfile.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-     
+
         let task = object(for: requestForBaseUserProfile) { [weak self] result in
             guard let self = self else {return}
-            
+
             switch result {
             case .success(let profileResult):
-                let profile = Profile(username: profileResult.username,
-                                      firstName: profileResult.firstName,
-                                      lastName: profileResult.lastName,
-                                      bio: profileResult.bio)
+                guard let username = profileResult.username,
+                      let firstName = profileResult.firstName,
+                      let lastName = profileResult.lastName,
+                      let bio = profileResult.bio
+                else {return}
+                let profile = Profile(username: username,
+                                      firstName: firstName,
+                                      lastName: lastName,
+                                      bio: bio)
+
                 completion(.success(profile))
                 self.task = nil
-     print(profileResult)
+               
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -61,10 +67,14 @@ extension ProfileService {
     private func object(for request: URLRequest, completion: @escaping (Result<ProfileResult, Error>) -> Void) -> URLSessionTask {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        
-        return urlSession.data(for: request) { (result: Result<Data, Error>) in
+
+        return urlSession.baseUserProfileData(for: request) { (result: Result<Data, Error>) in
+            
             let response = result.flatMap { data -> Result<ProfileResult, Error> in
-                Result {try decoder.decode(ProfileResult.self, from: data)}
+                let result = Result {
+                    try decoder.decode(ProfileResult.self, from: data)
+                }
+                return result
             }
             completion(response)
         }
@@ -76,7 +86,7 @@ extension URLRequest {
     static func makeHTTPRequestForBaseUserProfile(
         path: String,
         httpMethod: String,
-        baseUrl: URL? = Constants.defaultBaseURL
+        baseUrl: URL?
     ) -> URLRequest {
         
         //MARK: - Unwrap optional URL
@@ -90,10 +100,8 @@ extension URLRequest {
 // MARK: - Network Connection
 
 extension URLSession {
-    func baseUserProfileData(
-        for request: URLRequest,
-        completion: @escaping (Result<Data, Error>) -> Void
-    ) -> URLSessionTask {
+    func baseUserProfileData(for request: URLRequest, completion: @escaping (Result<Data, Error>) -> Void) -> URLSessionTask {
+ 
         let fulfillCompletion: (Result<Data, Error>) -> Void = { result in
             DispatchQueue.main.async {
                 completion(result)
