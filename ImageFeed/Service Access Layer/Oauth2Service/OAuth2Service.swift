@@ -32,6 +32,7 @@ final class OAuth2Service {
     
     func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void) {
         
+        //MARK: - add eliminating a potential Data Race 
         assert(Thread.isMainThread)
         if lastCode == code {return}
         task?.cancel()

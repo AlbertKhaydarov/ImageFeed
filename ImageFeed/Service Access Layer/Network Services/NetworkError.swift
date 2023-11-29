@@ -13,4 +13,5 @@ enum NetworkError: Error {
     case urlRequestError(Error)
     case urlSessionError
     case invalidURL
+    case codeError
 }

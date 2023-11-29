@@ -31,6 +31,7 @@ class SplashViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+    //MARK: - check token and routing
         guard let storage = storage else {return}
         if (storage.token) != nil {
             switchToTabBarController()
@@ -43,7 +44,6 @@ class SplashViewController: UIViewController {
         .lightContent
     }
     
-    //MARK: - check token and routing
     private func switchToTabBarController() {
         guard let window = UIApplication.shared.windows.first else {
             fatalError("Invalid Configuration")

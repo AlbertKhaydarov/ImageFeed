@@ -6,12 +6,16 @@
 //
 
 import Foundation
+//struct ProfileResult: Codable {
+//    let profileBaseInformation: ProfileBaseInformation
+//    let profileImage: ProfileImage
+//}
+
 struct ProfileResult: Codable {
     let username: String
     let firstName: String
     let lastName: String
     let bio: String
-    var profileImage: ProfileImage
 }
 
 struct ProfileImage: Codable {

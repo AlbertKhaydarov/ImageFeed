@@ -8,6 +8,8 @@
 import UIKit
 
 final class ProfileViewController: UIViewController {
+    
+    var profileService: ProfileServiceProtocol?
 
     private lazy var userProfileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -19,7 +21,7 @@ final class ProfileViewController: UIViewController {
     private lazy var userNamelabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Альберт Хайдаров"
+//        label.text = "Альберт Хайдаров"
         label.font = UIFont.systemFont(ofSize: 23, weight: .bold)
         label.textColor = UIColor(named: "YP White")
         return label
@@ -28,7 +30,7 @@ final class ProfileViewController: UIViewController {
     private lazy var loginNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "@albert_khaydarov"
+//        label.text = "@albert_khaydarov"
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.textColor = UIColor(named: "YP Gray")
         return label
@@ -37,7 +39,7 @@ final class ProfileViewController: UIViewController {
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Hello, world!"
+//        label.text = "Hello, world!"
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.textColor = UIColor(named: "YP White")
         return label
@@ -51,12 +53,25 @@ final class ProfileViewController: UIViewController {
         button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
         return button
     }()
+    
+    private var storage: StorageProtocol?
        
     override func viewDidLoad() {
         super.viewDidLoad()
+        profileService = ProfileService()
+        storage = OAuth2TokenStorage()
+
         view.backgroundColor = UIColor(named: "YP Black")
         setupSubview()
         layoutSubviews()
+   
+        //MARK: - check token and routing
+            guard let storage = storage else {return}
+            if (storage.token) != nil {
+                guard let token = storage.token else {return}
+                fetchUserProfile(token: token)
+        }
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -68,6 +83,22 @@ final class ProfileViewController: UIViewController {
     @objc private func logoutButtonTapped(_ sender: UIButton) {
         print(#function)
     }
+    
+    private func fetchUserProfile(token: String) {
+        profileService?.fetchProfile(token)  { [weak self] result in
+            guard let self = self else {return}
+            
+            switch result {
+            case .success(let profile):
+                userNamelabel.text = profile.name
+                loginNameLabel.text = profile.loginName
+                descriptionLabel.text = profile.bio
+            case .failure:
+                break
+            }
+        }
+    }
+
     
     private func setupSubview() {
         view.addSubview(userProfileImageView)
