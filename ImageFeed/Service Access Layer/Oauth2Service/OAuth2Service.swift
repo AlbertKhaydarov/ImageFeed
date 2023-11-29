@@ -104,13 +104,6 @@ extension URLRequest {
 
 // MARK: - Network Connection
 
-enum NetworkError: Error {
-    case httpStatusCode(Int)
-    case urlRequestError(Error)
-    case urlSessionError
-    case invalidURL
-}
-
 extension URLSession {
     func data(
         for request: URLRequest,

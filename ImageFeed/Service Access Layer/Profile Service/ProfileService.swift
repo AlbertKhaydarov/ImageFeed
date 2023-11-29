@@ -6,6 +6,13 @@
 //
 
 import Foundation
-final class ProfileService {
+
+
+final class ProfileService: ProfileServiceProtocol {
+    
+    func fetchProfile(_ token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
+        let 
+    }
+    
     
 }
