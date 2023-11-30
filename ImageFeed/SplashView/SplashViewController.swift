@@ -37,7 +37,6 @@ class SplashViewController: UIViewController {
         if (storage.token) != nil {
             guard let token = storage.token else {return}
             fetchUserProfile(token: token)
-            switchToTabBarController()
         } else {
             performSegue(withIdentifier: ShowAuthenticationScreenSegueIdentifier, sender: nil)
         }
@@ -98,7 +97,9 @@ extension SplashViewController: AuthViewControllerDelegate {
         profileService.fetchProfile(token) { [weak self] result in
             guard let self = self else {return}
             switch result {
-            case .success:
+            case .success(let profile):
+                let username = profile.username
+                ProfileImageService.shared.fetchProfileImageURL(token, username: username ) { _ in }
                 UIBlockingProgressHUD.desmiss()
                 self.switchToTabBarController()
             case .failure:

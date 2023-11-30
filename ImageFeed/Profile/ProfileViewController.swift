@@ -51,6 +51,20 @@ final class ProfileViewController: UIViewController {
     
     private let profileService = ProfileService.shared
     
+    private var profileImageServiceObserver: NSObjectProtocol?
+    
+    @objc private func updateAvatar(notification: Notification) {
+        guard
+            isViewLoaded,
+            let userInfo = notification.userInfo,
+            let profileImageURL = userInfo["URL"] as? String,
+            let url = URL(string: profileImageURL)
+        else { return }
+        
+        // TODO [Sprint 11] Обновить аватар, используя Kingfisher
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "YP Black")
@@ -58,6 +72,17 @@ final class ProfileViewController: UIViewController {
         layoutSubviews()
         guard let profile = profileService.profile else {return}
         updateProfileDetails(profile: profile)
+        
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ProfileImageService.DidChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAvatar()
+            }
+        updateAvatar()
     }
     
     override func viewDidLayoutSubviews() {
@@ -70,6 +95,14 @@ final class ProfileViewController: UIViewController {
         super.viewWillAppear(animated)
         guard let profile = profileService.profile else {return}
         updateProfileDetails(profile: profile)
+    }
+    
+    private func updateAvatar() {
+        guard
+            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let url = URL(string: profileImageURL)
+        else { return }
+        // TODO [Sprint 11] Обновить аватар, используя Kingfisher
     }
     
     func updateProfileDetails(profile: Profile) {

@@ -32,6 +32,7 @@ final class ProfileService {
         
         let task = object(for: requestForBaseUserProfile) { [weak self] result in
             guard let self = self else {return}
+      
             switch result {
             case .success(let profileResult):
                 guard let username = profileResult.username,
