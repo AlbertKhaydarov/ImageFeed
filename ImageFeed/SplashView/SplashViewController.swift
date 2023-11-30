@@ -10,13 +10,14 @@ import ProgressHUD
 
 class SplashViewController: UIViewController {
     
+    private let ShowAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreenSegueIdentifier"
+    
     //MARK: -  add protocol for storage (todo  a keychain)
     private var storage: StorageProtocol?
     
     //MARK: - use Singlton
     private let oauthService = OAuth2Service.shared
-    
-    private let ShowAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreenSegueIdentifier"
+    private let profileService = ProfileService.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,9 +32,11 @@ class SplashViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-    //MARK: - check token and routing
+        //MARK: - check token and routing
         guard let storage = storage else {return}
         if (storage.token) != nil {
+            guard let token = storage.token else {return}
+            fetchUserProfile(token: token)
             switchToTabBarController()
         } else {
             performSegue(withIdentifier: ShowAuthenticationScreenSegueIdentifier, sender: nil)
@@ -81,12 +84,26 @@ extension SplashViewController: AuthViewControllerDelegate {
         oauthService.fetchOAuthToken(code) { [weak self] result in
             guard let self = self else {return}
             switch result {
-            case .success:
-                self.switchToTabBarController()
-                UIBlockingProgressHUD.desmiss()
+            case .success(let token):
+                self.fetchUserProfile(token: token)
             case .failure:
                 UIBlockingProgressHUD.desmiss()
                 // TODO [Sprint 11]
+                break
+            }
+        }
+    }
+    
+    private func fetchUserProfile(token: String) {
+        profileService.fetchProfile(token) { [weak self] result in
+            guard let self = self else {return}
+            switch result {
+            case .success:
+                UIBlockingProgressHUD.desmiss()
+                self.switchToTabBarController()
+            case .failure:
+                UIBlockingProgressHUD.desmiss()
+                // TODO [Sprint 11] Показать ошибку
                 break
             }
         }

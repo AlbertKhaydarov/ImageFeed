@@ -9,8 +9,6 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
     
-    var profileService: ProfileServiceProtocol?
-
     private lazy var userProfileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "myAvatar")
@@ -21,7 +19,6 @@ final class ProfileViewController: UIViewController {
     private lazy var userNamelabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-//        label.text = "Альберт Хайдаров"
         label.font = UIFont.systemFont(ofSize: 23, weight: .bold)
         label.textColor = UIColor(named: "YP White")
         return label
@@ -30,7 +27,6 @@ final class ProfileViewController: UIViewController {
     private lazy var loginNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-//        label.text = "@albert_khaydarov"
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.textColor = UIColor(named: "YP Gray")
         return label
@@ -39,7 +35,6 @@ final class ProfileViewController: UIViewController {
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-//        label.text = "Hello, world!"
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.textColor = UIColor(named: "YP White")
         return label
@@ -54,24 +49,15 @@ final class ProfileViewController: UIViewController {
         return button
     }()
     
-    private var storage: StorageProtocol?
-       
+    private let profileService = ProfileService.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        profileService = ProfileService()
-        storage = OAuth2TokenStorage()
-
         view.backgroundColor = UIColor(named: "YP Black")
         setupSubview()
         layoutSubviews()
-   
-        //MARK: - check token and routing
-            guard let storage = storage else {return}
-            if (storage.token) != nil {
-                guard let token = storage.token else {return}
-                fetchUserProfile(token: token)
-        }
-        
+        guard let profile = profileService.profile else {return}
+        updateProfileDetails(profile: profile)
     }
     
     override func viewDidLayoutSubviews() {
@@ -80,25 +66,21 @@ final class ProfileViewController: UIViewController {
         userProfileImageView.layer.masksToBounds = true
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        guard let profile = profileService.profile else {return}
+        updateProfileDetails(profile: profile)
+    }
+    
+    func updateProfileDetails(profile: Profile) {
+        userNamelabel.text = profile.name
+        loginNameLabel.text = profile.loginName
+        descriptionLabel.text = profile.bio
+    }
+    
     @objc private func logoutButtonTapped(_ sender: UIButton) {
         print(#function)
     }
-    
-    private func fetchUserProfile(token: String) {
-        profileService?.fetchProfile(token)  { [weak self] result in
-            guard let self = self else {return}
-            
-            switch result {
-            case .success(let profile):
-                userNamelabel.text = profile.name
-                loginNameLabel.text = profile.loginName
-                descriptionLabel.text = profile.bio
-            case .failure:
-                break
-            }
-        }
-    }
-
     
     private func setupSubview() {
         view.addSubview(userProfileImageView)
@@ -114,7 +96,7 @@ final class ProfileViewController: UIViewController {
             userProfileImageView.heightAnchor.constraint(equalToConstant: 70),
             userProfileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
             userProfileImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-        
+            
             userNamelabel.leadingAnchor.constraint(equalTo: userProfileImageView.leadingAnchor),
             userNamelabel.topAnchor.constraint(equalTo: userProfileImageView.bottomAnchor, constant: 8),
             

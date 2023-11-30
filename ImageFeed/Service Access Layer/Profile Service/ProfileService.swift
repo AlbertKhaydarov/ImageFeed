@@ -7,8 +7,7 @@
 
 import Foundation
 
-
-final class ProfileService: ProfileServiceProtocol {
+final class ProfileService {
     
     private var lastToken: String?
     
@@ -16,8 +15,12 @@ final class ProfileService: ProfileServiceProtocol {
     
     private let urlSession = URLSession.shared
     
+    static let shared = ProfileService()
+    
+    private(set) var profile: Profile?
+    
     func fetchProfile(_ token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
-
+        
         //MARK: - add eliminating a potential Data Race
         assert(Thread.isMainThread)
         if lastToken == token {return}
@@ -26,10 +29,9 @@ final class ProfileService: ProfileServiceProtocol {
         
         var requestForBaseUserProfile = baseUserProfileRequest(token: token)
         requestForBaseUserProfile.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-
+        
         let task = object(for: requestForBaseUserProfile) { [weak self] result in
             guard let self = self else {return}
-
             switch result {
             case .success(let profileResult):
                 guard let username = profileResult.username,
@@ -41,10 +43,10 @@ final class ProfileService: ProfileServiceProtocol {
                                       firstName: firstName,
                                       lastName: lastName,
                                       bio: bio)
-
+                self.profile = profile
                 completion(.success(profile))
                 self.task = nil
-               
+                
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -67,9 +69,8 @@ extension ProfileService {
     private func object(for request: URLRequest, completion: @escaping (Result<ProfileResult, Error>) -> Void) -> URLSessionTask {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-
+        
         return urlSession.baseUserProfileData(for: request) { (result: Result<Data, Error>) in
-            
             let response = result.flatMap { data -> Result<ProfileResult, Error> in
                 let result = Result {
                     try decoder.decode(ProfileResult.self, from: data)
@@ -80,7 +81,7 @@ extension ProfileService {
         }
     }
 }
-    
+
 // MARK: - HTTP Request
 extension URLRequest {
     static func makeHTTPRequestForBaseUserProfile(
@@ -98,10 +99,9 @@ extension URLRequest {
 }
 
 // MARK: - Network Connection
-
 extension URLSession {
     func baseUserProfileData(for request: URLRequest, completion: @escaping (Result<Data, Error>) -> Void) -> URLSessionTask {
- 
+        
         let fulfillCompletion: (Result<Data, Error>) -> Void = { result in
             DispatchQueue.main.async {
                 completion(result)

@@ -6,10 +6,6 @@
 //
 
 import Foundation
-//struct ProfileResult: Codable {
-//    let profileBaseInformation: ProfileBaseInformation
-//    let profileImage: ProfileImage
-//}
 
 struct ProfileResult: Codable {
     let username: String?
