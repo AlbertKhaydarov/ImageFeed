@@ -12,7 +12,7 @@ enum Constants {
     static let defaultBaseURL: URL? = {
         var components = URLComponents()
         components.scheme = "https"
-        components.host = "api.unsplash.com"
+        components.host = "api.unsplash.com1"
         return components.url
     }()
 }

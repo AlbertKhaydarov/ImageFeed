@@ -34,7 +34,7 @@ final class ProfileImageService {
         
         let task = object(for: requestUserAvatar) { [weak self] result in
             guard let self = self else {return}
-   
+            
             switch result {
             case .success(let userResult):
                 let profileImage = userResult.profileImage
@@ -65,17 +65,8 @@ extension ProfileImageService {
     
     //MARK: - handling the server response
     private func object(for request: URLRequest, completion: @escaping (Result<UserResult, Error>) -> Void) -> URLSessionTask {
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        
-        return urlSession.userAvatarData(for: request) { (result: Result<Data, Error>) in
-            let response = result.flatMap { data -> Result<UserResult, Error> in
-                let result = Result {
-                    try decoder.decode(UserResult.self, from: data)
-                }
-                return result
-            }
-            completion(response)
+        return urlSession.objectTask(for: request) { (result: Result<UserResult, Error>) in
+            completion(result)
         }
     }
 }
@@ -95,34 +86,3 @@ extension URLRequest {
         return request
     }
 }
-
-// MARK: - Network Connection
-extension URLSession {
-    func userAvatarData(for request: URLRequest, completion: @escaping (Result<Data, Error>) -> Void) -> URLSessionTask {
-        
-        let fulfillCompletion: (Result<Data, Error>) -> Void = { result in
-            DispatchQueue.main.async {
-                completion(result)
-            }
-        }
-        let task = dataTask(with: request, completionHandler: { data, response, error in
-            if let data = data,
-               let response = response,
-               let statusCode = (response as? HTTPURLResponse)?.statusCode
-            {
-                if 200 ..< 300 ~= statusCode {
-                    fulfillCompletion(.success(data))
-                } else {
-                    fulfillCompletion(.failure(NetworkError.httpStatusCode(statusCode)))
-                }
-            } else if let error = error {
-                fulfillCompletion(.failure(NetworkError.urlRequestError(error)))
-            } else {
-                fulfillCompletion(.failure(NetworkError.urlSessionError))
-            }
-        })
-        task.resume()
-        return task
-    }
-}
-

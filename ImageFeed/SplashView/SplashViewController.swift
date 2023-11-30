@@ -22,7 +22,10 @@ class SplashViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         storage = OAuth2TokenStorage()
+        errorPresenter = ErrorAlertPresenter(delegate: self)
     }
+    //MARK: -  add ErrorPresenter
+    var errorPresenter: ErrorAlertPresenterProtocol?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -40,6 +43,15 @@ class SplashViewController: UIViewController {
         } else {
             performSegue(withIdentifier: ShowAuthenticationScreenSegueIdentifier, sender: nil)
         }
+    }
+    
+    func showNetworkError() {
+        let errorModel = ErrorAlertModel(
+            title: "Что-то пошло не так",
+            message: "Не удалось войти в систему",
+            buttonText: "Ok")
+        { }
+        self.errorPresenter?.errorShowAlert(errorMessages: errorModel, on: self)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -87,7 +99,7 @@ extension SplashViewController: AuthViewControllerDelegate {
                 self.fetchUserProfile(token: token)
             case .failure:
                 UIBlockingProgressHUD.desmiss()
-                // TODO [Sprint 11]
+                self.showNetworkError()
                 break
             }
         }
@@ -104,9 +116,14 @@ extension SplashViewController: AuthViewControllerDelegate {
                 self.switchToTabBarController()
             case .failure:
                 UIBlockingProgressHUD.desmiss()
-                // TODO [Sprint 11] Показать ошибку
+                self.showNetworkError()
                 break
             }
         }
     }
+}
+
+// MARK: - ErrorAlertPresenterDelegate
+extension SplashViewController: ErrorAlertPresenterDelegate {
+    func errorShowAlert() { }
 }
