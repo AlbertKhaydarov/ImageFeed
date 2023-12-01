@@ -15,7 +15,7 @@ struct ProfileResult: Decodable {
 }
 
 struct UserResult: Decodable {
-    let profile_image: ProfileImage
+    let profileImage: ProfileImage
 }
 
 struct ProfileImage: Decodable {

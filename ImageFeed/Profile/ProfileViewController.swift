@@ -53,24 +53,6 @@ final class ProfileViewController: UIViewController {
     
     private var profileImageServiceObserver: NSObjectProtocol?
     
-    @objc private func updateAvatar(notification: Notification) {
-        print("!")
-        guard
-            isViewLoaded,
-            let userInfo = notification.userInfo,
-            let profileImageURL = userInfo["URL"] as? String,
-            let url = URL(string: profileImageURL)
-        else { return }
-        
-        let processor = RoundCornerImageProcessor(cornerRadius: 20)
-        print(url)
-        userProfileImageView.kf.setImage(with: url,
-                              placeholder: UIImage(named: "placeholder.jpeg"),
-                              options: [.processor(processor)])
-        // TODO [Sprint 11] Обновить аватар, используя Kingfisher
-    }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "YP Black")
@@ -93,7 +75,7 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        userProfileImageView.layer.cornerRadius = userProfileImageView.bounds.size.width / 2
+//        userProfileImageView.layer.cornerRadius = userProfileImageView.bounds.size.width / 2
         userProfileImageView.layer.masksToBounds = true
     }
     
@@ -108,7 +90,15 @@ final class ProfileViewController: UIViewController {
             let profileImageURL = ProfileImageService.shared.avatarURL,
             let url = URL(string: profileImageURL)
         else { return }
-        // TODO [Sprint 11] Обновить аватар, используя Kingfisher
+        let radius = userProfileImageView.bounds.size.width / 2
+        let processor = RoundCornerImageProcessor(cornerRadius:  radius)
+        let cache = ImageCache.default
+        cache.clearMemoryCache()
+        cache.clearDiskCache()
+        userProfileImageView.kf.indicatorType = .activity
+        userProfileImageView.kf.setImage(with: url,
+                                         placeholder: UIImage(named: "placeholder.jpeg"),
+                                         options: [.processor(processor)])
     }
     
     func updateProfileDetails(profile: Profile) {
