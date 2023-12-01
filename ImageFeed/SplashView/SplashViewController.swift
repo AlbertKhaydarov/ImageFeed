@@ -18,6 +18,7 @@ class SplashViewController: UIViewController {
     //MARK: - use Singlton
     private let oauthService = OAuth2Service.shared
     private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,10 +109,18 @@ extension SplashViewController: AuthViewControllerDelegate {
     private func fetchUserProfile(token: String) {
         profileService.fetchProfile(token) { [weak self] result in
             guard let self = self else {return}
+        
             switch result {
             case .success(let profile):
                 let username = profile.username
-                ProfileImageService.shared.fetchProfileImageURL(token, username: username ) { _ in }
+                ProfileImageService.shared.fetchProfileImageURL(token: token, username: username) {  result in
+                    switch result {
+                    case .success(let url):
+                        print(url)
+                    case .failure(let error):
+                        print(error)
+                    }
+                }
                 UIBlockingProgressHUD.desmiss()
                 self.switchToTabBarController()
             case .failure:

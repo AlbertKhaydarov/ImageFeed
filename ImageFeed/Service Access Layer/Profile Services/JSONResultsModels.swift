@@ -7,19 +7,21 @@
 
 import Foundation
 
-struct ProfileResult: Codable {
+struct ProfileResult: Decodable {
     let username: String?
     let firstName: String?
     let lastName: String?
     let bio: String?
 }
 
-struct UserResult: Codable {
-    let profileImage: ProfileImage
+struct UserResult: Decodable {
+    let profile_image: ProfileImage
 }
 
-struct ProfileImage: Codable {
-        let small: String?
+struct ProfileImage: Decodable {
+    let small: String?
+    let medium: String?
+    let large: String?
 }
 
 

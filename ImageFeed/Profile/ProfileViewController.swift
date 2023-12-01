@@ -12,7 +12,6 @@ final class ProfileViewController: UIViewController {
     
     private lazy var userProfileImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "myAvatar")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -55,6 +54,7 @@ final class ProfileViewController: UIViewController {
     private var profileImageServiceObserver: NSObjectProtocol?
     
     @objc private func updateAvatar(notification: Notification) {
+        print("!")
         guard
             isViewLoaded,
             let userInfo = notification.userInfo,
@@ -62,6 +62,11 @@ final class ProfileViewController: UIViewController {
             let url = URL(string: profileImageURL)
         else { return }
         
+        let processor = RoundCornerImageProcessor(cornerRadius: 20)
+        print(url)
+        userProfileImageView.kf.setImage(with: url,
+                              placeholder: UIImage(named: "placeholder.jpeg"),
+                              options: [.processor(processor)])
         // TODO [Sprint 11] Обновить аватар, используя Kingfisher
     }
     

@@ -68,9 +68,10 @@ extension ProfileService {
     
     //MARK: - handling the server response
     private func object(for request: URLRequest, completion: @escaping (Result<ProfileResult, Error>) -> Void) -> URLSessionTask {
-        return urlSession.objectTask(for: request) { (result: Result<ProfileResult, Error>) in
+        let task = urlSession.objectTask(for: request) { (result: Result<ProfileResult, Error>) in
             completion(result)
         }
+        return task
     }
 }
 
