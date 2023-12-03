@@ -13,7 +13,8 @@ final class OAuth2Service {
     static let shared = OAuth2Service()
     
     //MARK: -  add protocol for storage (todo  a keychain)
-    private var storage: StorageProtocol? = OAuth2TokenStorage()
+//    private var storage: StorageProtocol? = OAuth2TokenStorageUserDefault()
+    private var storage: StorageProtocol? = OAuth2TokenStorageKeychain()
     
     private let urlSession = URLSession.shared
     
@@ -25,7 +26,7 @@ final class OAuth2Service {
             storage?.token = newValue
         }
     }
-    
+
     private var lastCode: String?
     
     private var task: URLSessionTask?
@@ -45,7 +46,7 @@ final class OAuth2Service {
             switch result {
             case .success(let body):
                 let authToken = body.accessToken
-                self.authToken  = authToken
+                self.authToken = authToken
                 completion(.success(authToken))
                 self.task = nil
             case .failure(let error):

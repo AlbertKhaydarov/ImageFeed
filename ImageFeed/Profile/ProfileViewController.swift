@@ -75,7 +75,7 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-//        userProfileImageView.layer.cornerRadius = userProfileImageView.bounds.size.width / 2
+        userProfileImageView.layer.cornerRadius = userProfileImageView.bounds.size.width / 2
         userProfileImageView.layer.masksToBounds = true
     }
     
@@ -87,18 +87,18 @@ final class ProfileViewController: UIViewController {
     
     private func updateAvatar() {
         guard
+            
             let profileImageURL = ProfileImageService.shared.avatarURL,
             let url = URL(string: profileImageURL)
         else { return }
-        let radius = userProfileImageView.bounds.size.width / 2
-        let processor = RoundCornerImageProcessor(cornerRadius:  radius)
+        
+    //MARK: -  download an image by Kingfisher and set the cache on the disk storage
         let cache = ImageCache.default
-        cache.clearMemoryCache()
-        cache.clearDiskCache()
+        cache.diskStorage.config.sizeLimit = 1000 * 1000 * 100
         userProfileImageView.kf.indicatorType = .activity
         userProfileImageView.kf.setImage(with: url,
                                          placeholder: UIImage(named: "placeholder.jpeg"),
-                                         options: [.processor(processor)])
+                                         options: [])
     }
     
     func updateProfileDetails(profile: Profile) {

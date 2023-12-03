@@ -22,7 +22,7 @@ class SplashViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        storage = OAuth2TokenStorage()
+        storage = OAuth2TokenStorageKeychain()
         errorPresenter = ErrorAlertPresenter(delegate: self)
     }
     //MARK: -  add ErrorPresenter
