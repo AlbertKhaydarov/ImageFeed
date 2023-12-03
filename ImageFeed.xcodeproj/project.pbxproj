@@ -23,6 +23,7 @@
 		7C8A57742B1CE92700DCBC45 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 7C8A57732B1CE92700DCBC45 /* SwiftKeychainWrapper */; };
 		7C8A57762B1CE97100DCBC45 /* StorageProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8A57752B1CE97100DCBC45 /* StorageProtocol.swift */; };
 		7C8A57782B1CE9DC00DCBC45 /* OAuth2TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8A57772B1CE9DC00DCBC45 /* OAuth2TokenStorage.swift */; };
+		7C8A57832B1D2ACC00DCBC45 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8A57822B1D2ACC00DCBC45 /* TabBarController.swift */; };
 		7CF0ABC62B162B3B00920A87 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF0ABC52B162B3B00920A87 /* UIBlockingProgressHUD.swift */; };
 		7CF0ABC82B162F4200920A87 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF0ABC72B162F4200920A87 /* ProfileService.swift */; };
 		7CF0ABCA2B162F8700920A87 /* JSONResultsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF0ABC92B162F8700920A87 /* JSONResultsModels.swift */; };
@@ -62,6 +63,7 @@
 		7C8A576D2B18729400DCBC45 /* ProfileImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageService.swift; sourceTree = "<group>"; };
 		7C8A57752B1CE97100DCBC45 /* StorageProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageProtocol.swift; sourceTree = "<group>"; };
 		7C8A57772B1CE9DC00DCBC45 /* OAuth2TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2TokenStorage.swift; sourceTree = "<group>"; };
+		7C8A57822B1D2ACC00DCBC45 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		7CF0ABC52B162B3B00920A87 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		7CF0ABC72B162F4200920A87 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		7CF0ABC92B162F8700920A87 /* JSONResultsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONResultsModels.swift; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 			children = (
 				84EC42312ACFE2CC009BE44E /* AppDelegate.swift */,
 				84EC42332ACFE2CC009BE44E /* SceneDelegate.swift */,
+				7C8A57822B1D2ACC00DCBC45 /* TabBarController.swift */,
 				7C716FA12AFAB01E00648C04 /* SplashView */,
 				7C716FA42AFB88C700648C04 /* Service Access Layer */,
 				7C1611512AE14E82000E6B9E /* Profile */,
@@ -363,6 +366,7 @@
 				84EC42472AD064C0009BE44E /* UIColors+Extensions.swift in Sources */,
 				84957CF12AE2D40F00C59155 /* SharingActivityPresenterDelegate.swift in Sources */,
 				844AEA092B18D0470021813E /* ErrorAlertPresenterProtocol.swift in Sources */,
+				7C8A57832B1D2ACC00DCBC45 /* TabBarController.swift in Sources */,
 				7C716FA32AFAB55000648C04 /* AuthViewControllerDelegate.swift in Sources */,
 				844AEA0B2B18D0650021813E /* ErrorAlertPresenterDelegate.swift in Sources */,
 				7C5DD5C72AF91083003F95B2 /* AuthConstants.swift in Sources */,

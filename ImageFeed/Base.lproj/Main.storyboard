@@ -13,7 +13,7 @@
         <!--ImagesListViewController -->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController title="ImagesListViewController " id="BYZ-38-t0r" customClass="ImagesListViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ImagesListViewController" title="ImagesListViewController " useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="ImagesListViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -303,7 +303,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="oiz-mQ-eA2">
             <objects>
-                <tabBarController storyboardIdentifier="TabBarViewController" id="eBs-Wv-H7k" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarViewController" id="eBs-Wv-H7k" customClass="TabBarController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="39w-0f-5Ci"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="qqp-5y-RHN">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
@@ -313,37 +313,18 @@
                             <color key="backgroundColor" name="YP Black"/>
                         </tabBarAppearance>
                     </tabBar>
-                    <connections>
-                        <segue destination="bdn-Sz-KOn" kind="relationship" relationship="viewControllers" id="eBJ-bE-49H"/>
-                        <segue destination="Iu0-2n-FOt" kind="relationship" relationship="viewControllers" id="w9H-bE-U0C"/>
-                    </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DKz-e6-diq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1016.030534351145" y="441.54929577464793"/>
         </scene>
-        <!--ProfileViewController-->
-        <scene sceneID="23l-fx-yXB">
-            <objects>
-                <viewController title="ProfileViewController" id="Iu0-2n-FOt" customClass="ProfileViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="iT3-OU-rYE">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="nVy-Tz-oMp"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="" image="tabProfileActive " id="hBN-m0-csK"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="lP0-LM-Kf0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="701.52671755725191" y="648.59154929577471"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="qci-l3-NsZ">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bdn-Sz-KOn" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="tabEditorialActive" id="I4F-Ii-nHH"/>
+                    <tabBarItem key="tabBarItem" title="" image="tabEditorialActive" selectedImage="tabEditorialActive" id="I4F-Ii-nHH"/>
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="7Fk-BH-zz2"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="tLW-5E-M9f">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -418,7 +399,6 @@
         <image name="sharing" width="50.333332061767578" height="50"/>
         <image name="splashScreenLogo" width="75" height="78"/>
         <image name="tabEditorialActive" width="30" height="30"/>
-        <image name="tabProfileActive " width="30" height="30"/>
         <namedColor name="YP Black">
             <color red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

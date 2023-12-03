@@ -13,8 +13,8 @@ final class OAuth2Service {
     static let shared = OAuth2Service()
     
     //MARK: -  add protocol for storage (todo  a keychain)
-//    private var storage: StorageProtocol? = OAuth2TokenStorageUserDefault()
-    private var storage: StorageProtocol? = OAuth2TokenStorageKeychain()
+//    private var storage: StorageProtocol? = OAuth2TokenStorageKeychain()
+    private var storage: StorageProtocol? = OAuth2TokenStorageSwiftKeychainWrapper()
     
     private let urlSession = URLSession.shared
     

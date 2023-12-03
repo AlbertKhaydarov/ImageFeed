@@ -10,4 +10,5 @@ import Foundation
 //MARK: -  add protocol for storage (todo  a keychain)
 protocol StorageProtocol {
     var token: String? { get set }
+    func removeToken()
 }

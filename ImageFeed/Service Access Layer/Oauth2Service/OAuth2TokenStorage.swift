@@ -6,30 +6,47 @@
 //
 
 import Foundation
-import SwiftKeychainWrapper
 import Security
+import SwiftKeychainWrapper
+
+//MARK: -  There are three variants storage by use: SwiftKeychainWrapper, Keychain and UserDefaults
 
 enum StorageKeys: String {
     case storageKey
     case appTag = "com.imagefeed.keys"
 }
 
-final class OAuth2TokenStorageUserDefault: StorageProtocol {
-    
-    private let storage = UserDefaults.standard
+// MARK: -  use SwiftKeychainWrapper
+final class OAuth2TokenStorageSwiftKeychainWrapper: StorageProtocol {
     
     init() {}
     
     var token: String? {
         get {
-            storage.string(forKey: StorageKeys.storageKey.rawValue)
+            let token: String? = KeychainWrapper.standard.string(forKey: StorageKeys.storageKey.rawValue)
+            return token
         }
         set {
-            storage.set(newValue, forKey: StorageKeys.storageKey.rawValue)
+            guard let token = newValue else {return}
+            let isSuccess = KeychainWrapper.standard.set(token, forKey: StorageKeys.storageKey.rawValue)
+            guard isSuccess else {
+                print("Error saving token")
+                return
+            }
+        }
+    }
+    // MARK: - Todo add for logoutButton action in ProfileViewController
+    func removeToken() {
+        let removeSuccessful: Bool = KeychainWrapper.standard.removeObject(forKey: StorageKeys.storageKey.rawValue)
+        
+        guard removeSuccessful else {
+            print("Error removeToken token")
+            return
         }
     }
 }
 
+// MARK: -  use native Keychain
 final class OAuth2TokenStorageKeychain: StorageProtocol {
     
     init() {}
@@ -41,6 +58,17 @@ final class OAuth2TokenStorageKeychain: StorageProtocol {
         set {
             saveUserToken(newValue)
         }
+    }
+    
+    // MARK: - Todo add for logoutButton action in ProfileViewController
+    func removeToken() {
+        let query: [String: Any]  = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: StorageKeys.appTag.rawValue,
+        ]
+        
+        // MARK: - Delete item from keychain
+        SecItemDelete(query as CFDictionary)
     }
 }
 
@@ -102,5 +130,25 @@ private extension OAuth2TokenStorageKeychain {
         }
         
         return (token)
+    }
+}
+
+// MARK: -  use UserDefaults
+final class OAuth2TokenStorageUserDefault: StorageProtocol {
+    func removeToken() {
+        storage.removeObject(forKey: StorageKeys.storageKey.rawValue)
+    }
+
+    private let storage = UserDefaults.standard
+
+    init() {}
+
+    var token: String? {
+        get {
+            storage.string(forKey: StorageKeys.storageKey.rawValue)
+        }
+        set {
+            storage.set(newValue, forKey: StorageKeys.storageKey.rawValue)
+        }
     }
 }
