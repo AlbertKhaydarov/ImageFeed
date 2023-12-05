@@ -14,7 +14,8 @@ final class OAuth2Service {
     
     //MARK: -  add protocol for storage (todo  a keychain)
 //    private var storage: StorageProtocol? = OAuth2TokenStorageKeychain()
-    private var storage: StorageProtocol? = OAuth2TokenStorageSwiftKeychainWrapper()
+    private var storage: StorageProtocol? = OAuth2TokenStorageSwiftKeychainWrapper.shared
+//    private var storage: StorageProtocol? = OAuth2TokenStorageSwiftKeychainWrapper()
     
     private let urlSession = URLSession.shared
     
@@ -42,7 +43,7 @@ final class OAuth2Service {
         let request = authTokenRequest(code: code)
         let task = object(for: request) { [weak self] result in
             guard let self = self else {return}
-            
+          
             switch result {
             case .success(let body):
                 let authToken = body.accessToken
@@ -55,7 +56,7 @@ final class OAuth2Service {
             }
         }
         self.task = task
-        task.resume()
+//        task.resume()
     }
 }
 

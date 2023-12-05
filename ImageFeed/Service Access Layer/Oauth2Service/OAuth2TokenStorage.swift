@@ -12,13 +12,13 @@ import SwiftKeychainWrapper
 //MARK: -  There are three variants storage by use: SwiftKeychainWrapper, Keychain and UserDefaults
 
 enum StorageKeys: String {
-    case storageKey
+    case storageKey = "imagefeed.keys"
     case appTag = "com.imagefeed.keys"
 }
 
 // MARK: -  use SwiftKeychainWrapper
 final class OAuth2TokenStorageSwiftKeychainWrapper: StorageProtocol {
-    
+    static let shared = OAuth2TokenStorageSwiftKeychainWrapper()
     init() {}
     
     var token: String? {
@@ -27,17 +27,20 @@ final class OAuth2TokenStorageSwiftKeychainWrapper: StorageProtocol {
             return token
         }
         set {
-            guard let token = newValue else {return}
-            let isSuccess = KeychainWrapper.standard.set(token, forKey: StorageKeys.storageKey.rawValue)
-            guard isSuccess else {
-                print("Error saving token")
-                return
+            if let token = newValue {
+                let isSuccess = KeychainWrapper.standard.set(token, forKey: StorageKeys.storageKey.rawValue)
+                guard isSuccess else {
+                    print("Error saving token")
+                    return
+                }
+            } else {
+                removeToken()
             }
         }
     }
     // MARK: - Todo add for logoutButton action in ProfileViewController
     func removeToken() {
-        let removeSuccessful: Bool = KeychainWrapper.standard.removeObject(forKey: StorageKeys.storageKey.rawValue)
+        let removeSuccessful = KeychainWrapper.standard.removeObject(forKey: StorageKeys.storageKey.rawValue)
         
         guard removeSuccessful else {
             print("Error removeToken token")
@@ -48,7 +51,7 @@ final class OAuth2TokenStorageSwiftKeychainWrapper: StorageProtocol {
 
 // MARK: -  use native Keychain
 final class OAuth2TokenStorageKeychain: StorageProtocol {
-    
+    static let shared = OAuth2TokenStorageKeychain()
     init() {}
     
     var token: String? {
@@ -135,13 +138,11 @@ private extension OAuth2TokenStorageKeychain {
 
 // MARK: -  use UserDefaults
 final class OAuth2TokenStorageUserDefault: StorageProtocol {
-    func removeToken() {
-        storage.removeObject(forKey: StorageKeys.storageKey.rawValue)
-    }
-
+    static let shared = OAuth2TokenStorageUserDefault()
+    
     private let storage = UserDefaults.standard
 
-    init() {}
+//    init() {}
 
     var token: String? {
         get {
@@ -150,5 +151,9 @@ final class OAuth2TokenStorageUserDefault: StorageProtocol {
         set {
             storage.set(newValue, forKey: StorageKeys.storageKey.rawValue)
         }
+    }
+    
+    func removeToken() {
+        storage.removeObject(forKey: StorageKeys.storageKey.rawValue)
     }
 }

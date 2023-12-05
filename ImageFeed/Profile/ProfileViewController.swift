@@ -53,8 +53,12 @@ final class ProfileViewController: UIViewController {
     
     private var profileImageServiceObserver: NSObjectProtocol?
     
+    //MARK: -  add protocol for storage (todo  a keychain)
+    private var storage: StorageProtocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        storage = OAuth2TokenStorageSwiftKeychainWrapper.shared
         view.backgroundColor = UIColor(named: "YP Black")
         setupSubview()
         layoutSubviews()
@@ -108,7 +112,8 @@ final class ProfileViewController: UIViewController {
     }
     
     @objc private func logoutButtonTapped(_ sender: UIButton) {
-        print(#function)
+        storage?.removeToken()
+        print("removeToken")
     }
     
     private func setupSubview() {

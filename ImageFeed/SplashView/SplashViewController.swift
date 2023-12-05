@@ -22,8 +22,9 @@ class SplashViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        storage = OAuth2TokenStorageSwiftKeychainWrapper.shared
 //      storage = OAuth2TokenStorageKeychain()
-        storage = OAuth2TokenStorageSwiftKeychainWrapper()
+//        storage = OAuth2TokenStorageSwiftKeychainWrapper()
         errorPresenter = ErrorAlertPresenter(delegate: self)
     }
     //MARK: -  add ErrorPresenter
@@ -40,11 +41,16 @@ class SplashViewController: UIViewController {
         //MARK: - check token and routing
         guard let storage = storage else {return}
         if (storage.token) != nil {
+
             guard let token = storage.token else {return}
+            print(token)
             fetchUserProfile(token: token)
         } else {
             performSegue(withIdentifier: ShowAuthenticationScreenSegueIdentifier, sender: nil)
         }
+    }
+    
+    func switchToAuthViewController() {
     }
     
     func showNetworkError() {
@@ -71,16 +77,16 @@ class SplashViewController: UIViewController {
 
 //MARK: - set delegate responsibility
 extension SplashViewController {
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == ShowAuthenticationScreenSegueIdentifier {
-            guard let navigationController = segue.destination as? UINavigationController,
-                  let viewController = navigationController.viewControllers[0] as? AuthViewController
-            else { fatalError("Failed to prepare for \(ShowAuthenticationScreenSegueIdentifier)")}
-            viewController.delegate = self
-        } else {
-            super.prepare(for: segue, sender: sender)
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == ShowAuthenticationScreenSegueIdentifier {
+//            guard let navigationController = segue.destination as? UINavigationController,
+//                  let viewController = navigationController.viewControllers[0] as? AuthViewController
+//            else { fatalError("Failed to prepare for \(ShowAuthenticationScreenSegueIdentifier)")}
+//            viewController.delegate = self
+//        } else {
+//            super.prepare(for: segue, sender: sender)
+//        }
+//    }
 }
 
 // MARK: - AuthViewControllerDelegate

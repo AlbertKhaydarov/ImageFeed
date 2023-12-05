@@ -53,7 +53,7 @@ final class ProfileService {
             }
         }
         self.task = task
-        task.resume()
+//        task.resume()
     }
 }
 
