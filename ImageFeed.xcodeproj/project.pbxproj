@@ -64,6 +64,7 @@
 		7C8A57752B1CE97100DCBC45 /* StorageProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageProtocol.swift; sourceTree = "<group>"; };
 		7C8A57772B1CE9DC00DCBC45 /* OAuth2TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2TokenStorage.swift; sourceTree = "<group>"; };
 		7C8A57822B1D2ACC00DCBC45 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		7C8A578B2B1F963C00DCBC45 /* ImageFeed.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ImageFeed.entitlements; sourceTree = "<group>"; };
 		7CF0ABC52B162B3B00920A87 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		7CF0ABC72B162F4200920A87 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		7CF0ABC92B162F8700920A87 /* JSONResultsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONResultsModels.swift; sourceTree = "<group>"; };
@@ -224,6 +225,7 @@
 		84EC42302ACFE2CC009BE44E /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
+				7C8A578B2B1F963C00DCBC45 /* ImageFeed.entitlements */,
 				84EC42312ACFE2CC009BE44E /* AppDelegate.swift */,
 				84EC42332ACFE2CC009BE44E /* SceneDelegate.swift */,
 				7C8A57822B1D2ACC00DCBC45 /* TabBarController.swift */,
@@ -521,6 +523,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ImageFeed/ImageFeed.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7M9SJB97N4;
@@ -552,6 +555,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ImageFeed/ImageFeed.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7M9SJB97N4;

@@ -53,7 +53,7 @@ final class ProfileViewController: UIViewController {
     
     private var profileImageServiceObserver: NSObjectProtocol?
     
-    //MARK: -  add protocol for storage (todo  a keychain)
+    //MARK: -  add protocol for storage
     private var storage: StorageProtocol?
     
     override func viewDidLoad() {
@@ -91,12 +91,11 @@ final class ProfileViewController: UIViewController {
     
     private func updateAvatar() {
         guard
-            
             let profileImageURL = ProfileImageService.shared.avatarURL,
             let url = URL(string: profileImageURL)
         else { return }
         
-    //MARK: -  download an image by Kingfisher and set the cache on the disk storage
+        //MARK: -  download an image by Kingfisher and set the cache on the disk storage
         let cache = ImageCache.default
         cache.diskStorage.config.sizeLimit = 1000 * 1000 * 100
         userProfileImageView.kf.indicatorType = .activity
@@ -111,9 +110,10 @@ final class ProfileViewController: UIViewController {
         descriptionLabel.text = profile.bio
     }
     
+    //MARK: - add switch after logout
     @objc private func logoutButtonTapped(_ sender: UIButton) {
         storage?.removeToken()
-        print("removeToken")
+        print("please, after removeToken additional remove app from simulator for clear keychain")
     }
     
     private func setupSubview() {

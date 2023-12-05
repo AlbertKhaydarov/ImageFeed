@@ -9,7 +9,7 @@ import Foundation
 import Security
 import SwiftKeychainWrapper
 
-//MARK: -  There are three variants storage by use: SwiftKeychainWrapper, Keychain and UserDefaults
+//MARK: -  There are storage options  by use: SwiftKeychainWrapper and Keychain
 
 enum StorageKeys: String {
     case storageKey = "imagefeed.keys"
@@ -131,29 +131,6 @@ private extension OAuth2TokenStorageKeychain {
         else {
             return nil
         }
-        
         return (token)
-    }
-}
-
-// MARK: -  use UserDefaults
-final class OAuth2TokenStorageUserDefault: StorageProtocol {
-    static let shared = OAuth2TokenStorageUserDefault()
-    
-    private let storage = UserDefaults.standard
-
-//    init() {}
-
-    var token: String? {
-        get {
-            storage.string(forKey: StorageKeys.storageKey.rawValue)
-        }
-        set {
-            storage.set(newValue, forKey: StorageKeys.storageKey.rawValue)
-        }
-    }
-    
-    func removeToken() {
-        storage.removeObject(forKey: StorageKeys.storageKey.rawValue)
     }
 }

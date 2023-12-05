@@ -17,8 +17,8 @@ class TabBarController: UITabBarController {
             withIdentifier: "ImagesListViewController"
         )
         imagesListViewController.tabBarItem = UITabBarItem(title: nil,
-                                                        image: UIImage(named: "tabEditorialActive"),
-                                                        selectedImage: nil)
+                                                           image: UIImage(named: "tabEditorialActive"),
+                                                           selectedImage: nil)
         
         let profileViewController = ProfileViewController()
         profileViewController.tabBarItem = UITabBarItem(title: nil,
@@ -27,14 +27,4 @@ class TabBarController: UITabBarController {
         
         self.viewControllers = [imagesListViewController, profileViewController]
     }
-    
-    //    override func viewDidLoad() {
-    //        super.viewDidLoad()
-    //
-    //
-    //    }
-    
-    
-    
-    
 }

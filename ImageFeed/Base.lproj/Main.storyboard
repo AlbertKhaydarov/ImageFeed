@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="79L-Ib-saR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bdn-Sz-KOn">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -189,7 +189,7 @@
         <!--Auth View Controller-->
         <scene sceneID="wB3-Zf-mI4">
             <objects>
-                <viewController id="t06-nq-efl" customClass="AuthViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AuthViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="t06-nq-efl" customClass="AuthViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7Jk-dK-jc0">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -202,7 +202,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HwD-hO-K2B" userLabel="SignIn Button">
-                                <rect key="frame" x="16" y="714" width="361" height="48"/>
+                                <rect key="frame" x="16" y="680" width="361" height="48"/>
                                 <color key="backgroundColor" name="YP White"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="tef-0m-kTs"/>
@@ -343,52 +343,6 @@
             </objects>
             <point key="canvasLocation" x="941.22137404580144" y="-27.464788732394368"/>
         </scene>
-        <!--Splash View Controller-->
-        <scene sceneID="zhT-eD-IYc">
-            <objects>
-                <viewController id="79L-Ib-saR" customClass="SplashViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="vUw-5z-WX9">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashScreenLogo" translatesAutoresizingMaskIntoConstraints="NO" id="BpG-uK-P4K">
-                                <rect key="frame" x="159" y="387" width="75" height="78"/>
-                            </imageView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="Ftx-xv-vvT"/>
-                        <color key="backgroundColor" name="YP Black"/>
-                        <constraints>
-                            <constraint firstItem="BpG-uK-P4K" firstAttribute="centerX" secondItem="vUw-5z-WX9" secondAttribute="centerX" id="82C-v7-TZq"/>
-                            <constraint firstItem="BpG-uK-P4K" firstAttribute="centerY" secondItem="vUw-5z-WX9" secondAttribute="centerY" id="aCm-EN-XgJ"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <segue destination="811-N4-v6Q" kind="presentation" identifier="ShowAuthenticationScreenSegueIdentifier" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="rRh-6D-fpN"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Qhd-N5-d6s" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-4085" y="-4"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="B0i-Ko-cFS">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="811-N4-v6Q" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="FtM-RC-gNa"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="jGm-TT-3Sk">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="t06-nq-efl" kind="relationship" relationship="rootViewController" id="J9E-Uf-R3M"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="UDY-TN-MPR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-2715" y="-304"/>
-        </scene>
     </scenes>
     <resources>
         <image name="0" width="200" height="132"/>
@@ -397,7 +351,6 @@
         <image name="favoriteActive" width="30" height="27.333333969116211"/>
         <image name="navBackButton" width="24" height="24"/>
         <image name="sharing" width="50.333332061767578" height="50"/>
-        <image name="splashScreenLogo" width="75" height="78"/>
         <image name="tabEditorialActive" width="30" height="30"/>
         <namedColor name="YP Black">
             <color red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

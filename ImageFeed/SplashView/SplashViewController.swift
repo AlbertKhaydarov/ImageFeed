@@ -10,9 +10,14 @@ import ProgressHUD
 
 class SplashViewController: UIViewController {
     
-    private let ShowAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreenSegueIdentifier"
+    private lazy var logoView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "splashScreenLogo")
+        return  imageView
+    }()
     
-    //MARK: -  add protocol for storage (todo  a keychain)
+    //MARK: -  add protocol for storage
     private var storage: StorageProtocol?
     
     //MARK: - use Singlton
@@ -23,10 +28,25 @@ class SplashViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         storage = OAuth2TokenStorageSwiftKeychainWrapper.shared
-//      storage = OAuth2TokenStorageKeychain()
-//        storage = OAuth2TokenStorageSwiftKeychainWrapper()
+        //MARK: - an alternative option
+//              storage = OAuth2TokenStorageKeychain.shared
+        view.backgroundColor = .ypBlack
         errorPresenter = ErrorAlertPresenter(delegate: self)
+        setupSubview()
+        layoutSubviews()
     }
+    
+    private func setupSubview() {
+        view.addSubview(logoView)
+    }
+    
+    private func layoutSubviews() {
+        NSLayoutConstraint.activate([
+            logoView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            logoView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+    }
+    
     //MARK: -  add ErrorPresenter
     var errorPresenter: ErrorAlertPresenterProtocol?
     
@@ -40,17 +60,21 @@ class SplashViewController: UIViewController {
         
         //MARK: - check token and routing
         guard let storage = storage else {return}
-        if (storage.token) != nil {
-
-            guard let token = storage.token else {return}
-            print(token)
+        if  let token = storage.token {
             fetchUserProfile(token: token)
         } else {
-            performSegue(withIdentifier: ShowAuthenticationScreenSegueIdentifier, sender: nil)
+            switchToAuthViewController()
         }
     }
     
     func switchToAuthViewController() {
+        let storyBoard = UIStoryboard(name: "Main", bundle: .main)
+        guard
+            let authViewController = storyBoard.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController
+        else { fatalError("Failed to prepare for Show Authentication Screen)")}
+        authViewController.delegate = self
+        authViewController.modalPresentationStyle = .fullScreen
+        present(authViewController, animated: true)
     }
     
     func showNetworkError() {
@@ -73,20 +97,6 @@ class SplashViewController: UIViewController {
         let tabBarController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(identifier: "TabBarViewController")
         window.rootViewController = tabBarController
     }
-}
-
-//MARK: - set delegate responsibility
-extension SplashViewController {
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == ShowAuthenticationScreenSegueIdentifier {
-//            guard let navigationController = segue.destination as? UINavigationController,
-//                  let viewController = navigationController.viewControllers[0] as? AuthViewController
-//            else { fatalError("Failed to prepare for \(ShowAuthenticationScreenSegueIdentifier)")}
-//            viewController.delegate = self
-//        } else {
-//            super.prepare(for: segue, sender: sender)
-//        }
-//    }
 }
 
 // MARK: - AuthViewControllerDelegate
@@ -116,7 +126,6 @@ extension SplashViewController: AuthViewControllerDelegate {
     private func fetchUserProfile(token: String) {
         profileService.fetchProfile(token) { [weak self] result in
             guard let self = self else {return}
-        
             switch result {
             case .success(let profile):
                 let username = profile.username

@@ -12,10 +12,10 @@ final class OAuth2Service {
     //MARK: - use Singlton
     static let shared = OAuth2Service()
     
-    //MARK: -  add protocol for storage (todo  a keychain)
-//    private var storage: StorageProtocol? = OAuth2TokenStorageKeychain()
+    //MARK: -  add protocol for storage
     private var storage: StorageProtocol? = OAuth2TokenStorageSwiftKeychainWrapper.shared
-//    private var storage: StorageProtocol? = OAuth2TokenStorageSwiftKeychainWrapper()
+    //MARK: - an alternative option
+    //    private var storage: StorageProtocol? = OAuth2TokenStorageKeychain()
     
     private let urlSession = URLSession.shared
     
@@ -27,14 +27,14 @@ final class OAuth2Service {
             storage?.token = newValue
         }
     }
-
+    
     private var lastCode: String?
     
     private var task: URLSessionTask?
     
     func fetchOAuthToken(_ code: String, completion: @escaping (Result<String, Error>) -> Void) {
         
-        //MARK: - add eliminating a potential Data Race 
+        //MARK: - add eliminating a potential Data Race
         assert(Thread.isMainThread)
         if lastCode == code {return}
         task?.cancel()
@@ -43,7 +43,7 @@ final class OAuth2Service {
         let request = authTokenRequest(code: code)
         let task = object(for: request) { [weak self] result in
             guard let self = self else {return}
-          
+            
             switch result {
             case .success(let body):
                 let authToken = body.accessToken
@@ -56,7 +56,6 @@ final class OAuth2Service {
             }
         }
         self.task = task
-//        task.resume()
     }
 }
 

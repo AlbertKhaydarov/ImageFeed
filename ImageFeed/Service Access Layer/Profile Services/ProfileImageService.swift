@@ -22,7 +22,7 @@ final class ProfileImageService {
     static let DidChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     
     func fetchProfileImageURL(token: String, username: String, _ completion: @escaping (Result<String, Error>) -> Void) {
-   
+        
         //MARK: - add eliminating a potential Data Race
         assert(Thread.isMainThread)
         if lastToken == token {return}
@@ -31,7 +31,7 @@ final class ProfileImageService {
         
         var requestUserAvatar = userAvatarRequest(token: token, username: username)
         requestUserAvatar.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-     
+        
         let task = object(for: requestUserAvatar) { [weak self] result in
             guard let self = self else {return}
             switch result {
@@ -49,7 +49,6 @@ final class ProfileImageService {
             }
         }
         self.task = task
-//        task.resume()
     }
 }
 
@@ -66,7 +65,6 @@ extension ProfileImageService {
     //MARK: - handling the server response
     private func object(for request: URLRequest, completion: @escaping (Result<UserResult, Error>) -> Void) -> URLSessionTask {
         let task = urlSession.objectTask(for: request) { (result: Result<UserResult, Error>) in
-
             completion(result)
         }
         return task
@@ -81,10 +79,9 @@ extension URLRequest {
         baseUrl: URL?
     ) -> URLRequest {
         
-        
         //MARK: - Unwrap optional URL
         guard let fullUrl = URL(string: path, relativeTo: baseUrl) else {fatalError("Failed to create full URL \(NetworkError.invalidURL)")}
-
+        
         //MARK: - Create the URLRequest
         var request = URLRequest(url: fullUrl)
         request.httpMethod = httpMethod
