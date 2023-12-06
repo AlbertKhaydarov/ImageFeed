@@ -19,6 +19,8 @@ final class ProfileService {
     
     private(set) var profile: Profile?
     
+    private init() {}
+    
     func fetchProfile(_ token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
         
         //MARK: - add eliminating a potential Data Race
@@ -27,7 +29,7 @@ final class ProfileService {
         task?.cancel()
         lastToken = token
         
-        var requestForBaseUserProfile = baseUserProfileRequest(token: token)
+        guard var requestForBaseUserProfile = baseUserProfileRequest(token: token) else {return}
         requestForBaseUserProfile.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
         let task = object(for: requestForBaseUserProfile) { [weak self] result in
@@ -50,6 +52,7 @@ final class ProfileService {
                 
             case .failure(let error):
                 completion(.failure(error))
+                self.task = nil
             }
         }
         self.task = task
@@ -58,11 +61,13 @@ final class ProfileService {
 
 extension ProfileService {
     //MARK: - make a request
-    private func baseUserProfileRequest(token: String) -> URLRequest {
-        URLRequest.makeHTTPRequestForBaseUserProfile(
+    private func baseUserProfileRequest(token: String) -> URLRequest? {
+        guard let request = URLRequest.makeHTTPRequestForBaseUserProfile(
             path: "/me",
             httpMethod: "GET",
             baseUrl: Constants.defaultBaseURL)
+        else {return nil}
+        return request
     }
     
     //MARK: - handling the server response
@@ -80,10 +85,13 @@ extension URLRequest {
         path: String,
         httpMethod: String,
         baseUrl: URL?
-    ) -> URLRequest {
+    ) -> URLRequest? {
         
         //MARK: - Unwrap optional URL
-        guard let fullUrl = URL(string: path, relativeTo: baseUrl) else {fatalError("Failed to create full URL \(NetworkError.invalidURL)")}
+        guard let fullUrl = URL(string: path, relativeTo: baseUrl)
+        else { assertionFailure("Failed to create full URL \(NetworkError.invalidURL)", file: #file, line: #line)
+            return nil
+        }
         var request = URLRequest(url: fullUrl)
         request.httpMethod = httpMethod
         return request

@@ -21,6 +21,8 @@ final class ProfileImageService {
     
     static let DidChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     
+    private init() {}
+    
     func fetchProfileImageURL(token: String, username: String, _ completion: @escaping (Result<String, Error>) -> Void) {
         
         //MARK: - add eliminating a potential Data Race
@@ -29,7 +31,7 @@ final class ProfileImageService {
         task?.cancel()
         lastToken = token
         
-        var requestUserAvatar = userAvatarRequest(token: token, username: username)
+        guard var requestUserAvatar = userAvatarRequest(token: token, username: username) else {return}
         requestUserAvatar.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
         let task = object(for: requestUserAvatar) { [weak self] result in
@@ -42,10 +44,11 @@ final class ProfileImageService {
                 completion(.success(avatarURL))
                 NotificationCenter.default.post(name: ProfileImageService.DidChangeNotification,
                                                 object: self,
-                                                userInfo: ["URL": avatarURL])
+                                                userInfo: nil)
                 self.task = nil
             case .failure(let error):
                 completion(.failure(error))
+                self.task = nil
             }
         }
         self.task = task
@@ -54,12 +57,13 @@ final class ProfileImageService {
 
 extension ProfileImageService {
     //MARK: - make a request
-    private func userAvatarRequest(token: String, username: String) -> URLRequest {
-        URLRequest.makeHTTPRequestUserAvatar(
+    private func userAvatarRequest(token: String, username: String) -> URLRequest? {
+        guard let request = URLRequest.makeHTTPRequestUserAvatar(
             path: "/users/\(username)",
             httpMethod: "GET",
             baseUrl: Constants.defaultBaseURL
-        )
+        ) else {return nil}
+        return request
     }
     
     //MARK: - handling the server response
@@ -77,10 +81,14 @@ extension URLRequest {
         path: String,
         httpMethod: String,
         baseUrl: URL?
-    ) -> URLRequest {
+    ) -> URLRequest? {
         
         //MARK: - Unwrap optional URL
-        guard let fullUrl = URL(string: path, relativeTo: baseUrl) else {fatalError("Failed to create full URL \(NetworkError.invalidURL)")}
+        guard let fullUrl = URL(string: path, relativeTo: baseUrl)
+        else {
+            assertionFailure("Failed to create full URL \(NetworkError.invalidURL)", file: #file, line: #line)
+            return nil
+        }
         
         //MARK: - Create the URLRequest
         var request = URLRequest(url: fullUrl)

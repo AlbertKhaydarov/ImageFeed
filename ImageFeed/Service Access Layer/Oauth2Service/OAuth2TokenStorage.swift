@@ -19,7 +19,7 @@ enum StorageKeys: String {
 // MARK: -  use SwiftKeychainWrapper
 final class OAuth2TokenStorageSwiftKeychainWrapper: StorageProtocol {
     static let shared = OAuth2TokenStorageSwiftKeychainWrapper()
-    init() {}
+    private init() {}
     
     var token: String? {
         get {
