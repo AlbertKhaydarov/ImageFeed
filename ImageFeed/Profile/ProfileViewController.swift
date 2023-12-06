@@ -20,7 +20,7 @@ final class ProfileViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 23, weight: .bold)
-        label.textColor = UIColor(named: "YP White")
+        label.textColor = UIColor.ypWhite
         return label
     }()
     
@@ -28,7 +28,7 @@ final class ProfileViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        label.textColor = UIColor(named: "YP Gray")
+        label.textColor = UIColor.ypGray
         return label
     }()
     
@@ -36,7 +36,7 @@ final class ProfileViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        label.textColor = UIColor(named: "YP White")
+        label.textColor = UIColor.ypWhite
         return label
     }()
     
@@ -44,7 +44,7 @@ final class ProfileViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "exitButtonImage"), for: .normal)
-        button.tintColor = UIColor(named: "YP Red")
+        button.tintColor = UIColor.ypRed
         button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -59,7 +59,7 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         storage = OAuth2TokenStorageSwiftKeychainWrapper.shared
-        view.backgroundColor = UIColor(named: "YP Black")
+        view.backgroundColor = UIColor.ypBlack
         setupSubview()
         layoutSubviews()
         guard let profile = profileService.profile else {return}
