@@ -39,7 +39,9 @@ final class ProfileImageService {
             switch result {
             case .success(let userResult):
                 let profileImage = userResult.profileImage
-                guard let avatarURL = profileImage.large else {return}
+                guard let avatarURL = profileImage.large else {
+                    completion(.failure(NetworkError.missingData))
+                    return}
                 self.avatarURL = avatarURL
                 completion(.success(avatarURL))
                 NotificationCenter.default.post(name: ProfileImageService.DidChangeNotification,

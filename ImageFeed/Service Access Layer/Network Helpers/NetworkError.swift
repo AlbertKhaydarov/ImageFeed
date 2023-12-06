@@ -14,4 +14,5 @@ enum NetworkError: Error {
     case invalidURL
     case codeError
     case decodeError
+    case missingData
 }

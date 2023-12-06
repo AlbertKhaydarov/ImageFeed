@@ -37,15 +37,16 @@ final class ProfileService {
             
             switch result {
             case .success(let profileResult):
-                guard let username = profileResult.username,
-                      let firstName = profileResult.firstName,
-                      let lastName = profileResult.lastName,
-                      let bio = profileResult.bio
-                else {return}
+                guard
+                    let username = profileResult.username,
+                    let firstName = profileResult.firstName
+                else {
+                    completion(.failure(NetworkError.missingData))
+                    return}
                 let profile = Profile(username: username,
                                       firstName: firstName,
-                                      lastName: lastName,
-                                      bio: bio)
+                                      lastName: profileResult.lastName ?? "",
+                                      bio: profileResult.bio ?? "")
                 self.profile = profile
                 completion(.success(profile))
                 self.task = nil

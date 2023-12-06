@@ -97,6 +97,8 @@ final class ProfileViewController: UIViewController {
         
         //MARK: -  download an image by Kingfisher and set the cache on the disk storage
         let cache = ImageCache.default
+        cache.clearMemoryCache()
+        cache.clearDiskCache()
         cache.diskStorage.config.sizeLimit = 1000 * 1000 * 100
         userProfileImageView.kf.indicatorType = .activity
         userProfileImageView.kf.setImage(with: url,
