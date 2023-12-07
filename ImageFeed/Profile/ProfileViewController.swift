@@ -6,12 +6,12 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
-
+    
     private lazy var userProfileImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "myAvatar")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -19,27 +19,24 @@ final class ProfileViewController: UIViewController {
     private lazy var userNamelabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Альберт Хайдаров"
         label.font = UIFont.systemFont(ofSize: 23, weight: .bold)
-        label.textColor = UIColor(named: "YP White")
+        label.textColor = UIColor.ypWhite
         return label
     }()
     
     private lazy var loginNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "@albert_khaydarov"
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        label.textColor = UIColor(named: "YP Gray")
+        label.textColor = UIColor.ypGray
         return label
     }()
     
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Hello, world!"
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        label.textColor = UIColor(named: "YP White")
+        label.textColor = UIColor.ypWhite
         return label
     }()
     
@@ -47,16 +44,37 @@ final class ProfileViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "exitButtonImage"), for: .normal)
-        button.tintColor = UIColor(named: "YP Red")
+        button.tintColor = UIColor.ypRed
         button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
         return button
     }()
-       
+    
+    private let profileService = ProfileService.shared
+    
+    private var profileImageServiceObserver: NSObjectProtocol?
+    
+    //MARK: -  add protocol for storage
+    private var storage: StorageProtocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(named: "YP Black")
+        storage = OAuth2TokenStorageSwiftKeychainWrapper.shared
+        view.backgroundColor = UIColor.ypBlack
         setupSubview()
         layoutSubviews()
+        guard let profile = profileService.profile else {return}
+        updateProfileDetails(profile: profile)
+        
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ProfileImageService.DidChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAvatar()
+            }
+        updateAvatar()
     }
     
     override func viewDidLayoutSubviews() {
@@ -65,8 +83,39 @@ final class ProfileViewController: UIViewController {
         userProfileImageView.layer.masksToBounds = true
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        guard let profile = profileService.profile else {return}
+        updateProfileDetails(profile: profile)
+    }
+    
+    private func updateAvatar() {
+        guard
+            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let url = URL(string: profileImageURL)
+        else { return }
+        
+        //MARK: -  download an image by Kingfisher and set the cache on the disk storage
+        let cache = ImageCache.default
+        cache.clearMemoryCache()
+        cache.clearDiskCache()
+        cache.diskStorage.config.sizeLimit = 1000 * 1000 * 100
+        userProfileImageView.kf.indicatorType = .activity
+        userProfileImageView.kf.setImage(with: url,
+                                         placeholder: UIImage(named: "placeholder.jpeg"),
+                                         options: [])
+    }
+    
+    func updateProfileDetails(profile: Profile) {
+        userNamelabel.text = profile.name
+        loginNameLabel.text = profile.loginName
+        descriptionLabel.text = profile.bio
+    }
+    
+    //MARK: - add switch after logout
     @objc private func logoutButtonTapped(_ sender: UIButton) {
-        print(#function)
+        storage?.removeToken()
+        print("please, after removeToken additional remove app from simulator for clear keychain")
     }
     
     private func setupSubview() {
@@ -83,7 +132,7 @@ final class ProfileViewController: UIViewController {
             userProfileImageView.heightAnchor.constraint(equalToConstant: 70),
             userProfileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
             userProfileImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-        
+            
             userNamelabel.leadingAnchor.constraint(equalTo: userProfileImageView.leadingAnchor),
             userNamelabel.topAnchor.constraint(equalTo: userProfileImageView.bottomAnchor, constant: 8),
             

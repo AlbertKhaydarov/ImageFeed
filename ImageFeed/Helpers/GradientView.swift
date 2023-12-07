@@ -8,8 +8,8 @@
 import UIKit
 
 final class GradientView: UIView {
-    private var firstColor: UIColor = UIColor(named: "YP Black")?.withAlphaComponent(0.0) ?? UIColor.black.withAlphaComponent(0.0)
-    private var secondColor: UIColor = UIColor(named: "YP Black")?.withAlphaComponent(0.2) ?? UIColor.black.withAlphaComponent(0.2)
+    private var firstColor = UIColor.ypBlack.withAlphaComponent(0.0)
+    private var secondColor = UIColor.ypBlack.withAlphaComponent(0.2)
     
     override class var layerClass: AnyClass {
         return CAGradientLayer.self
