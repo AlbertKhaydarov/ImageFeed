@@ -84,14 +84,15 @@ final class ImagesListViewController: UIViewController {
         let url = URL(string: photos[indexPath.row].thumbImageURL)
         let imageView = UIImageView()
         cell.imageForCell.kf.indicatorType = .activity
-        imageView.kf.setImage(with: url, placeholder: UIImage(named: "Stub")){ result in
-            switch result {
-            case .success(let imageView):
-                cell.imageForCell.image = imageView.image
-            case .failure(let error):
-                assertionFailure("Failed to download photo \(error)", file: #file, line: #line)
-            }
-        }
+        cell.imageForCell.kf.setImage(with: url, placeholder: UIImage(named: "Stub"))
+//        { result in
+//            switch result {
+//            case .success(let imageView):
+//                cell.imageForCell.image = imageView.image
+//            case .failure(let error):
+//                assertionFailure("Failed to download photo \(error)", file: #file, line: #line)
+//            }
+//        }
  
      
         cell.imageForCell.image = imageView.image
