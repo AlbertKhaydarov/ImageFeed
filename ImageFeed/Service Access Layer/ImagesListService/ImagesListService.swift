@@ -25,8 +25,8 @@ class ImagesListService {
     
     private init() {}
     
-    func fetchPhotosNextPage(completion: @escaping (Result<[Photo], Error>) -> Void) {
-        
+//    func fetchPhotosNextPage(completion: @escaping (Result<[Photo], Error>) -> Void) {
+    func fetchPhotosNextPage() {
         guard task == nil else {return}
         let nextPage = lastLoadedPage == nil ? 1 : lastLoadedPage! + 1
         print(#function)
@@ -53,16 +53,17 @@ class ImagesListService {
                                  isLiked: photoResult.likedByUser ?? false
                     )
                 }
-       
+//                print(photoResults)
                 assert(Thread.isMainThread)
                 photos.append(contentsOf: photosFromTask)
-                completion(.success(photos))
+              
                 NotificationCenter.default.post(name: ImagesListService.DidChangeNotification,
                                                 object: self,
                                                 userInfo: ["Photos": photos])
                 self.task = nil
             case .failure(let error):
-                completion(.failure(error))
+                assertionFailure("Failed to create Photo from JSON \(error)", file: #file, line: #line)
+//                completion(.failure(error))
                 self.task = nil
             }
         }

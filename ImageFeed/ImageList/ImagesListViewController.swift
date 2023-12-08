@@ -46,9 +46,9 @@ final class ImagesListViewController: UIViewController {
 //                self.updatePhotos()
                 guard let photos = photos else { return }
                 self.photos = photos
-                print(photos)
+                print(photos.count)
             }
-//        updatePhotos()
+         imagesListService.fetchPhotosNextPage()
     }
     
     private func updatePhotos() {
@@ -103,6 +103,7 @@ final class ImagesListViewController: UIViewController {
         self.errorPresenter?.errorShowAlert(errorMessages: errorModel, on: self)
     }
 
+   
 }
 
 extension ImagesListViewController: UITableViewDataSource {
@@ -122,18 +123,21 @@ extension ImagesListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
+
+        if indexPath.row + 1 == photos.count {
+            imagesListService.fetchPhotosNextPage()
+        }
 //        if indexPath.row + 1 == photos.count {
-            imagesListService.fetchPhotosNextPage { result in
-                switch result {
-                case .success(let photos):
-                    print(photos.count)
-                    
-                case .failure(let error):
-                    print("Error \(error.localizedDescription)")
-                    self.showNetworkError()
-                }
-            }
+//            imagesListService.fetchPhotosNextPage { result in
+//                switch result {
+//                case .success(let photos):
+//                    print(photos.count)
+//
+//                case .failure(let error):
+//                    print("Error \(error.localizedDescription)")
+//                    self.showNetworkError()
+//                }
+//            }
 //        }
     }
 }
