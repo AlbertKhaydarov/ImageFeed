@@ -29,10 +29,10 @@ class ImagesListService {
     func fetchPhotosNextPage() {
         guard task == nil else {return}
         let nextPage = lastLoadedPage == nil ? 1 : lastLoadedPage! + 1
-        print(#function)
+        lastLoadedPage = nextPage
         guard
             let token = storage.token,
-            let request = photosRequest(token: token, nextPage: nextPage)
+            let request = photosRequest(token: token, page: nextPage)
         else {
             assertionFailure("Failed to create full URL \(NetworkError.missingData)", file: #file, line: #line)
             return}
@@ -42,7 +42,6 @@ class ImagesListService {
             switch result {
             case .success(let photoResults):
                 let photosFromTask = photoResults.compactMap { photoResult -> Photo in
-                    
                     return Photo(id: photoResult.id ?? "",
                                  width: photoResult.width,
                                  height: photoResult.height,
@@ -53,13 +52,15 @@ class ImagesListService {
                                  isLiked: photoResult.likedByUser ?? false
                     )
                 }
-//
+                
+              
                 assert(Thread.isMainThread)
                 photos.append(contentsOf: photosFromTask)
               
                 NotificationCenter.default.post(name: ImagesListService.DidChangeNotification,
                                                 object: self,
                                                 userInfo: ["Photos": photos])
+             
                 self.task = nil
             case .failure(let error):
                 assertionFailure("Failed to create Photo from JSON \(error)", file: #file, line: #line)
@@ -73,7 +74,7 @@ class ImagesListService {
 
 extension ImagesListService {
     //MARK: - make a request
-    private func photosRequest(token: String, nextPage: Int) -> URLRequest? {
+    private func photosRequest(token: String, page: Int) -> URLRequest? {
         guard
             let defaultBaseURL = Constants.defaultBaseURL,
             var urlComponents = URLComponents(url: defaultBaseURL, resolvingAgainstBaseURL: true)
@@ -86,7 +87,7 @@ extension ImagesListService {
         let perPage = 10
         
         urlComponents.queryItems = [
-            URLQueryItem(name: "page", value: "\(nextPage)"),
+            URLQueryItem(name: "page", value: "\(page)"),
             URLQueryItem(name: "per_page", value: "\(perPage)")
         ]
         urlComponents.path = "/photos"

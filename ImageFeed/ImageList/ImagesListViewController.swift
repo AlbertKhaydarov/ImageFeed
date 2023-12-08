@@ -52,7 +52,6 @@ final class ImagesListViewController: UIViewController {
         let currentPhotosCount = photos.count
         let newPhotosCount = imagesListService.photos.count
         photos = imagesListService.photos
-        
         if currentPhotosCount != newPhotosCount {
             tableView.performBatchUpdates {
                 let indexPaths = (currentPhotosCount..<newPhotosCount).map { i in
@@ -77,22 +76,23 @@ final class ImagesListViewController: UIViewController {
     
     private func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         let imageName = String(indexPath.row)
+        let cache = ImageCache.default
+        cache.clearMemoryCache()
+        cache.clearDiskCache()
 //        guard let imageForCell = UIImage(named: imageName) else {return}
 //        let cache = ImageCache.default
         let url = URL(string: photos[indexPath.row].thumbImageURL)
         let imageView = UIImageView()
-        imageView.kf.indicatorType = .activity
-        cell.imageForCell.kf.setImage(with: url, placeholder: UIImage(named: "Stub"))
-//        imageView.kf.setImage(with: url, placeholder: UIImage(named: "Stub"))
-      
-//        { result in
-//            switch result {
-//            case .success(let imageView):
-//                cell.imageForCell.image = imageView.image
-//            case .failure(let error):
-//                assertionFailure("Failed to download photo \(error)", file: #file, line: #line)
-//            }
-//        }
+        cell.imageForCell.kf.indicatorType = .activity
+        imageView.kf.setImage(with: url, placeholder: UIImage(named: "Stub")){ result in
+            switch result {
+            case .success(let imageView):
+                cell.imageForCell.image = imageView.image
+            case .failure(let error):
+                assertionFailure("Failed to download photo \(error)", file: #file, line: #line)
+            }
+        }
+ 
      
         cell.imageForCell.image = imageView.image
         let date = Date()
