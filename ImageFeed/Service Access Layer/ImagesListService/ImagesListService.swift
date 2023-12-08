@@ -53,7 +53,7 @@ class ImagesListService {
                                  isLiked: photoResult.likedByUser ?? false
                     )
                 }
-//                print(photoResults)
+//
                 assert(Thread.isMainThread)
                 photos.append(contentsOf: photosFromTask)
               
@@ -83,7 +83,7 @@ extension ImagesListService {
         }
         
         // MARK: - ImagesListService photos request
-        let perPage = 2
+        let perPage = 10
         
         urlComponents.queryItems = [
             URLQueryItem(name: "page", value: "\(nextPage)"),

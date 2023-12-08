@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ImagesListCell: UITableViewCell {
     static let reuseIdentifier = "ImagesListCell"
@@ -42,6 +43,12 @@ final class ImagesListCell: UITableViewCell {
         contentView.backgroundColor = .ypBlack
         setupSubview()
         layoutSetup()
+    }
+    
+    //MARK: - Cancel the Kingfisher operation when reusing
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageForCell.kf.cancelDownloadTask()
     }
     
     override func layoutSubviews() {

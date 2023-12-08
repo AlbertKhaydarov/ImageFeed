@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ImagesListViewController: UIViewController {
     
@@ -39,33 +40,28 @@ final class ImagesListViewController: UIViewController {
                 forName: ImagesListService.DidChangeNotification,
                 object: nil,
                 queue: .main
-            ) { [weak self] notification in
+            ) { [weak self] _ in
                 guard let self = self else { return }
-                guard let userInfo = notification.userInfo else { return }
-                let photos = userInfo["Photos"] as? [Photo]
-//                self.updatePhotos()
-                guard let photos = photos else { return }
-                self.photos = photos
-                print(photos.count)
+                updateTableViewAnimated()
             }
-         imagesListService.fetchPhotosNextPage()
+        imagesListService.fetchPhotosNextPage()
     }
-    
-    private func updatePhotos() {
-        guard
-            let profileImageURL = ProfileImageService.shared.avatarURL,
-            let url = URL(string: profileImageURL)
-        else { return }
+
+    //        MARK: -  Animated update of the table state
+    private func updateTableViewAnimated() {
+        let currentPhotosCount = photos.count
+        let newPhotosCount = imagesListService.photos.count
+        photos = imagesListService.photos
         
-        //MARK: -  download an image by Kingfisher and set the cache on the disk storage
-//        let cache = ImageCache.default
-//        cache.clearMemoryCache()
-//        cache.clearDiskCache()
-//        cache.diskStorage.config.sizeLimit = 1000 * 1000 * 100
-//        userProfileImageView.kf.indicatorType = .activity
-//        userProfileImageView.kf.setImage(with: url,
-//                                         placeholder: UIImage(named: "placeholder.jpeg"),
-//                                         options: [])
+        if currentPhotosCount != newPhotosCount {
+            tableView.performBatchUpdates {
+                let indexPaths = (currentPhotosCount..<newPhotosCount).map { i in
+                    IndexPath(row: i, section: 0)
+                }
+                tableView.insertRows(at: indexPaths, with: .automatic)
+                tableView.reloadRows(at: indexPaths, with: .automatic)
+            } completion: { _ in }
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -81,8 +77,24 @@ final class ImagesListViewController: UIViewController {
     
     private func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         let imageName = String(indexPath.row)
-        guard let imageForCell = UIImage(named: imageName) else {return}
-        cell.imageForCell.image = imageForCell
+//        guard let imageForCell = UIImage(named: imageName) else {return}
+//        let cache = ImageCache.default
+        let url = URL(string: photos[indexPath.row].thumbImageURL)
+        let imageView = UIImageView()
+        imageView.kf.indicatorType = .activity
+        cell.imageForCell.kf.setImage(with: url, placeholder: UIImage(named: "Stub"))
+//        imageView.kf.setImage(with: url, placeholder: UIImage(named: "Stub"))
+      
+//        { result in
+//            switch result {
+//            case .success(let imageView):
+//                cell.imageForCell.image = imageView.image
+//            case .failure(let error):
+//                assertionFailure("Failed to download photo \(error)", file: #file, line: #line)
+//            }
+//        }
+     
+        cell.imageForCell.image = imageView.image
         let date = Date()
         cell.dateLabel.text = dateFormatter.string(from: date)
         let favoriteActiveImage: UIImage!
@@ -107,8 +119,9 @@ final class ImagesListViewController: UIViewController {
 }
 
 extension ImagesListViewController: UITableViewDataSource {
+ 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return photosName.count
+        return photos.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -123,22 +136,9 @@ extension ImagesListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-
         if indexPath.row + 1 == photos.count {
             imagesListService.fetchPhotosNextPage()
         }
-//        if indexPath.row + 1 == photos.count {
-//            imagesListService.fetchPhotosNextPage { result in
-//                switch result {
-//                case .success(let photos):
-//                    print(photos.count)
-//
-//                case .failure(let error):
-//                    print("Error \(error.localizedDescription)")
-//                    self.showNetworkError()
-//                }
-//            }
-//        }
     }
 }
 
@@ -147,13 +147,13 @@ extension ImagesListViewController: UITableViewDelegate {
         performSegue(withIdentifier: ShowSingleImageSegueIdentifier, sender: indexPath)
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let image = UIImage(named: photosName[indexPath.row]) else {return 0}
-        let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
-        let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
-        let heightForCell = image.size.height * (imageViewWidth / image.size.width) + imageInsets.top + imageInsets.bottom
-        return heightForCell
-    }   
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        guard let image = UIImage(named: photos[indexPath.row]) else {return 0}
+//        let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
+//        let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
+//        let heightForCell = image.size.height * (imageViewWidth / image.size.width) + imageInsets.top + imageInsets.bottom
+//        return heightForCell
+//    }
 }
 
 
