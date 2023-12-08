@@ -23,7 +23,7 @@ class SplashViewController: UIViewController {
     //MARK: - use Singlton
     private let oauthService = OAuth2Service.shared
     private let profileService = ProfileService.shared
-    private let profileImageService = ProfileImageService.shared
+//    private let profileImageService = ProfileImageService.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
