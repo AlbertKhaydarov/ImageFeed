@@ -84,7 +84,7 @@ extension ImagesListService {
         }
         
         // MARK: - ImagesListService photos request
-        let perPage = 2
+        let perPage = 10
         
         urlComponents.queryItems = [
             URLQueryItem(name: "page", value: "\(page)"),

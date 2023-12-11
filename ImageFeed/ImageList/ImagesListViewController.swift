@@ -28,12 +28,16 @@ final class ImagesListViewController: UIViewController {
     
     private var imagesListService = ImagesListService.shared
     private var imagesListServiceObserver: NSObjectProtocol?
-    
+    let globalCustomIndicator = MyIndicator()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         tableView.register(ImagesListCell.self, forCellReuseIdentifier: ImagesListCell.reuseIdentifier)
         errorPresenter = ErrorAlertPresenter(delegate: self)
+        
+        KingfisherWrapper.shared?.delegate = [.indica]
+        
         imagesListServiceObserver = NotificationCenter.default
             .addObserver(
                 forName: ImagesListService.DidChangeNotification,
@@ -74,39 +78,52 @@ final class ImagesListViewController: UIViewController {
     }
     
     private func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
-        let imageName = String(indexPath.row)
-        let cache = ImageCache.default
-//        cache.clearMemoryCache()
-//        cache.clearDiskCache()
-//        guard let imageForCell = UIImage(named: imageName) else {return}
-//        let cache = ImageCache.default
-        
+//        let imageName = String(indexPath.row)
+        //        guard let imageForCell = UIImage(named: imageName) else {return}
+
+                let cache = ImageCache.default
+        cache.clearMemoryCache()
+        cache.clearDiskCache()
+        //        cell.imageForCell.kf.indicatorType = .activity
+        //        cell.imageForCell.kf.setImage(with: url, placeholder: UIImage(named: "Stub"))
+
         let url = URL(string: photos[indexPath.row].thumbImageURL)
-        let imageView = UIImageView()
-        
+       
 //        cell.imageForCell.kf.indicatorType = .activity
-//        cell.imageForCell.kf.setImage(with: url, placeholder: UIImage(named: "Stub"))
-//        imageView.kf.indicatorType = .activity
-    
-//        guard let ind = UIImage(named: "loader"),
-//        let imageData = ind.pngData()else {  assertionFailure("Failed indicator loaderView", file: #file, line: #line)
-//            return}
-////
-//        imageView.kf.indicatorType = .image(imageData: imageData)
-////
+
+//        if let image = UIImage(named: "loader") {
+//            if let imageData = image.pngData() {
+//                cell.imageForCell.kf.indicatorType = .image(imageData: imageData)
+//            }
+//        }
+//        if let gifImage = UIImage(named: "loaderGif") {
+//            if let imageData = gifImage.pngData() {
+//                cell.imageForCell.kf.indicatorType = .image(imageData: imageData)
+//            } else {
+//                print("Не удалось преобразовать изображение в данные")
+//            }
+//        } else {
+//            print("Изображение 'loaderGif.gif' не найдено")
+//        }
+
+
+//        let path = Bundle.main.url(forResource: "loaderGif", withExtension: "gif")!
+//        let imageData = try! Data(contentsOf: path)
+       
+        cell.imageForCell.kf.setImage(with: url, placeholder: UIImage(named: "Stub"))
 //
-        imageView.kf.setImage(with: url, placeholder: UIImage(named: "Stub")) { result in
-            switch result {
-            case .success(let imageView):
-                cell.imageForCell.image = imageView.image
-            case .failure(let error):
-                assertionFailure("Failed to download photo \(error)", file: #file, line: #line)
-            }
-            self.tableView.reloadRows(at: [indexPath], with: .automatic)
-        }
- 
-     
-        cell.imageForCell.image = imageView.image
+//        imageView.kf.setImage(with: url, placeholder: UIImage(named: "Stub")) { result in
+//            switch result {
+//            case .success(let imageView):
+//                cell.imageForCell.image = imageView.image
+//            case .failure(let error):
+//                assertionFailure("Failed to download photo \(error)", file: #file, line: #line)
+//            }
+//            self.tableView.reloadRows(at: [indexPath], with: .automatic)
+//        }
+//
+//
+//        cell.imageForCell.image = imageView.image
         let date = Date()
         cell.dateLabel.text = dateFormatter.string(from: date)
         let favoriteActiveImage: UIImage!
@@ -142,20 +159,38 @@ extension ImagesListViewController: UITableViewDataSource {
         guard let imageListCell = cell as? ImagesListCell else {
             return UITableViewCell()
         }
-//        cell.imageView?.kf.indicatorType = .activity
-//
-//                // Загрузка изображения с помощью Kingfisher
-//                if let url = URL(string: "loader") {
-//                    cell.imageView?.kf.setImage(with: url)
-//                }
         
-      if let ind = UIImage(named: "loader"),
-         let imageData = ind.pngData() {
-          cell.imageView?.kf.indicatorType = .image(imageData: imageData)
-                          cell.imageView?.kf.indicatorType = .activity
-                      }
+//                let path = Bundle.main.url(forResource: "loaderGif", withExtension: "gif")!
+//                let imageData = try! Data(contentsOf: path)
+//        if let gifImage = UIImage(named: "loaderGif") {
+//             if let imageData = try! Data(gifImage){
+//                 cell.imageView?.kf.indicatorType = .image(imageData: imageData)
+//             } else {
+//                 print("Не удалось преобразовать изображение в данные")
+//             }
+//         } else {
+//             print("Изображение 'loaderGif.gif' не найдено")
+//         }
 
         configCell(for: imageListCell, with: indexPath)
+      
+//        let cache = ImageCache.default
+//        cache.clearMemoryCache()
+//        cache.clearDiskCache()
+//
+//        let url = URL(string: photos[indexPath.row].thumbImageURL)
+//        let imageView = UIImageView()
+//
+//        imageView.kf.setImage(with: url, placeholder: UIImage(named: "Stub")) { result in
+//            switch result {
+//            case .success(let imageView):
+//                cell..imageForCell.image = imageView.image
+//            case .failure(let error):
+//                assertionFailure("Failed to download photo \(error)", file: #file, line: #line)
+//            }
+//            self.tableView.reloadRows(at: [indexPath], with: .automatic)
+//        }
+        
         return imageListCell
     }
     
