@@ -14,7 +14,8 @@ final class ImagesListCell: UITableViewCell {
     lazy var imageForCell: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "0")
+//        imageView.image = UIImage(named: "0")
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
    

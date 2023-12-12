@@ -52,19 +52,13 @@ class ImagesListService {
                                  isLiked: photoResult.likedByUser ?? false
                     )
                 }
-                
-              
-                assert(Thread.isMainThread)
                 photos.append(contentsOf: photosFromTask)
-              
                 NotificationCenter.default.post(name: ImagesListService.DidChangeNotification,
                                                 object: self,
                                                 userInfo: ["Photos": photos])
-             
                 self.task = nil
             case .failure(let error):
                 assertionFailure("Failed to create Photo from JSON \(error)", file: #file, line: #line)
-//                completion(.failure(error))
                 self.task = nil
             }
         }

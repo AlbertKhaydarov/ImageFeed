@@ -28,15 +28,39 @@ final class ImagesListViewController: UIViewController {
     
     private var imagesListService = ImagesListService.shared
     private var imagesListServiceObserver: NSObjectProtocol?
-    let globalCustomIndicator = MyIndicator()
+    
+    lazy var loaderIndicatorBackImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layer.cornerRadius = 8
+        imageView.layer.masksToBounds = true
+        imageView.backgroundColor = .ypWhite
+        return imageView
+    }()
+    
+    var loaderIndicator = UIActivityIndicatorView(style: .medium)
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         tableView.register(ImagesListCell.self, forCellReuseIdentifier: ImagesListCell.reuseIdentifier)
+//        tableView.rowHeight = UITableView.automaticDimension
+//        tableView.estimatedRowHeight = 200
+        
         errorPresenter = ErrorAlertPresenter(delegate: self)
         
-        KingfisherWrapper.shared?.delegate = [.indica]
+//        view.addSubview(loaderIndicatorBackImageView)
+//        loaderIndicatorBackImageView.addSubview(loaderIndicator)
+//        loaderIndicator.translatesAutoresizingMaskIntoConstraints = false
+//        layoutSetup()
+//
+        let cache = ImageCache.default
+        cache.clearMemoryCache()
+        cache.clearDiskCache()
+              
+//        let indicator = MyKFIndicator(view: loaderIndicator)
+//        loaderIndicator.color = .ypBlack
+//        loaderIndicator.startAnimating()
         
         imagesListServiceObserver = NotificationCenter.default
             .addObserver(
@@ -49,6 +73,30 @@ final class ImagesListViewController: UIViewController {
             }
         imagesListService.fetchPhotosNextPage()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        view.addSubview(loaderIndicatorBackImageView)
+        loaderIndicatorBackImageView.addSubview(loaderIndicator)
+        loaderIndicator.translatesAutoresizingMaskIntoConstraints = false
+        layoutSetup()
+        
+        let indicator = MyKFIndicator(view: loaderIndicator)
+        loaderIndicator.color = .ypBlack
+        loaderIndicator.startAnimating()
+    }
+    
+    private func layoutSetup() {
+        NSLayoutConstraint.activate([
+            loaderIndicatorBackImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            loaderIndicatorBackImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loaderIndicatorBackImageView.widthAnchor.constraint(equalToConstant: 51),
+            loaderIndicatorBackImageView.heightAnchor.constraint(equalToConstant: 51),
+            
+            loaderIndicator.centerXAnchor.constraint(equalTo: loaderIndicatorBackImageView.centerXAnchor),
+            loaderIndicator.centerYAnchor.constraint(equalTo: loaderIndicatorBackImageView.centerYAnchor)
+        ])
+    }
 
     //        MARK: -  Animated update of the table state
     private func updateTableViewAnimated() {
@@ -57,11 +105,14 @@ final class ImagesListViewController: UIViewController {
         photos = imagesListService.photos
         if currentPhotosCount != newPhotosCount {
             tableView.performBatchUpdates {
-                let indexPaths = (currentPhotosCount..<newPhotosCount).map { i in
-                    IndexPath(row: i, section: 0)
+//                let indexPaths = (currentPhotosCount..<newPhotosCount).map { i in
+//                    IndexPath(row: i, section: 0)
+//                }
+                var indexPaths: [IndexPath] = []
+                for i in currentPhotosCount..<newPhotosCount {
+                    indexPaths.append(IndexPath(row: i, section: 0))
                 }
-                tableView.insertRows(at: indexPaths, with: .automatic)
-//                tableView.reloadRows(at: indexPaths, with: .automatic)
+                tableView.insertRows(at: indexPaths, with: .top)
             } completion: { _ in }
         }
     }
@@ -78,52 +129,14 @@ final class ImagesListViewController: UIViewController {
     }
     
     private func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
-//        let imageName = String(indexPath.row)
-        //        guard let imageForCell = UIImage(named: imageName) else {return}
-
-                let cache = ImageCache.default
-        cache.clearMemoryCache()
-        cache.clearDiskCache()
-        //        cell.imageForCell.kf.indicatorType = .activity
-        //        cell.imageForCell.kf.setImage(with: url, placeholder: UIImage(named: "Stub"))
 
         let url = URL(string: photos[indexPath.row].thumbImageURL)
-       
-//        cell.imageForCell.kf.indicatorType = .activity
+        print(photos[indexPath.row].thumbImageURL)
+        cell.imageForCell.kf.setImage(with: url, placeholder: UIImage(named: "Stub")) { _ in
+            self.loaderIndicator.stopAnimating()
+            self.loaderIndicatorBackImageView.isHidden = true
+        }
 
-//        if let image = UIImage(named: "loader") {
-//            if let imageData = image.pngData() {
-//                cell.imageForCell.kf.indicatorType = .image(imageData: imageData)
-//            }
-//        }
-//        if let gifImage = UIImage(named: "loaderGif") {
-//            if let imageData = gifImage.pngData() {
-//                cell.imageForCell.kf.indicatorType = .image(imageData: imageData)
-//            } else {
-//                print("Не удалось преобразовать изображение в данные")
-//            }
-//        } else {
-//            print("Изображение 'loaderGif.gif' не найдено")
-//        }
-
-
-//        let path = Bundle.main.url(forResource: "loaderGif", withExtension: "gif")!
-//        let imageData = try! Data(contentsOf: path)
-       
-        cell.imageForCell.kf.setImage(with: url, placeholder: UIImage(named: "Stub"))
-//
-//        imageView.kf.setImage(with: url, placeholder: UIImage(named: "Stub")) { result in
-//            switch result {
-//            case .success(let imageView):
-//                cell.imageForCell.image = imageView.image
-//            case .failure(let error):
-//                assertionFailure("Failed to download photo \(error)", file: #file, line: #line)
-//            }
-//            self.tableView.reloadRows(at: [indexPath], with: .automatic)
-//        }
-//
-//
-//        cell.imageForCell.image = imageView.image
         let date = Date()
         cell.dateLabel.text = dateFormatter.string(from: date)
         let favoriteActiveImage: UIImage!
@@ -133,6 +146,8 @@ final class ImagesListViewController: UIViewController {
             favoriteActiveImage = UIImage(named: "favoriteNoActive")
         }
         cell.favoriteActiveButton.setImage(favoriteActiveImage, for: .normal)
+        
+        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
     
     func showNetworkError() {
@@ -143,8 +158,6 @@ final class ImagesListViewController: UIViewController {
         { }
         self.errorPresenter?.errorShowAlert(errorMessages: errorModel, on: self)
     }
-
-   
 }
 
 extension ImagesListViewController: UITableViewDataSource {
@@ -159,37 +172,8 @@ extension ImagesListViewController: UITableViewDataSource {
         guard let imageListCell = cell as? ImagesListCell else {
             return UITableViewCell()
         }
-        
-//                let path = Bundle.main.url(forResource: "loaderGif", withExtension: "gif")!
-//                let imageData = try! Data(contentsOf: path)
-//        if let gifImage = UIImage(named: "loaderGif") {
-//             if let imageData = try! Data(gifImage){
-//                 cell.imageView?.kf.indicatorType = .image(imageData: imageData)
-//             } else {
-//                 print("Не удалось преобразовать изображение в данные")
-//             }
-//         } else {
-//             print("Изображение 'loaderGif.gif' не найдено")
-//         }
-
         configCell(for: imageListCell, with: indexPath)
-      
-//        let cache = ImageCache.default
-//        cache.clearMemoryCache()
-//        cache.clearDiskCache()
-//
-//        let url = URL(string: photos[indexPath.row].thumbImageURL)
-//        let imageView = UIImageView()
-//
-//        imageView.kf.setImage(with: url, placeholder: UIImage(named: "Stub")) { result in
-//            switch result {
-//            case .success(let imageView):
-//                cell..imageForCell.image = imageView.image
-//            case .failure(let error):
-//                assertionFailure("Failed to download photo \(error)", file: #file, line: #line)
-//            }
-//            self.tableView.reloadRows(at: [indexPath], with: .automatic)
-//        }
+        tableView.reloadRows(at: [indexPath], with: .automatic)
         
         return imageListCell
     }
@@ -198,6 +182,22 @@ extension ImagesListViewController: UITableViewDataSource {
         if indexPath.row + 1 == photos.count {
             imagesListService.fetchPhotosNextPage()
         }
+        
+        if let imageListCell = cell as? ImagesListCell {
+                let image = imageListCell.imageForCell.image
+                guard let image = image else { return }
+                let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
+                let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
+//                let heightForCell = image.size.height * (imageViewWidth / image.size.width) + imageInsets.top + imageInsets.bottom
+            guard let width = photos[indexPath.row].width,
+                  let height = photos[indexPath.row].height
+            else { return}
+            
+           let imageWidth = CGFloat(width)
+            let imageheight = CGFloat(height)
+            let heightForCell = imageheight * (imageViewWidth / imageWidth) + imageInsets.top + imageInsets.bottom
+                imageListCell.frame.size.height = heightForCell
+            }
     }
 }
 
@@ -206,15 +206,16 @@ extension ImagesListViewController: UITableViewDelegate {
         performSegue(withIdentifier: ShowSingleImageSegueIdentifier, sender: indexPath)
     }
     
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        guard let image = UIImage(named: photos[indexPath.row]) else {return 0}
-//        let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
-//        let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
-//        let heightForCell = image.size.height * (imageViewWidth / image.size.width) + imageInsets.top + imageInsets.bottom
-//        return heightForCell
-//    }
+    //MARK: - deprecated, The height For Cell  implementation is proposed in willDisplay method
+    //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    //    guard let image = UIImage(named: photos[indexPath.row]) else {return 0}
+    //            let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
+    //            let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
+    //        let heightForCell = image.size.height * (imageViewWidth / image.size.width) + imageInsets.top + imageInsets.bottom
+    //
+    //        return heightForCell
+    //    }
 }
-
 
 // MARK: - ErrorAlertPresenterDelegate
 extension ImagesListViewController: ErrorAlertPresenterDelegate {
