@@ -105,12 +105,8 @@ final class ImagesListViewController: UIViewController {
         photos = imagesListService.photos
         if currentPhotosCount != newPhotosCount {
             tableView.performBatchUpdates {
-//                let indexPaths = (currentPhotosCount..<newPhotosCount).map { i in
-//                    IndexPath(row: i, section: 0)
-//                }
-                var indexPaths: [IndexPath] = []
-                for i in currentPhotosCount..<newPhotosCount {
-                    indexPaths.append(IndexPath(row: i, section: 0))
+                let indexPaths = (currentPhotosCount..<newPhotosCount).map { i in
+                    IndexPath(row: i, section: 0)
                 }
                 tableView.insertRows(at: indexPaths, with: .top)
             } completion: { _ in }
@@ -131,12 +127,13 @@ final class ImagesListViewController: UIViewController {
     private func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
 
         let url = URL(string: photos[indexPath.row].thumbImageURL)
-        print(photos[indexPath.row].thumbImageURL)
+     
         cell.imageForCell.kf.setImage(with: url, placeholder: UIImage(named: "Stub")) { _ in
             self.loaderIndicator.stopAnimating()
             self.loaderIndicatorBackImageView.isHidden = true
         }
-
+        print("0",indexPath.row, photos[indexPath.row].id, "widgth:", cell.imageForCell.frame.size.width, "heigth:", cell.imageForCell.frame.size.height, photos[indexPath.row].thumbImageURL)
+        
         let date = Date()
         cell.dateLabel.text = dateFormatter.string(from: date)
         let favoriteActiveImage: UIImage!
@@ -188,15 +185,16 @@ extension ImagesListViewController: UITableViewDataSource {
                 guard let image = image else { return }
                 let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
                 let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
-//                let heightForCell = image.size.height * (imageViewWidth / image.size.width) + imageInsets.top + imageInsets.bottom
-            guard let width = photos[indexPath.row].width,
-                  let height = photos[indexPath.row].height
-            else { return}
+                let heightForCell = image.size.height * (imageViewWidth / image.size.width) + imageInsets.top + imageInsets.bottom
+           
+            print("1",indexPath.row, photos[indexPath.row].id, "widgth:", imageViewWidth, image.size.width, "heigth:", heightForCell, image.size.height, photos[indexPath.row].thumbImageURL)
             
-           let imageWidth = CGFloat(width)
-            let imageheight = CGFloat(height)
-            let heightForCell = imageheight * (imageViewWidth / imageWidth) + imageInsets.top + imageInsets.bottom
-                imageListCell.frame.size.height = heightForCell
+//           let imageWidth = imageListCell.frame.width
+//            let imageheight = imageListCell.frame.height
+//            let heightForCell = imageListCell.frame.height * (imageViewWidth / imageWidth) + imageInsets.top + imageInsets.bottom
+//                imageListCell.frame.size.height = heightForCell
+            
+            
             }
     }
 }
