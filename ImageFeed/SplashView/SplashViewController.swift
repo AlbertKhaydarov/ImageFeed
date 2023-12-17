@@ -62,7 +62,6 @@ class SplashViewController: UIViewController {
         guard let storage = storage else {return}
         if  let token = storage.token {
             fetchUserProfile(token: token)
-            print(token)
         } else {
             switchToAuthViewController()
         }

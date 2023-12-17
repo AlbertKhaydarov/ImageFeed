@@ -73,6 +73,10 @@ final class ImagesListViewController: UIViewController {
                 updateTableViewAnimated()
             }
         imagesListService.fetchPhotosNextPage()
+        
+        imagesListService.changeLike(photoId: "LF8gK8-HGSg", isLike: false) { _ in
+            
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -112,9 +116,7 @@ final class ImagesListViewController: UIViewController {
                 }
                 tableView.insertRows(at: indexPaths, with: .top)
             } completion: { _ in }
-
         }
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -131,24 +133,12 @@ final class ImagesListViewController: UIViewController {
     private func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
 
         let url = URL(string: photos[indexPath.row].thumbImageURL)
-     
         let imageView = cell.imageForCell
         
         imageView.kf.setImage(with: url, placeholder: UIImage(named: "Stub")) { _ in
             self.loaderIndicator.stopAnimating()
             self.loaderIndicatorBackImageView.isHidden = true
-            
-//            switch result {
-//            case .success(let retrieveImageResult):
-//                cell.imageForCell.image = retrieveImageResult.image
-//
-//            case .failure(let error):
-//                print("Error in image download \(error)")
-//            }
-//            cell.imageForCell.frame.size.height = 300
             self.tableView.reloadRows(at: [indexPath], with: .automatic)
-//            self.calculateHeigthCell(for: cell, with: indexPath)
-            
         }
   
         guard let date = photos[indexPath.row].createdAt else {return}
@@ -160,30 +150,16 @@ final class ImagesListViewController: UIViewController {
             favoriteActiveImage = UIImage(named: "favoriteNoActive")
         }
         cell.favoriteActiveButton.setImage(favoriteActiveImage, for: .normal)
-        
-//        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
    
-    private func calculateHeigthCell(for cell: ImagesListCell, with indexPath: IndexPath) -> CGFloat {
-
-        guard let image = cell.imageForCell.image else {return 100}
-        let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
-        let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
-       let heightForCell = image.size.height * (imageViewWidth / (image.size.width)) + imageInsets.top + imageInsets.bottom
-
+    private func calculateHeigthCell(for cell: ImagesListCell) -> CGFloat {
+        guard let image = cell.imageForCell.image else {return UITableView.automaticDimension}
+                let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
+                let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
+               let heightForCell = image.size.height * (imageViewWidth / (image.size.width)) + imageInsets.top + imageInsets.bottom
         return heightForCell
     }
-//    private func calculateHeigthCell(for cell: ImagesListCell, with indexPath: IndexPath) -> CGFloat {
-//        var heightForCell: CGFloat = 0.0
-//
-//        guard let image = cell.imageForCell.image else {return 100}
-//        let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
-//        let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
-//        heightForCell = image.size.height * (imageViewWidth / (image.size.width)) + imageInsets.top + imageInsets.bottom
-//
-//        return heightForCell
-//    }
-//
+    
     func showNetworkError() {
         let errorModel = ErrorAlertModel(
             title: "Что-то пошло не так",
@@ -202,36 +178,42 @@ extension ImagesListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ImagesListCell.reuseIdentifier, for: indexPath)
-        
         guard let imageListCell = cell as? ImagesListCell else {
             return UITableViewCell()
         }
         configCell(for: imageListCell, with: indexPath)
-//        tableView.reloadRows(at: [indexPath], with: .automatic)
-        
         return imageListCell
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row + 1 == photos.count {
-            imagesListService.fetchPhotosNextPage()
-        }
     }
 }
 
 extension ImagesListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        if indexPath.row + 1 == photos.count {
+            imagesListService.fetchPhotosNextPage()
+        }
+        
+        guard let imageListCell = cell as? ImagesListCell else {return}
+        let heigth = calculateHeigthCell(for: imageListCell)
+        tableView.rowHeight = heigth
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 350
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: ShowSingleImageSegueIdentifier, sender: indexPath)
     }
     
   
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-     //error
-        guard let cell = tableView.cellForRow(at: indexPath) as? ImagesListCell else {return 100}
-            let heigth = calculateHeigthCell(for: cell, with: indexPath)
-            return heigth
-        
-    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//     //error
+//        guard let cell = tableView.cellForRow(at: indexPath) as? ImagesListCell else {return UITableView.automaticDimension}
+//            let heigth = calculateHeigthCell(for: cell)
+//            return heigth
+//
+//    }
 //        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 //            var heightForCell: CGFloat = 0.0
 //            let imageListCell: ImagesListCell

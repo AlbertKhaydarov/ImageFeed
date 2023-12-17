@@ -18,6 +18,7 @@ class ImagesListService {
     static let DidChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
     
     private var task: URLSessionTask?
+    private var taskGetIsLike: URLSessionTask?
     
     private let urlSession = URLSession.shared
     
@@ -25,7 +26,38 @@ class ImagesListService {
     
     private init() {}
     
-//    func fetchPhotosNextPage(completion: @escaping (Result<[Photo], Error>) -> Void) {
+    
+    func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<Void, Error>) -> Void) {
+        guard taskGetIsLike == nil else {return}
+        guard
+            let token = storage.token
+        else {
+            assertionFailure("Failed to create full URL \(NetworkError.missingData)", file: #file, line: #line)
+            return}
+    
+        if isLike == false {
+            guard let request = isLikeRequest(token: token, photoId: photoId, isLike: isLike) else {
+                assertionFailure("Failed to create request \(String(describing: NetworkError.urlRequestError))", file: #file, line: #line)
+                return }
+            let task = objectGetIsLike(for: request) { [weak self] result in
+                guard let self = self else {return}
+               
+//                self.taskGetIsLike = nil
+                switch result {
+                case .success(let photo):
+                    print(photo.id)
+                    self.taskGetIsLike = nil
+                case .failure(let error):
+                    assertionFailure("Failed to create Photo from JSON \(error)", file: #file, line: #line)
+                    self.taskGetIsLike = nil
+                }
+            }
+            self.taskGetIsLike = task
+        } else {
+            
+        }
+    }
+
     func fetchPhotosNextPage() {
         guard task == nil else {return}
         let nextPage = lastLoadedPage == nil ? 1 : lastLoadedPage! + 1
@@ -49,6 +81,7 @@ class ImagesListService {
                                  welcomeDescription: photoResult.description,
                                  thumbImageURL: photoResult.urls?.thumb ?? "",
                                  largeImageURL: photoResult.urls?.full ?? "",
+                                 smallImageURL: photoResult.urls?.small ?? "",
                                  isLiked: photoResult.likedByUser ?? false
                     )
                 }
@@ -67,7 +100,7 @@ class ImagesListService {
 }
 
 extension ImagesListService {
-    //MARK: - make a request
+    //MARK: - photos request
     private func photosRequest(token: String, page: Int) -> URLRequest? {
         guard
             let defaultBaseURL = Constants.defaultBaseURL,
@@ -76,10 +109,7 @@ extension ImagesListService {
             assertionFailure("Failed to create full URL \(NetworkError.invalidURL)", file: #file, line: #line)
             return nil
         }
-        
-        // MARK: - ImagesListService photos request
         let perPage = 10
-        
         urlComponents.queryItems = [
             URLQueryItem(name: "page", value: "\(page)"),
             URLQueryItem(name: "per_page", value: "\(perPage)")
@@ -95,6 +125,35 @@ extension ImagesListService {
     //MARK: - handling the server response
     private func object(for request: URLRequest, completion: @escaping (Result<[JSONPhotoResultModel], Error>) -> Void) -> URLSessionTask {
         let task = urlSession.objectTask(for: request) { (result: Result<[JSONPhotoResultModel], Error>) in
+            completion(result)
+        }
+        return task
+    }
+    
+    //MARK: - isLike request
+    private func isLikeRequest(token: String, photoId: String, isLike: Bool) -> URLRequest? {
+        guard
+            let defaultBaseURL = Constants.defaultBaseURL,
+            var urlComponents = URLComponents(url: defaultBaseURL, resolvingAgainstBaseURL: true)
+        else {
+            assertionFailure("Failed to create full URL \(NetworkError.invalidURL)", file: #file, line: #line)
+            return nil
+        }
+        urlComponents.path = "/photos/\(photoId)/like"
+        let url = urlComponents.url!
+        var request = URLRequest(url: url)
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        if isLike == false {
+            request.httpMethod = "POST"
+        } else {
+            request.httpMethod = "DELETE"
+        }
+        print(request)
+        return request
+    }
+    //MARK: - handling the server response
+    private func objectGetIsLike(for request: URLRequest, completion: @escaping (Result<JSONPhotoResultModel, Error>) -> Void) -> URLSessionTask {
+        let task = urlSession.objectTask(for: request) { (result: Result<JSONPhotoResultModel, Error>) in
             completion(result)
         }
         return task

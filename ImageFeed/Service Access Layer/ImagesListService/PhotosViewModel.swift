@@ -18,6 +18,7 @@ struct Photo {
     let welcomeDescription: String?
     let thumbImageURL: String
     let largeImageURL: String
+    let smallImageURL: String
     let isLiked: Bool
     
     var size: CGSize {
