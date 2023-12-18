@@ -24,6 +24,9 @@
 		7C81054D2B282B23001A4206 /* MyKFIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C81054C2B282B23001A4206 /* MyKFIndicator.swift */; };
 		7C87CAEF2B305EEF009DE864 /* Array + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C87CAEE2B305EEF009DE864 /* Array + Extension.swift */; };
 		7C87CAF12B30635D009DE864 /* ImagesListCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C87CAF02B30635D009DE864 /* ImagesListCellDelegate.swift */; };
+		7C87CAF52B30D3EA009DE864 /* ErrorTwoButtonsAlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C87CAF42B30D3EA009DE864 /* ErrorTwoButtonsAlertModel.swift */; };
+		7C87CAF72B30D687009DE864 /* ErrorAlertPresenterTwoButtonsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C87CAF62B30D687009DE864 /* ErrorAlertPresenterTwoButtonsDelegate.swift */; };
+		7C87CAF92B30DA12009DE864 /* ErrorAlertPresenterTwoButtonsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C87CAF82B30DA12009DE864 /* ErrorAlertPresenterTwoButtonsProtocol.swift */; };
 		7C8A576C2B17CB8F00DCBC45 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 7C8A576B2B17CB8F00DCBC45 /* ProgressHUD */; };
 		7C8A576E2B18729400DCBC45 /* ProfileImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8A576D2B18729400DCBC45 /* ProfileImageService.swift */; };
 		7C8A57712B19AA8D00DCBC45 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 7C8A57702B19AA8D00DCBC45 /* Kingfisher */; };
@@ -75,6 +78,9 @@
 		7C81054C2B282B23001A4206 /* MyKFIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyKFIndicator.swift; sourceTree = "<group>"; };
 		7C87CAEE2B305EEF009DE864 /* Array + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array + Extension.swift"; sourceTree = "<group>"; };
 		7C87CAF02B30635D009DE864 /* ImagesListCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCellDelegate.swift; sourceTree = "<group>"; };
+		7C87CAF42B30D3EA009DE864 /* ErrorTwoButtonsAlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTwoButtonsAlertModel.swift; sourceTree = "<group>"; };
+		7C87CAF62B30D687009DE864 /* ErrorAlertPresenterTwoButtonsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlertPresenterTwoButtonsDelegate.swift; sourceTree = "<group>"; };
+		7C87CAF82B30DA12009DE864 /* ErrorAlertPresenterTwoButtonsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlertPresenterTwoButtonsProtocol.swift; sourceTree = "<group>"; };
 		7C8A576D2B18729400DCBC45 /* ProfileImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageService.swift; sourceTree = "<group>"; };
 		7C8A57752B1CE97100DCBC45 /* StorageProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageProtocol.swift; sourceTree = "<group>"; };
 		7C8A57772B1CE9DC00DCBC45 /* OAuth2TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2TokenStorage.swift; sourceTree = "<group>"; };
@@ -201,6 +207,28 @@
 			path = ImagesListService;
 			sourceTree = "<group>";
 		};
+		7C87CAF22B30D3A7009DE864 /* OneButtonAlert */ = {
+			isa = PBXGroup;
+			children = (
+				844AEA0C2B18D0830021813E /* ErrorAlertPresenter.swift */,
+				844AEA0A2B18D0650021813E /* ErrorAlertPresenterDelegate.swift */,
+				844AEA082B18D0470021813E /* ErrorAlertPresenterProtocol.swift */,
+				844AEA062B18D01C0021813E /* ErrorAlertModel.swift */,
+			);
+			path = OneButtonAlert;
+			sourceTree = "<group>";
+		};
+		7C87CAF32B30D3BE009DE864 /* TwoButtonsAlert */ = {
+			isa = PBXGroup;
+			children = (
+				8448E8032B30AE5B00058A24 /* ErrorAlertPresenterTwoButtons.swift */,
+				7C87CAF62B30D687009DE864 /* ErrorAlertPresenterTwoButtonsDelegate.swift */,
+				7C87CAF82B30DA12009DE864 /* ErrorAlertPresenterTwoButtonsProtocol.swift */,
+				7C87CAF42B30D3EA009DE864 /* ErrorTwoButtonsAlertModel.swift */,
+			);
+			path = TwoButtonsAlert;
+			sourceTree = "<group>";
+		};
 		7CF0ABCB2B16316C00920A87 /* Profile Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -225,11 +253,8 @@
 		844AEA0E2B18DA890021813E /* Error Alert */ = {
 			isa = PBXGroup;
 			children = (
-				844AEA062B18D01C0021813E /* ErrorAlertModel.swift */,
-				844AEA082B18D0470021813E /* ErrorAlertPresenterProtocol.swift */,
-				844AEA0A2B18D0650021813E /* ErrorAlertPresenterDelegate.swift */,
-				844AEA0C2B18D0830021813E /* ErrorAlertPresenter.swift */,
-				8448E8032B30AE5B00058A24 /* ErrorAlertPresenterTwoButtons.swift */,
+				7C87CAF22B30D3A7009DE864 /* OneButtonAlert */,
+				7C87CAF32B30D3BE009DE864 /* TwoButtonsAlert */,
 			);
 			path = "Error Alert";
 			sourceTree = "<group>";
@@ -260,10 +285,10 @@
 				7C716FA12AFAB01E00648C04 /* SplashView */,
 				7C716FA42AFB88C700648C04 /* Service Access Layer */,
 				7C1611542AE16A5F000E6B9E /* SingleImageViewController */,
+				844AEA0E2B18DA890021813E /* Error Alert */,
 				7C1611512AE14E82000E6B9E /* Profile */,
 				7C5DD5CA2AFA22EC003F95B2 /* Auth */,
 				7C16115B2AE2604A000E6B9E /* SharingActivityPresenter */,
-				844AEA0E2B18DA890021813E /* Error Alert */,
 				84EC42372ACFE2CC009BE44E /* Main.storyboard */,
 				84EC423A2ACFE2CF009BE44E /* Assets.xcassets */,
 				84EC42452AD0646F009BE44E /* Helpers */,
@@ -387,6 +412,7 @@
 				7CF0ABCD2B1631D200920A87 /* ProfileModel.swift in Sources */,
 				7C1611502AE144BD000E6B9E /* ProfileViewController.swift in Sources */,
 				7C8105472B21EE2E001A4206 /* PhotosViewModel.swift in Sources */,
+				7C87CAF52B30D3EA009DE864 /* ErrorTwoButtonsAlertModel.swift in Sources */,
 				7C5DD5CE2AFA43D2003F95B2 /* WebViewViewControllerDelegate.swift in Sources */,
 				84EC42342ACFE2CC009BE44E /* SceneDelegate.swift in Sources */,
 				7C1611582AE25200000E6B9E /* SharingActivityPresenterProtocol.swift in Sources */,
@@ -404,6 +430,7 @@
 				84957CF12AE2D40F00C59155 /* SharingActivityPresenterDelegate.swift in Sources */,
 				8448E8042B30AE5B00058A24 /* ErrorAlertPresenterTwoButtons.swift in Sources */,
 				7C87CAEF2B305EEF009DE864 /* Array + Extension.swift in Sources */,
+				7C87CAF92B30DA12009DE864 /* ErrorAlertPresenterTwoButtonsProtocol.swift in Sources */,
 				844AEA092B18D0470021813E /* ErrorAlertPresenterProtocol.swift in Sources */,
 				7C8A57832B1D2ACC00DCBC45 /* TabBarController.swift in Sources */,
 				7C716FA32AFAB55000648C04 /* AuthViewControllerDelegate.swift in Sources */,
@@ -412,6 +439,7 @@
 				7CF0ABD12B170E4900920A87 /* NetworkError.swift in Sources */,
 				7C8105442B21ECD1001A4206 /* JSONPhotoResultModel.swift in Sources */,
 				7CF0ABC62B162B3B00920A87 /* UIBlockingProgressHUD.swift in Sources */,
+				7C87CAF72B30D687009DE864 /* ErrorAlertPresenterTwoButtonsDelegate.swift in Sources */,
 				844AEA052B18B0790021813E /* Extension+URLSession.swift in Sources */,
 				7C8A576E2B18729400DCBC45 /* ProfileImageService.swift in Sources */,
 				7C87CAF12B30635D009DE864 /* ImagesListCellDelegate.swift in Sources */,

@@ -119,8 +119,7 @@ final class ImagesListViewController: UIViewController {
         if segue.identifier == ShowSingleImageSegueIdentifier {
             let viewController = segue.destination as! SingleImageViewController
             let indexPath = sender as! IndexPath
-            let image = UIImage(named: photosName[indexPath.row])
-            viewController.image = image
+            viewController.fullImageUrlString = photos[indexPath.row].largeImageURL
         } else {
             super.prepare(for: segue, sender: sender)
         }
@@ -219,7 +218,8 @@ extension ImagesListViewController: UITableViewDelegate {
     //        imageListCell.favoriteActiveButton.setImage(favoriteActiveImage, for: .normal)
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //        performSegue(withIdentifier: ShowSingleImageSegueIdentifier, sender: indexPath)
+                performSegue(withIdentifier: ShowSingleImageSegueIdentifier, sender: indexPath)
+        
     }
     
     
