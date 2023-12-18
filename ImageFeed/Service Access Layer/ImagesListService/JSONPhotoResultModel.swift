@@ -40,8 +40,25 @@ struct User: Decodable {
 }
 
 // MARK: - UserLinks
-struct UserLinks: Decodable {
-    let linksSelf, html, photos, likes: String
-    let portfolio: String
+//struct UserLinks: Decodable {
+//    let linksSelf, html, photos, likes: String
+//    let portfolio: String
+//}
+
+struct JSONGetIsLikeModel: Decodable {
+    let photo: JsonPhoto
+    let user: JsonUser
 }
+
+struct JsonPhoto: Decodable {
+    let id: String
+    let likes: Int
+    let likedByUser: Bool
+}
+
+struct JsonUser: Decodable {
+    let id, username, name: String
+    
+}
+
 

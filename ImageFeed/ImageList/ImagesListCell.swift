@@ -38,12 +38,20 @@ final class ImagesListCell: UITableViewCell {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
+    weak var delegate: ImagesListCellDelegate?
         
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.delegate = delegate
         contentView.backgroundColor = .ypBlack
         setupSubview()
         layoutSetup()
+    }
+    
+    //MARK: - Like Button Clicked  function
+    private func likeButtonClicked() {
+       delegate?.imageListCellDidTapLike(self)
     }
     
     //MARK: - Cancel the Kingfisher operation when reusing

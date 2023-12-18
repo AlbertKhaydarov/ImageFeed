@@ -22,6 +22,8 @@
 		7C8105492B21EEBA001A4206 /* ImagesListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8105482B21EEBA001A4206 /* ImagesListService.swift */; };
 		7C81054B2B22F266001A4206 /* String+Extensions.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C81054A2B22F266001A4206 /* String+Extensions.swift.swift */; };
 		7C81054D2B282B23001A4206 /* MyKFIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C81054C2B282B23001A4206 /* MyKFIndicator.swift */; };
+		7C87CAEF2B305EEF009DE864 /* Array + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C87CAEE2B305EEF009DE864 /* Array + Extension.swift */; };
+		7C87CAF12B30635D009DE864 /* ImagesListCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C87CAF02B30635D009DE864 /* ImagesListCellDelegate.swift */; };
 		7C8A576C2B17CB8F00DCBC45 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 7C8A576B2B17CB8F00DCBC45 /* ProgressHUD */; };
 		7C8A576E2B18729400DCBC45 /* ProfileImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8A576D2B18729400DCBC45 /* ProfileImageService.swift */; };
 		7C8A57712B19AA8D00DCBC45 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 7C8A57702B19AA8D00DCBC45 /* Kingfisher */; };
@@ -70,6 +72,8 @@
 		7C8105482B21EEBA001A4206 /* ImagesListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListService.swift; sourceTree = "<group>"; };
 		7C81054A2B22F266001A4206 /* String+Extensions.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift.swift"; sourceTree = "<group>"; };
 		7C81054C2B282B23001A4206 /* MyKFIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyKFIndicator.swift; sourceTree = "<group>"; };
+		7C87CAEE2B305EEF009DE864 /* Array + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array + Extension.swift"; sourceTree = "<group>"; };
+		7C87CAF02B30635D009DE864 /* ImagesListCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCellDelegate.swift; sourceTree = "<group>"; };
 		7C8A576D2B18729400DCBC45 /* ProfileImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageService.swift; sourceTree = "<group>"; };
 		7C8A57752B1CE97100DCBC45 /* StorageProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageProtocol.swift; sourceTree = "<group>"; };
 		7C8A57772B1CE9DC00DCBC45 /* OAuth2TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2TokenStorage.swift; sourceTree = "<group>"; };
@@ -270,6 +274,7 @@
 			isa = PBXGroup;
 			children = (
 				7CF0ABC52B162B3B00920A87 /* UIBlockingProgressHUD.swift */,
+				7C87CAEE2B305EEF009DE864 /* Array + Extension.swift */,
 				7C81054C2B282B23001A4206 /* MyKFIndicator.swift */,
 				841BF5512AD70074001C919E /* GradientView.swift */,
 				84EC42462AD064C0009BE44E /* UIColors+Extensions.swift */,
@@ -283,6 +288,7 @@
 			children = (
 				84EC42352ACFE2CC009BE44E /* ImagesListViewController.swift */,
 				84EC42682AD08AD5009BE44E /* ImagesListCell.swift */,
+				7C87CAF02B30635D009DE864 /* ImagesListCellDelegate.swift */,
 			);
 			path = ImageList;
 			sourceTree = "<group>";
@@ -393,6 +399,7 @@
 				7C1611532AE16743000E6B9E /* SingleImageViewController.swift in Sources */,
 				84EC42472AD064C0009BE44E /* UIColors+Extensions.swift in Sources */,
 				84957CF12AE2D40F00C59155 /* SharingActivityPresenterDelegate.swift in Sources */,
+				7C87CAEF2B305EEF009DE864 /* Array + Extension.swift in Sources */,
 				844AEA092B18D0470021813E /* ErrorAlertPresenterProtocol.swift in Sources */,
 				7C8A57832B1D2ACC00DCBC45 /* TabBarController.swift in Sources */,
 				7C716FA32AFAB55000648C04 /* AuthViewControllerDelegate.swift in Sources */,
@@ -403,6 +410,7 @@
 				7CF0ABC62B162B3B00920A87 /* UIBlockingProgressHUD.swift in Sources */,
 				844AEA052B18B0790021813E /* Extension+URLSession.swift in Sources */,
 				7C8A576E2B18729400DCBC45 /* ProfileImageService.swift in Sources */,
+				7C87CAF12B30635D009DE864 /* ImagesListCellDelegate.swift in Sources */,
 				7CF0ABC82B162F4200920A87 /* ProfileService.swift in Sources */,
 				844AEA022B1777D60021813E /* Constants.swift in Sources */,
 				844AEA072B18D01C0021813E /* ErrorAlertModel.swift in Sources */,

@@ -19,7 +19,6 @@ class ImagesListService {
     
     private var task: URLSessionTask?
     private var taskGetIsLike: URLSessionTask?
-    
     private let urlSession = URLSession.shared
     
     let storage: StorageProtocol = OAuth2TokenStorageSwiftKeychainWrapper.shared
@@ -35,17 +34,32 @@ class ImagesListService {
             assertionFailure("Failed to create full URL \(NetworkError.missingData)", file: #file, line: #line)
             return}
     
-        if isLike == false {
-            guard let request = isLikeRequest(token: token, photoId: photoId, isLike: isLike) else {
+
+            guard let request = isLikeRequest(token: token, photoId: photoId, isLikeType: isLike) else {
                 assertionFailure("Failed to create request \(String(describing: NetworkError.urlRequestError))", file: #file, line: #line)
                 return }
             let task = objectGetIsLike(for: request) { [weak self] result in
                 guard let self = self else {return}
                
-//                self.taskGetIsLike = nil
+                self.taskGetIsLike = nil
+                //TODO remove result
                 switch result {
                 case .success(let photo):
-                    print(photo.id)
+                    if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
+                       let photo = self.photos[index]
+                       let newPhoto = Photo(
+                                id: photo.id,
+                                width: photo.width,
+                                height: photo.height,
+                                createdAt: photo.createdAt,
+                                welcomeDescription: photo.welcomeDescription,
+                                thumbImageURL: photo.thumbImageURL,
+                                largeImageURL: photo.largeImageURL,
+                                smallImageURL: photo.smallImageURL,
+                                isLiked: !photo.isLiked
+                            )
+                        self.photos = self.photos.withReplaced(itemAt: index, newValue: newPhoto)
+                    }
                     self.taskGetIsLike = nil
                 case .failure(let error):
                     assertionFailure("Failed to create Photo from JSON \(error)", file: #file, line: #line)
@@ -53,9 +67,7 @@ class ImagesListService {
                 }
             }
             self.taskGetIsLike = task
-        } else {
-            
-        }
+        
     }
 
     func fetchPhotosNextPage() {
@@ -131,7 +143,7 @@ extension ImagesListService {
     }
     
     //MARK: - isLike request
-    private func isLikeRequest(token: String, photoId: String, isLike: Bool) -> URLRequest? {
+    private func isLikeRequest(token: String, photoId: String, isLikeType: Bool) -> URLRequest? {
         guard
             let defaultBaseURL = Constants.defaultBaseURL,
             var urlComponents = URLComponents(url: defaultBaseURL, resolvingAgainstBaseURL: true)
@@ -143,17 +155,16 @@ extension ImagesListService {
         let url = urlComponents.url!
         var request = URLRequest(url: url)
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        if isLike == false {
+        if isLikeType == false {
             request.httpMethod = "POST"
         } else {
             request.httpMethod = "DELETE"
         }
-        print(request)
         return request
     }
     //MARK: - handling the server response
-    private func objectGetIsLike(for request: URLRequest, completion: @escaping (Result<JSONPhotoResultModel, Error>) -> Void) -> URLSessionTask {
-        let task = urlSession.objectTask(for: request) { (result: Result<JSONPhotoResultModel, Error>) in
+    private func objectGetIsLike(for request: URLRequest, completion: @escaping (Result<JSONGetIsLikeModel, Error>) -> Void) -> URLSessionTask {
+        let task = urlSession.objectTask(for: request) { (result: Result<JSONGetIsLikeModel, Error>) in
             completion(result)
         }
         return task

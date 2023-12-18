@@ -28,7 +28,6 @@ extension URLSession {
                             decoder.keyDecodingStrategy = .convertFromSnakeCase
                             let decodedObject = try decoder.decode(T.self, from: data)
                             fulfillCompletion(.success(decodedObject))
-                            print(decodedObject)
                         } catch {
                             fulfillCompletion(.failure(NetworkError.decodeError))
                         }

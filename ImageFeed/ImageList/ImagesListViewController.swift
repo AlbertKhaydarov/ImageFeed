@@ -74,8 +74,7 @@ final class ImagesListViewController: UIViewController {
             }
         imagesListService.fetchPhotosNextPage()
         
-        imagesListService.changeLike(photoId: "LF8gK8-HGSg", isLike: false) { _ in
-            
+        imagesListService.changeLike(photoId: "LF8gK8-HGSg", isLike: true) { _ in
         }
     }
     
@@ -131,7 +130,6 @@ final class ImagesListViewController: UIViewController {
     }
     
     private func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
-
         let url = URL(string: photos[indexPath.row].thumbImageURL)
         let imageView = cell.imageForCell
         
@@ -182,6 +180,7 @@ extension ImagesListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         configCell(for: imageListCell, with: indexPath)
+        cell.delegate = self
         return imageListCell
     }
 }
@@ -234,4 +233,10 @@ extension ImagesListViewController: UITableViewDelegate {
 // MARK: - ErrorAlertPresenterDelegate
 extension ImagesListViewController: ErrorAlertPresenterDelegate {
     func errorShowAlert() { }
+}
+
+extension ImagesListViewController: ImagesListCellDelegate {
+    func imageListCellDidTapLike(_ cell: ImagesListCell) {
+        
+    }
 }
