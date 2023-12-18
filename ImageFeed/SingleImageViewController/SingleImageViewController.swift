@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class SingleImageViewController: UIViewController {
     
@@ -23,7 +24,12 @@ final class SingleImageViewController: UIViewController {
         }
     }
     
+    let fullImage: String? = nil
+    
     var sharingActivityPresenter: SharingActivityPresenterProtocol?
+    
+    //MARK: -  add ErrorPresenter
+    var errorPresenter: ErrorAlertPresenterProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +40,7 @@ final class SingleImageViewController: UIViewController {
         
         rescaleAndCenterImageInScrollView(image: image)
         sharingActivityPresenter = SharingActivityPresenter(delegate: self)
+        errorPresenter = ErrorAlertPresenterTwoButtons(delegate: self)
     }
     
     @IBAction private func backButtonTapped(_ sender: UIButton) {
@@ -43,6 +50,36 @@ final class SingleImageViewController: UIViewController {
     @IBAction func didTapShareButton(_ sender: UIButton) {
         let objectsToShare = [image]
         sharingActivityPresenter?.showSharingActivity(activityItems: objectsToShare, on: self)
+    }
+    
+   //MARK: - Dowload Image
+    private func getSingleImmage(for imageView: UIImageView?) {
+        guard let imageView = imageView,
+        let url = fullImage
+        else {return}
+        let fullImageUrl = URL(string: url)
+        
+        UIBlockingProgressHUD.show()
+        imageView.kf.setImage(with: fullImageUrl) { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
+            
+            guard let self = self else { return }
+            switch result {
+            case .success(let imageResult):
+                self.rescaleAndCenterImageInScrollView(image: imageResult.image)
+            case .failure:
+                self.showError()
+            }
+        }
+    }
+    
+    func showError() {
+        let errorModel = ErrorAlertModel(
+            title: "Что-то пошло не так. Попробовать ещё раз?",
+            message: "Ошибка в установке Like",
+            buttonText: "Ok")
+        { }
+        self.errorPresenter?.errorShowAlert(errorMessages: errorModel, on: self)
     }
     
     private func rescaleAndCenterImageInScrollView(image: UIImage) {
@@ -75,4 +112,8 @@ extension SingleImageViewController: SharingActivityPresenterDelegate {
     func finishShowSharing(image: UIImage){
         rescaleAndCenterImageInScrollView(image: image)
     }
+}
+
+extension SingleImageViewController: ErrorAlertPresenterDelegate {
+    func errorShowAlert() { }
 }

@@ -37,6 +37,7 @@
 		7CF0ABCD2B1631D200920A87 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF0ABCC2B1631D200920A87 /* ProfileModel.swift */; };
 		7CF0ABD12B170E4900920A87 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF0ABD02B170E4900920A87 /* NetworkError.swift */; };
 		841BF5522AD70074001C919E /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841BF5512AD70074001C919E /* GradientView.swift */; };
+		8448E8042B30AE5B00058A24 /* ErrorAlertPresenterTwoButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8448E8032B30AE5B00058A24 /* ErrorAlertPresenterTwoButtons.swift */; };
 		844AEA022B1777D60021813E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AEA012B1777D60021813E /* Constants.swift */; };
 		844AEA052B18B0790021813E /* Extension+URLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AEA042B18B0790021813E /* Extension+URLSession.swift */; };
 		844AEA072B18D01C0021813E /* ErrorAlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844AEA062B18D01C0021813E /* ErrorAlertModel.swift */; };
@@ -85,6 +86,7 @@
 		7CF0ABCC2B1631D200920A87 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		7CF0ABD02B170E4900920A87 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		841BF5512AD70074001C919E /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		8448E8032B30AE5B00058A24 /* ErrorAlertPresenterTwoButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlertPresenterTwoButtons.swift; sourceTree = "<group>"; };
 		844AEA012B1777D60021813E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		844AEA042B18B0790021813E /* Extension+URLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+URLSession.swift"; sourceTree = "<group>"; };
 		844AEA062B18D01C0021813E /* ErrorAlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlertModel.swift; sourceTree = "<group>"; };
@@ -173,7 +175,6 @@
 			isa = PBXGroup;
 			children = (
 				7C716F9F2AFAB00B00648C04 /* SplashViewController.swift */,
-				844AEA0E2B18DA890021813E /* Error Alert */,
 			);
 			path = SplashView;
 			sourceTree = "<group>";
@@ -185,6 +186,7 @@
 				7C716F9E2AFAAF0900648C04 /* Oauth2Service */,
 				7CF0ABCB2B16316C00920A87 /* Profile Services */,
 				7C8105452B21ECE9001A4206 /* ImagesListService */,
+				84EC426A2AD08AF5009BE44E /* ImageList */,
 			);
 			path = "Service Access Layer";
 			sourceTree = "<group>";
@@ -227,6 +229,7 @@
 				844AEA082B18D0470021813E /* ErrorAlertPresenterProtocol.swift */,
 				844AEA0A2B18D0650021813E /* ErrorAlertPresenterDelegate.swift */,
 				844AEA0C2B18D0830021813E /* ErrorAlertPresenter.swift */,
+				8448E8032B30AE5B00058A24 /* ErrorAlertPresenterTwoButtons.swift */,
 			);
 			path = "Error Alert";
 			sourceTree = "<group>";
@@ -256,11 +259,11 @@
 				7C8A57822B1D2ACC00DCBC45 /* TabBarController.swift */,
 				7C716FA12AFAB01E00648C04 /* SplashView */,
 				7C716FA42AFB88C700648C04 /* Service Access Layer */,
+				7C1611542AE16A5F000E6B9E /* SingleImageViewController */,
 				7C1611512AE14E82000E6B9E /* Profile */,
 				7C5DD5CA2AFA22EC003F95B2 /* Auth */,
-				84EC426A2AD08AF5009BE44E /* ImageList */,
-				7C1611542AE16A5F000E6B9E /* SingleImageViewController */,
 				7C16115B2AE2604A000E6B9E /* SharingActivityPresenter */,
+				844AEA0E2B18DA890021813E /* Error Alert */,
 				84EC42372ACFE2CC009BE44E /* Main.storyboard */,
 				84EC423A2ACFE2CF009BE44E /* Assets.xcassets */,
 				84EC42452AD0646F009BE44E /* Helpers */,
@@ -399,6 +402,7 @@
 				7C1611532AE16743000E6B9E /* SingleImageViewController.swift in Sources */,
 				84EC42472AD064C0009BE44E /* UIColors+Extensions.swift in Sources */,
 				84957CF12AE2D40F00C59155 /* SharingActivityPresenterDelegate.swift in Sources */,
+				8448E8042B30AE5B00058A24 /* ErrorAlertPresenterTwoButtons.swift in Sources */,
 				7C87CAEF2B305EEF009DE864 /* Array + Extension.swift in Sources */,
 				844AEA092B18D0470021813E /* ErrorAlertPresenterProtocol.swift in Sources */,
 				7C8A57832B1D2ACC00DCBC45 /* TabBarController.swift in Sources */,

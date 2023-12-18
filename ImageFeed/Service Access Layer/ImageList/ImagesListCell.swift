@@ -43,14 +43,24 @@ final class ImagesListCell: UITableViewCell {
         
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.delegate = delegate
         contentView.backgroundColor = .ypBlack
         setupSubview()
         layoutSetup()
+        favoriteActiveButton.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
+    }
+    
+    func setIsLiked(isLiked: Bool) {
+        let favoriteActiveImage: UIImage!
+        if isLiked == true {
+            favoriteActiveImage = UIImage(named: "favoriteActive")
+        } else {
+            favoriteActiveImage = UIImage(named: "favoriteNoActive")
+        }
+        self.favoriteActiveButton.setImage(favoriteActiveImage, for: .normal)
     }
     
     //MARK: - Like Button Clicked  function
-    private func likeButtonClicked() {
+    @objc private func likeButtonClicked() {
        delegate?.imageListCellDidTapLike(self)
     }
     
@@ -74,7 +84,8 @@ final class ImagesListCell: UITableViewCell {
         contentView.addSubview(imageForCell)
         imageForCell.addSubview(dateLabel)
         imageForCell.addSubview(backgroundDateLabelView)
-        imageForCell.addSubview(favoriteActiveButton)
+//        imageForCell.addSubview(favoriteActiveButton)
+        contentView.insertSubview(favoriteActiveButton, aboveSubview: imageForCell)
     }
     
     private func layoutSetup() {

@@ -39,29 +39,29 @@ final class ImagesListViewController: UIViewController {
     }()
     
     var loaderIndicator = UIActivityIndicatorView(style: .medium)
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         tableView.register(ImagesListCell.self, forCellReuseIdentifier: ImagesListCell.reuseIdentifier)
-//        tableView.rowHeight = UITableView.automaticDimension
-//        tableView.estimatedRowHeight = 200
+        //        tableView.rowHeight = UITableView.automaticDimension
+        //        tableView.estimatedRowHeight = 200
         
         errorPresenter = ErrorAlertPresenter(delegate: self)
         
-//        view.addSubview(loaderIndicatorBackImageView)
-//        loaderIndicatorBackImageView.addSubview(loaderIndicator)
-//        loaderIndicator.translatesAutoresizingMaskIntoConstraints = false
-//        layoutSetup()
-//
+        //        view.addSubview(loaderIndicatorBackImageView)
+        //        loaderIndicatorBackImageView.addSubview(loaderIndicator)
+        //        loaderIndicator.translatesAutoresizingMaskIntoConstraints = false
+        //        layoutSetup()
+        //
         let cache = ImageCache.default
         cache.clearMemoryCache()
         cache.clearDiskCache()
-  
-              
-//        let indicator = MyKFIndicator(view: loaderIndicator)
-//        loaderIndicator.color = .ypBlack
-//        loaderIndicator.startAnimating()
+        
+        
+        //        let indicator = MyKFIndicator(view: loaderIndicator)
+        //        loaderIndicator.color = .ypBlack
+        //        loaderIndicator.startAnimating()
         
         imagesListServiceObserver = NotificationCenter.default
             .addObserver(
@@ -73,9 +73,6 @@ final class ImagesListViewController: UIViewController {
                 updateTableViewAnimated()
             }
         imagesListService.fetchPhotosNextPage()
-        
-        imagesListService.changeLike(photoId: "LF8gK8-HGSg", isLike: true) { _ in
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -88,7 +85,7 @@ final class ImagesListViewController: UIViewController {
         let indicator = MyKFIndicator(view: loaderIndicator)
         loaderIndicator.color = .ypBlack
         loaderIndicator.startAnimating()
-
+        
     }
     
     private func layoutSetup() {
@@ -102,7 +99,7 @@ final class ImagesListViewController: UIViewController {
             loaderIndicator.centerYAnchor.constraint(equalTo: loaderIndicatorBackImageView.centerYAnchor)
         ])
     }
-
+    
     //        MARK: -  Animated update of the table state
     private func updateTableViewAnimated() {
         let currentPhotosCount = photos.count
@@ -138,23 +135,23 @@ final class ImagesListViewController: UIViewController {
             self.loaderIndicatorBackImageView.isHidden = true
             self.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
-  
+        
         guard let date = photos[indexPath.row].createdAt else {return}
         cell.dateLabel.text = dateFormatter.string(from: date)
-        let favoriteActiveImage: UIImage!
-        if indexPath.row % 2 == 0 {
-            favoriteActiveImage = UIImage(named: "favoriteActive")
-        } else {
-            favoriteActiveImage = UIImage(named: "favoriteNoActive")
-        }
-        cell.favoriteActiveButton.setImage(favoriteActiveImage, for: .normal)
+        //        let favoriteActiveImage: UIImage!
+        //        if photos[indexPath.row].isLiked == true {
+        //            favoriteActiveImage = UIImage(named: "favoriteActive")
+        //        } else {
+        //            favoriteActiveImage = UIImage(named: "favoriteNoActive")
+        //        }
+        //        cell.favoriteActiveButton.setImage(favoriteActiveImage, for: .normal)
     }
-   
+    
     private func calculateHeigthCell(for cell: ImagesListCell) -> CGFloat {
         guard let image = cell.imageForCell.image else {return UITableView.automaticDimension}
-                let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
-                let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
-               let heightForCell = image.size.height * (imageViewWidth / (image.size.width)) + imageInsets.top + imageInsets.bottom
+        let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
+        let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
+        let heightForCell = image.size.height * (imageViewWidth / (image.size.width)) + imageInsets.top + imageInsets.bottom
         return heightForCell
     }
     
@@ -166,10 +163,19 @@ final class ImagesListViewController: UIViewController {
         { }
         self.errorPresenter?.errorShowAlert(errorMessages: errorModel, on: self)
     }
+    
+    func showLikeTapError() {
+        let errorModel = ErrorAlertModel(
+            title: "Что-то пошло не так",
+            message: "Ошибка в установке Like",
+            buttonText: "Ok")
+        { }
+        self.errorPresenter?.errorShowAlert(errorMessages: errorModel, on: self)
+    }
 }
 
 extension ImagesListViewController: UITableViewDataSource {
- 
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return photos.count
     }
@@ -180,7 +186,7 @@ extension ImagesListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         configCell(for: imageListCell, with: indexPath)
-        cell.delegate = self
+        imageListCell.delegate = self
         return imageListCell
     }
 }
@@ -195,39 +201,47 @@ extension ImagesListViewController: UITableViewDelegate {
         guard let imageListCell = cell as? ImagesListCell else {return}
         let heigth = calculateHeigthCell(for: imageListCell)
         tableView.rowHeight = heigth
+        
+        let isLiked = photos[indexPath.row].isLiked
+        imageListCell.setIsLiked(isLiked: isLiked)
+        
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 350
     }
+    //        let favoriteActiveImage: UIImage!
+    //        if photos[indexPath.row].isLiked == true {
+    //            favoriteActiveImage = UIImage(named: "favoriteActive")
+    //        } else {
+    //            favoriteActiveImage = UIImage(named: "favoriteNoActive")
+    //        }
+    //        imageListCell.favoriteActiveButton.setImage(favoriteActiveImage, for: .normal)
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: ShowSingleImageSegueIdentifier, sender: indexPath)
+        //        performSegue(withIdentifier: ShowSingleImageSegueIdentifier, sender: indexPath)
     }
     
-  
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//     //error
-//        guard let cell = tableView.cellForRow(at: indexPath) as? ImagesListCell else {return UITableView.automaticDimension}
-//            let heigth = calculateHeigthCell(for: cell)
-//            return heigth
-//
-//    }
-//        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//            var heightForCell: CGFloat = 0.0
-//            let imageListCell: ImagesListCell
-//            imageListCell = tableView.cellForRow(at: indexPath) as! ImagesListCell
-//            guard let image = imageListCell.imageForCell.image else {return 100}
-//                let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
-//                let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
-//            heightForCell = image.size.height * (imageViewWidth / (image.size.width)) + imageInsets.top + imageInsets.bottom
-//
-//print("1",indexPath.row, photos[indexPath.row].id, "widgth:", image.size.width, "heigth:", image.size.height, photos[indexPath.row].thumbImageURL)
-//
-//            tableView.reloadRows(at: [indexPath], with: .automatic)
-//
-//            return heightForCell
-//        }
+    
+    //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    //     //error
+    //        guard let cell = tableView.cellForRow(at: indexPath) as? ImagesListCell else {return UITableView.automaticDimension}
+    //            let heigth = calculateHeigthCell(for: cell)
+    //            return heigth
+    //
+    //    }
+    //        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    //            var heightForCell: CGFloat = 0.0
+    //            let imageListCell: ImagesListCell
+    //            imageListCell = tableView.cellForRow(at: indexPath) as! ImagesListCell
+    //            guard let image = imageListCell.imageForCell.image else {return 100}
+    //                let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
+    //                let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
+    //            heightForCell = image.size.height * (imageViewWidth / (image.size.width)) + imageInsets.top + imageInsets.bottom
+
+    //
+    //            return heightForCell
+    //        }
 }
 
 // MARK: - ErrorAlertPresenterDelegate
@@ -237,6 +251,21 @@ extension ImagesListViewController: ErrorAlertPresenterDelegate {
 
 extension ImagesListViewController: ImagesListCellDelegate {
     func imageListCellDidTapLike(_ cell: ImagesListCell) {
-        
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        let photo = photos[indexPath.row]
+        UIBlockingProgressHUD.show()
+        let photoId = photo.id
+        let isLike = photo.isLiked
+        imagesListService.changeLike(photoId: photoId, isLike: !isLike) { result in
+            switch result {
+            case .success:
+                self.photos = self.imagesListService.photos
+                cell.setIsLiked(isLiked: self.photos[indexPath.row].isLiked)
+                UIBlockingProgressHUD.dismiss()
+            case .failure:
+                UIBlockingProgressHUD.dismiss()
+                self.showLikeTapError()
+            }
+        }
     }
 }

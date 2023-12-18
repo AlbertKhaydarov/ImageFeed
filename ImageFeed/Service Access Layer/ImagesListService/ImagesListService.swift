@@ -59,15 +59,17 @@ class ImagesListService {
                                 isLiked: !photo.isLiked
                             )
                         self.photos = self.photos.withReplaced(itemAt: index, newValue: newPhoto)
+                        print(photo.isLiked)
                     }
+                    completion(.success(()))
                     self.taskGetIsLike = nil
                 case .failure(let error):
                     assertionFailure("Failed to create Photo from JSON \(error)", file: #file, line: #line)
+                    completion(.failure(error))
                     self.taskGetIsLike = nil
                 }
             }
             self.taskGetIsLike = task
-        
     }
 
     func fetchPhotosNextPage() {
