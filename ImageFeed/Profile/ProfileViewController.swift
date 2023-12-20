@@ -4,7 +4,7 @@
 //
 //  Created by Альберт Хайдаров on 19.10.2023.
 //
-
+import Foundation
 import UIKit
 import Kingfisher
 
@@ -115,7 +115,16 @@ final class ProfileViewController: UIViewController {
     //MARK: - add switch after logout
     @objc private func logoutButtonTapped(_ sender: UIButton) {
         storage?.removeToken()
-        print("please, after removeToken additional remove app from simulator for clear keychain")
+        CleanCookieStorage.clean()
+        switchToSplashViewController() 
+    }
+    
+    private func switchToSplashViewController() {
+        guard let window = UIApplication.shared.windows.first else {
+            fatalError("Invalid Configuration")
+        }
+        let splashViewController = SplashViewController()
+        window.rootViewController = splashViewController
     }
     
     private func setupSubview() {

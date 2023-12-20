@@ -40,28 +40,27 @@ final class ImagesListViewController: UIViewController {
     
     var loaderIndicator = UIActivityIndicatorView(style: .medium)
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         tableView.register(ImagesListCell.self, forCellReuseIdentifier: ImagesListCell.reuseIdentifier)
-        //        tableView.rowHeight = UITableView.automaticDimension
-        //        tableView.estimatedRowHeight = 200
         
         errorPresenter = ErrorAlertPresenter(delegate: self)
         
-        //        view.addSubview(loaderIndicatorBackImageView)
-        //        loaderIndicatorBackImageView.addSubview(loaderIndicator)
-        //        loaderIndicator.translatesAutoresizingMaskIntoConstraints = false
-        //        layoutSetup()
+                view.addSubview(loaderIndicatorBackImageView)
+                loaderIndicatorBackImageView.addSubview(loaderIndicator)
+                loaderIndicator.translatesAutoresizingMaskIntoConstraints = false
+                layoutSetup()
         //
         let cache = ImageCache.default
         cache.clearMemoryCache()
         cache.clearDiskCache()
         
         
-        //        let indicator = MyKFIndicator(view: loaderIndicator)
-        //        loaderIndicator.color = .ypBlack
-        //        loaderIndicator.startAnimating()
+        let indicator = MyKFIndicator(view: loaderIndicator)
+        indicator.view.tintColor = .ypBlack
+        indicator.startAnimatingView()
         
         imagesListServiceObserver = NotificationCenter.default
             .addObserver(
@@ -73,19 +72,6 @@ final class ImagesListViewController: UIViewController {
                 updateTableViewAnimated()
             }
         imagesListService.fetchPhotosNextPage()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        view.addSubview(loaderIndicatorBackImageView)
-        loaderIndicatorBackImageView.addSubview(loaderIndicator)
-        loaderIndicator.translatesAutoresizingMaskIntoConstraints = false
-        layoutSetup()
-        
-        let indicator = MyKFIndicator(view: loaderIndicator)
-        loaderIndicator.color = .ypBlack
-        loaderIndicator.startAnimating()
-        
     }
     
     private func layoutSetup() {
@@ -129,25 +115,19 @@ final class ImagesListViewController: UIViewController {
         let url = URL(string: photos[indexPath.row].thumbImageURL)
         let imageView = cell.imageForCell
         
-        imageView.kf.setImage(with: url, placeholder: UIImage(named: "Stub")) { _ in
-            self.loaderIndicator.stopAnimating()
-            self.loaderIndicatorBackImageView.isHidden = true
+        imageView.kf.setImage(with: url, placeholder: UIImage(named: "Stub")) { _ in            self.loaderIndicatorBackImageView.isHidden = true
             self.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
         
         guard let date = photos[indexPath.row].createdAt else {return}
         cell.dateLabel.text = dateFormatter.string(from: date)
-        //        let favoriteActiveImage: UIImage!
-        //        if photos[indexPath.row].isLiked == true {
-        //            favoriteActiveImage = UIImage(named: "favoriteActive")
-        //        } else {
-        //            favoriteActiveImage = UIImage(named: "favoriteNoActive")
-        //        }
-        //        cell.favoriteActiveButton.setImage(favoriteActiveImage, for: .normal)
+        
+        let isLiked = imagesListService.photos[indexPath.row].isLiked
+        cell.setIsLiked(isLiked: isLiked)
     }
     
-    private func calculateHeigthCell(for cell: ImagesListCell) -> CGFloat {
-        guard let image = cell.imageForCell.image else {return UITableView.automaticDimension}
+    private func calculateHeigthCell(for indexPath: IndexPath) -> CGFloat {
+        let image = imagesListService.photos[indexPath.row]
         let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
         let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
         let heightForCell = image.size.height * (imageViewWidth / (image.size.width)) + imageInsets.top + imageInsets.bottom
@@ -184,8 +164,8 @@ extension ImagesListViewController: UITableViewDataSource {
         guard let imageListCell = cell as? ImagesListCell else {
             return UITableViewCell()
         }
-        configCell(for: imageListCell, with: indexPath)
         imageListCell.delegate = self
+        configCell(for: imageListCell, with: indexPath)
         return imageListCell
     }
 }
@@ -197,51 +177,20 @@ extension ImagesListViewController: UITableViewDelegate {
             imagesListService.fetchPhotosNextPage()
         }
         
-        guard let imageListCell = cell as? ImagesListCell else {return}
-        let heigth = calculateHeigthCell(for: imageListCell)
-        tableView.rowHeight = heigth
-        
-        let isLiked = photos[indexPath.row].isLiked
-        imageListCell.setIsLiked(isLiked: isLiked)
-        
+       
     }
-    
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 350
-    }
-    //        let favoriteActiveImage: UIImage!
-    //        if photos[indexPath.row].isLiked == true {
-    //            favoriteActiveImage = UIImage(named: "favoriteActive")
-    //        } else {
-    //            favoriteActiveImage = UIImage(named: "favoriteNoActive")
-    //        }
-    //        imageListCell.favoriteActiveButton.setImage(favoriteActiveImage, for: .normal)
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
                 performSegue(withIdentifier: ShowSingleImageSegueIdentifier, sender: indexPath)
         
     }
     
     
-    //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    //     //error
-    //        guard let cell = tableView.cellForRow(at: indexPath) as? ImagesListCell else {return UITableView.automaticDimension}
-    //            let heigth = calculateHeigthCell(for: cell)
-    //            return heigth
-    //
-    //    }
-    //        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    //            var heightForCell: CGFloat = 0.0
-    //            let imageListCell: ImagesListCell
-    //            imageListCell = tableView.cellForRow(at: indexPath) as! ImagesListCell
-    //            guard let image = imageListCell.imageForCell.image else {return 100}
-    //                let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
-    //                let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
-    //            heightForCell = image.size.height * (imageViewWidth / (image.size.width)) + imageInsets.top + imageInsets.bottom
-
-    //
-    //            return heightForCell
-    //        }
+        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+      
+                let heigth = calculateHeigthCell(for: indexPath)
+                return heigth
+        }
 }
 
 // MARK: - ErrorAlertPresenterDelegate

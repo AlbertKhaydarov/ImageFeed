@@ -33,8 +33,7 @@ class ImagesListService {
         else {
             assertionFailure("Failed to create full URL \(NetworkError.missingData)", file: #file, line: #line)
             return}
-    
-
+  
             guard let request = isLikeRequest(token: token, photoId: photoId, isLikeType: isLike) else {
                 assertionFailure("Failed to create request \(String(describing: NetworkError.urlRequestError))", file: #file, line: #line)
                 return }
@@ -44,7 +43,7 @@ class ImagesListService {
                 self.taskGetIsLike = nil
                 //TODO remove result
                 switch result {
-                case .success(let photo):
+                case .success(let changedLikePhoto):
                     if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
                        let photo = self.photos[index]
                        let newPhoto = Photo(
@@ -59,7 +58,6 @@ class ImagesListService {
                                 isLiked: !photo.isLiked
                             )
                         self.photos = self.photos.withReplaced(itemAt: index, newValue: newPhoto)
-                        print(photo.isLiked)
                     }
                     completion(.success(()))
                     self.taskGetIsLike = nil
@@ -158,9 +156,9 @@ extension ImagesListService {
         var request = URLRequest(url: url)
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         if isLikeType == false {
-            request.httpMethod = "POST"
-        } else {
             request.httpMethod = "DELETE"
+        } else {
+            request.httpMethod = "POST"
         }
         return request
     }
