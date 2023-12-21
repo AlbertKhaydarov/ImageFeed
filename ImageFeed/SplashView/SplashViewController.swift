@@ -23,7 +23,6 @@ class SplashViewController: UIViewController {
     //MARK: - use Singlton
     private let oauthService = OAuth2Service.shared
     private let profileService = ProfileService.shared
-//    private let profileImageService = ProfileImageService.shared
     
     //MARK: -  add ErrorPresenter
     var errorPresenter: ErrorAlertPresenterProtocol?
@@ -31,8 +30,7 @@ class SplashViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         storage = OAuth2TokenStorageSwiftKeychainWrapper.shared
-        //MARK: - an alternative option
-//              storage = OAuth2TokenStorageKeychain.shared
+        
         view.backgroundColor = .ypBlack
         errorPresenter = ErrorAlertPresenter(delegate: self)
         setupSubview()

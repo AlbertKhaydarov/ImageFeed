@@ -29,16 +29,15 @@ final class SingleImageViewController: UIViewController {
     var sharingActivityPresenter: SharingActivityPresenterProtocol?
     
     //MARK: -  add ErrorPresenter
-    var errorPresenter: ErrorAlertPresenterTwoButtonsProtocol?
+    var errorPresenter: ErrorPresenterTwoButtonsProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollView.minimumZoomScale = 1.0
         scrollView.maximumZoomScale = 3.0
         
-//        imageView.image = image
         getSingleImage(for: imageView)
-
+        
         sharingActivityPresenter = SharingActivityPresenter(delegate: self)
         errorPresenter = ErrorAlertPresenterTwoButtons(delegate: self)
     }
@@ -52,16 +51,16 @@ final class SingleImageViewController: UIViewController {
         sharingActivityPresenter?.showSharingActivity(activityItems: objectsToShare, on: self)
     }
     
-   //MARK: - Dowload Image
+    //MARK: - Dowload Image
     private func getSingleImage(for imageView: UIImageView?) {
         guard let imageView = imageView,
-        let url = fullImageUrlString
+              let url = fullImageUrlString
         else {
             self.showError()
             return}
         
         let fullImageUrl = URL(string: url)
-
+        
         UIBlockingProgressHUD.show()
         imageView.kf.setImage(with: fullImageUrl) { [weak self] result in
             UIBlockingProgressHUD.dismiss()
@@ -86,24 +85,17 @@ final class SingleImageViewController: UIViewController {
             guard let self = self else {return}
             getSingleImage(for: imageView)
         }
-        self.errorPresenter?.errorShowAlert(errorMessages: errorModel, on: self)
+        self.errorPresenter?.showErrorAlert(errorMessages: errorModel, on: self)
     }
     
     private func rescaleAndCenterImageInScrollView(image: UIImage) {
-            let minZoomScale = scrollView.minimumZoomScale
-            let maxZoomScale = scrollView.maximumZoomScale
-            view.layoutIfNeeded()
-            let visibleRectSize = scrollView.bounds.size
-            let imageSize = image.size
-            let hScale = visibleRectSize.width / imageSize.width
-            let vScale = visibleRectSize.height / imageSize.height
-            let scale = min(maxZoomScale, max(minZoomScale, max(hScale, vScale)))
-            scrollView.layoutIfNeeded()
-            let newContentSize = scrollView.contentSize
-            let x = (newContentSize.width - visibleRectSize.width) / 2
-            let y = (newContentSize.height - visibleRectSize.height) / 2
-            scrollView.setContentOffset(CGPoint(x: x, y: y), animated: false)
-        }
+        let visibleRectSize = scrollView.bounds.size
+        scrollView.layoutIfNeeded()
+        let newContentSize = scrollView.contentSize
+        let x = (newContentSize.width - visibleRectSize.width) / 2
+        let y = (newContentSize.height - visibleRectSize.height) / 2
+        scrollView.setContentOffset(CGPoint(x: x, y: y), animated: false)
+    }
 }
 
 extension SingleImageViewController: UIScrollViewDelegate {
@@ -118,8 +110,8 @@ extension SingleImageViewController: SharingActivityPresenterDelegate {
     }
 }
 
-extension SingleImageViewController: ErrorAlertPresenterTwoButtonsDelegate {
-    func errorShowAlert() { }
+extension SingleImageViewController: ErrorPresenterTwoButtonsDelegate {
+    func showErrorAlert() { }
     func hideErrorViewController(_ errorAlertPresenter: ErrorAlertPresenterTwoButtons) {
         dismiss(animated: true, completion: nil)
     }

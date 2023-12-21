@@ -17,3 +17,11 @@ private let dateTimeDefaultFormatterDate: DateFormatter = {
 extension String {
     var dateTimeDateFromString: Date? { dateTimeDefaultFormatterDate.date(from: self) }
 }
+
+private let dateTimeISO8601FormatterDate: ISO8601DateFormatter = {
+    let dateFormatter = ISO8601DateFormatter()
+    return dateFormatter
+}()
+extension String {
+    var dateISO8601TimeDateFromString: Date? {dateTimeISO8601FormatterDate.date(from: self)}
+}

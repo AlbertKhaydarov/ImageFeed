@@ -56,6 +56,9 @@ final class ProfileViewController: UIViewController {
     //MARK: -  add protocol for storage
     private var storage: StorageProtocol?
     
+    //MARK: -  add ErrorPresenter
+    var alertPresenter: AlertPresenterTwoButtonsProtocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         storage = OAuth2TokenStorageSwiftKeychainWrapper.shared
@@ -64,6 +67,7 @@ final class ProfileViewController: UIViewController {
         layoutSubviews()
         guard let profile = profileService.profile else {return}
         updateProfileDetails(profile: profile)
+        alertPresenter = AlertPresenterTwoButtons(delegate: self)
         
         profileImageServiceObserver = NotificationCenter.default
             .addObserver(
@@ -114,9 +118,22 @@ final class ProfileViewController: UIViewController {
     
     //MARK: - add switch after logout
     @objc private func logoutButtonTapped(_ sender: UIButton) {
-        storage?.removeToken()
-        CleanCookieStorage.clean()
-        switchToSplashViewController() 
+        showExitAlert()
+    }
+    
+    func showExitAlert() {
+        let alertModel = TwoButtonsAlertModel(
+            title: "Пока, пока!",
+            message: "Уверены, что хотите выйти?",
+            logOutActionButtonText: "Да",
+            cancelActionButtonText: "Нет")
+        {[weak self] in
+            guard let self = self else {return}
+            storage?.removeToken()
+            CleanCookieStorage.clean()
+            switchToSplashViewController()
+        }
+        self.alertPresenter?.showAlert(alertMessages: alertModel, on: self)
     }
     
     private func switchToSplashViewController() {
@@ -156,5 +173,13 @@ final class ProfileViewController: UIViewController {
             logoutButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             logoutButton.centerYAnchor.constraint(equalTo:userProfileImageView.centerYAnchor)
         ])
+    }
+}
+
+extension ProfileViewController: AlertPresenterTwoButtonsDelegate {
+    func cancelLogoutViewController(_ alertPresenter: AlertPresenterTwoButtons) {
+        dismiss(animated: true, completion: nil)
+    }
+    func showAlert() {
     }
 }

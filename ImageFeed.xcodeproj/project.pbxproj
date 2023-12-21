@@ -12,6 +12,8 @@
 		7C1611562AE2517B000E6B9E /* SharingActivityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1611552AE2517B000E6B9E /* SharingActivityPresenter.swift */; };
 		7C1611582AE25200000E6B9E /* SharingActivityPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1611572AE25200000E6B9E /* SharingActivityPresenterProtocol.swift */; };
 		7C59F63B2B337B2E004C138F /* CleanCookieStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59F63A2B337B2E004C138F /* CleanCookieStorage.swift */; };
+		7C59F63D2B340F8C004C138F /* AlertPresenterTwoButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59F63C2B340F8C004C138F /* AlertPresenterTwoButtons.swift */; };
+		7C59F63F2B3410A2004C138F /* TwoButtonsAlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59F63E2B3410A2004C138F /* TwoButtonsAlertModel.swift */; };
 		7C5DD5C72AF91083003F95B2 /* AuthConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5DD5C62AF91083003F95B2 /* AuthConstants.swift */; };
 		7C5DD5C92AFA22E5003F95B2 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5DD5C82AFA22E5003F95B2 /* AuthViewController.swift */; };
 		7C5DD5CC2AFA2E60003F95B2 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5DD5CB2AFA2E60003F95B2 /* WebViewViewController.swift */; };
@@ -26,8 +28,8 @@
 		7C87CAEF2B305EEF009DE864 /* Array + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C87CAEE2B305EEF009DE864 /* Array + Extension.swift */; };
 		7C87CAF12B30635D009DE864 /* ImagesListCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C87CAF02B30635D009DE864 /* ImagesListCellDelegate.swift */; };
 		7C87CAF52B30D3EA009DE864 /* ErrorTwoButtonsAlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C87CAF42B30D3EA009DE864 /* ErrorTwoButtonsAlertModel.swift */; };
-		7C87CAF72B30D687009DE864 /* ErrorAlertPresenterTwoButtonsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C87CAF62B30D687009DE864 /* ErrorAlertPresenterTwoButtonsDelegate.swift */; };
-		7C87CAF92B30DA12009DE864 /* ErrorAlertPresenterTwoButtonsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C87CAF82B30DA12009DE864 /* ErrorAlertPresenterTwoButtonsProtocol.swift */; };
+		7C87CAF72B30D687009DE864 /* AlertPresenterTwoButtonsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C87CAF62B30D687009DE864 /* AlertPresenterTwoButtonsDelegate.swift */; };
+		7C87CAF92B30DA12009DE864 /* AlertPresenterTwoButtonsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C87CAF82B30DA12009DE864 /* AlertPresenterTwoButtonsProtocol.swift */; };
 		7C8A576C2B17CB8F00DCBC45 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 7C8A576B2B17CB8F00DCBC45 /* ProgressHUD */; };
 		7C8A576E2B18729400DCBC45 /* ProfileImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8A576D2B18729400DCBC45 /* ProfileImageService.swift */; };
 		7C8A57712B19AA8D00DCBC45 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 7C8A57702B19AA8D00DCBC45 /* Kingfisher */; };
@@ -67,6 +69,8 @@
 		7C1611552AE2517B000E6B9E /* SharingActivityPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingActivityPresenter.swift; sourceTree = "<group>"; };
 		7C1611572AE25200000E6B9E /* SharingActivityPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingActivityPresenterProtocol.swift; sourceTree = "<group>"; };
 		7C59F63A2B337B2E004C138F /* CleanCookieStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanCookieStorage.swift; sourceTree = "<group>"; };
+		7C59F63C2B340F8C004C138F /* AlertPresenterTwoButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenterTwoButtons.swift; sourceTree = "<group>"; };
+		7C59F63E2B3410A2004C138F /* TwoButtonsAlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoButtonsAlertModel.swift; sourceTree = "<group>"; };
 		7C5DD5C62AF91083003F95B2 /* AuthConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConstants.swift; sourceTree = "<group>"; };
 		7C5DD5C82AFA22E5003F95B2 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		7C5DD5CB2AFA2E60003F95B2 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
@@ -81,8 +85,8 @@
 		7C87CAEE2B305EEF009DE864 /* Array + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array + Extension.swift"; sourceTree = "<group>"; };
 		7C87CAF02B30635D009DE864 /* ImagesListCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCellDelegate.swift; sourceTree = "<group>"; };
 		7C87CAF42B30D3EA009DE864 /* ErrorTwoButtonsAlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTwoButtonsAlertModel.swift; sourceTree = "<group>"; };
-		7C87CAF62B30D687009DE864 /* ErrorAlertPresenterTwoButtonsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlertPresenterTwoButtonsDelegate.swift; sourceTree = "<group>"; };
-		7C87CAF82B30DA12009DE864 /* ErrorAlertPresenterTwoButtonsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorAlertPresenterTwoButtonsProtocol.swift; sourceTree = "<group>"; };
+		7C87CAF62B30D687009DE864 /* AlertPresenterTwoButtonsDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenterTwoButtonsDelegate.swift; sourceTree = "<group>"; };
+		7C87CAF82B30DA12009DE864 /* AlertPresenterTwoButtonsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenterTwoButtonsProtocol.swift; sourceTree = "<group>"; };
 		7C8A576D2B18729400DCBC45 /* ProfileImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageService.swift; sourceTree = "<group>"; };
 		7C8A57752B1CE97100DCBC45 /* StorageProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageProtocol.swift; sourceTree = "<group>"; };
 		7C8A57772B1CE9DC00DCBC45 /* OAuth2TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2TokenStorage.swift; sourceTree = "<group>"; };
@@ -156,6 +160,24 @@
 			path = SharingActivityPresenter;
 			sourceTree = "<group>";
 		};
+		7C59F6402B3416C7004C138F /* ErrorAlert */ = {
+			isa = PBXGroup;
+			children = (
+				8448E8032B30AE5B00058A24 /* ErrorAlertPresenterTwoButtons.swift */,
+				7C87CAF42B30D3EA009DE864 /* ErrorTwoButtonsAlertModel.swift */,
+			);
+			path = ErrorAlert;
+			sourceTree = "<group>";
+		};
+		7C59F6412B3416D8004C138F /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				7C59F63C2B340F8C004C138F /* AlertPresenterTwoButtons.swift */,
+				7C59F63E2B3410A2004C138F /* TwoButtonsAlertModel.swift */,
+			);
+			path = Alert;
+			sourceTree = "<group>";
+		};
 		7C5DD5CA2AFA22EC003F95B2 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
@@ -223,10 +245,10 @@
 		7C87CAF32B30D3BE009DE864 /* TwoButtonsAlert */ = {
 			isa = PBXGroup;
 			children = (
-				8448E8032B30AE5B00058A24 /* ErrorAlertPresenterTwoButtons.swift */,
-				7C87CAF62B30D687009DE864 /* ErrorAlertPresenterTwoButtonsDelegate.swift */,
-				7C87CAF82B30DA12009DE864 /* ErrorAlertPresenterTwoButtonsProtocol.swift */,
-				7C87CAF42B30D3EA009DE864 /* ErrorTwoButtonsAlertModel.swift */,
+				7C87CAF62B30D687009DE864 /* AlertPresenterTwoButtonsDelegate.swift */,
+				7C87CAF82B30DA12009DE864 /* AlertPresenterTwoButtonsProtocol.swift */,
+				7C59F6402B3416C7004C138F /* ErrorAlert */,
+				7C59F6412B3416D8004C138F /* Alert */,
 			);
 			path = TwoButtonsAlert;
 			sourceTree = "<group>";
@@ -434,7 +456,7 @@
 				84957CF12AE2D40F00C59155 /* SharingActivityPresenterDelegate.swift in Sources */,
 				8448E8042B30AE5B00058A24 /* ErrorAlertPresenterTwoButtons.swift in Sources */,
 				7C87CAEF2B305EEF009DE864 /* Array + Extension.swift in Sources */,
-				7C87CAF92B30DA12009DE864 /* ErrorAlertPresenterTwoButtonsProtocol.swift in Sources */,
+				7C87CAF92B30DA12009DE864 /* AlertPresenterTwoButtonsProtocol.swift in Sources */,
 				844AEA092B18D0470021813E /* ErrorAlertPresenterProtocol.swift in Sources */,
 				7C8A57832B1D2ACC00DCBC45 /* TabBarController.swift in Sources */,
 				7C716FA32AFAB55000648C04 /* AuthViewControllerDelegate.swift in Sources */,
@@ -443,10 +465,12 @@
 				7CF0ABD12B170E4900920A87 /* NetworkError.swift in Sources */,
 				7C8105442B21ECD1001A4206 /* JSONPhotoResultModel.swift in Sources */,
 				7CF0ABC62B162B3B00920A87 /* UIBlockingProgressHUD.swift in Sources */,
-				7C87CAF72B30D687009DE864 /* ErrorAlertPresenterTwoButtonsDelegate.swift in Sources */,
+				7C87CAF72B30D687009DE864 /* AlertPresenterTwoButtonsDelegate.swift in Sources */,
+				7C59F63F2B3410A2004C138F /* TwoButtonsAlertModel.swift in Sources */,
 				844AEA052B18B0790021813E /* Extension+URLSession.swift in Sources */,
 				7C8A576E2B18729400DCBC45 /* ProfileImageService.swift in Sources */,
 				7C87CAF12B30635D009DE864 /* ImagesListCellDelegate.swift in Sources */,
+				7C59F63D2B340F8C004C138F /* AlertPresenterTwoButtons.swift in Sources */,
 				7CF0ABC82B162F4200920A87 /* ProfileService.swift in Sources */,
 				844AEA022B1777D60021813E /* Constants.swift in Sources */,
 				844AEA072B18D01C0021813E /* ErrorAlertModel.swift in Sources */,

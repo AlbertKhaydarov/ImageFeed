@@ -14,7 +14,6 @@ final class ImagesListCell: UITableViewCell {
     lazy var imageForCell: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-//        imageView.image = UIImage(named: "0")
         imageView.contentMode = .scaleToFill
         return imageView
     }()
@@ -84,7 +83,6 @@ final class ImagesListCell: UITableViewCell {
         contentView.addSubview(imageForCell)
         imageForCell.addSubview(dateLabel)
         imageForCell.addSubview(backgroundDateLabelView)
-//        imageForCell.addSubview(favoriteActiveButton)
         contentView.insertSubview(favoriteActiveButton, aboveSubview: imageForCell)
     }
     

@@ -43,7 +43,7 @@ class ImagesListService {
                 self.taskGetIsLike = nil
                 //TODO remove result
                 switch result {
-                case .success(let changedLikePhoto):
+                case .success(_):
                     if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
                        let photo = self.photos[index]
                        let newPhoto = Photo(
@@ -85,11 +85,13 @@ class ImagesListService {
             guard let self = self else {return}
             switch result {
             case .success(let photoResults):
+              
                 let photosFromTask = photoResults.compactMap { photoResult -> Photo in
+                    
                     return Photo(id: photoResult.id ?? "",
                                  width: photoResult.width,
                                  height: photoResult.height,
-                                 createdAt: photoResult.createdAt?.dateTimeDateFromString,
+                                 createdAt: photoResult.createdAt?.dateISO8601TimeDateFromString,
                                  welcomeDescription: photoResult.description,
                                  thumbImageURL: photoResult.urls?.thumb ?? "",
                                  largeImageURL: photoResult.urls?.full ?? "",

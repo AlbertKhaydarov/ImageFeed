@@ -7,15 +7,15 @@
 
 import UIKit
 
-final class ErrorAlertPresenterTwoButtons: ErrorAlertPresenterTwoButtonsProtocol {
+final class ErrorAlertPresenterTwoButtons: ErrorPresenterTwoButtonsProtocol {
+
+    weak var delegate: ErrorPresenterTwoButtonsDelegate?
     
-    weak var delegate: ErrorAlertPresenterTwoButtonsDelegate?
-    
-    init(delegate: ErrorAlertPresenterTwoButtonsDelegate?) {
+    init(delegate: ErrorPresenterTwoButtonsDelegate?) {
         self.delegate = delegate
     }
     
-    func errorShowAlert(errorMessages: ErrorTwoButtonsAlertModel, on viewController: UIViewController) {
+    func showErrorAlert(errorMessages: ErrorTwoButtonsAlertModel, on viewController: UIViewController) {
         let alert = UIAlertController(title: errorMessages.title,
                                       message: errorMessages.message,
                                       preferredStyle: .alert)
@@ -25,10 +25,10 @@ final class ErrorAlertPresenterTwoButtons: ErrorAlertPresenterTwoButtonsProtocol
             self.delegate?.hideErrorViewController(self)
         }
 
-        let retryAction = UIAlertAction(title: "Повторить", style: .default) { [weak self] _ in
+        let retryAction = UIAlertAction(title: errorMessages.retryActionButtonText, style: .default) { [weak self] _ in
             guard let self = self else {return}
             errorMessages.errorAlertButtonAction()
-            self.delegate?.errorShowAlert()
+            self.delegate?.showErrorAlert()
             }
             
             alert.addAction(hideAction)

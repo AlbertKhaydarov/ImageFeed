@@ -40,7 +40,6 @@ final class ImagesListViewController: UIViewController {
     
     var loaderIndicator = UIActivityIndicatorView(style: .medium)
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
@@ -48,15 +47,10 @@ final class ImagesListViewController: UIViewController {
         
         errorPresenter = ErrorAlertPresenter(delegate: self)
         
-                view.addSubview(loaderIndicatorBackImageView)
-                loaderIndicatorBackImageView.addSubview(loaderIndicator)
-                loaderIndicator.translatesAutoresizingMaskIntoConstraints = false
-                layoutSetup()
-        //
-        let cache = ImageCache.default
-        cache.clearMemoryCache()
-        cache.clearDiskCache()
-        
+        view.addSubview(loaderIndicatorBackImageView)
+        loaderIndicatorBackImageView.addSubview(loaderIndicator)
+        loaderIndicator.translatesAutoresizingMaskIntoConstraints = false
+        layoutSetup()
         
         let indicator = MyKFIndicator(view: loaderIndicator)
         indicator.view.tintColor = .ypBlack
@@ -86,7 +80,7 @@ final class ImagesListViewController: UIViewController {
         ])
     }
     
-    //        MARK: -  Animated update of the table state
+    //   MARK: -  Animated update of the table state
     private func updateTableViewAnimated() {
         let currentPhotosCount = photos.count
         let newPhotosCount = imagesListService.photos.count
@@ -172,25 +166,20 @@ extension ImagesListViewController: UITableViewDataSource {
 
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
         if indexPath.row + 1 == photos.count {
             imagesListService.fetchPhotosNextPage()
         }
-        
-       
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-                performSegue(withIdentifier: ShowSingleImageSegueIdentifier, sender: indexPath)
+        performSegue(withIdentifier: ShowSingleImageSegueIdentifier, sender: indexPath)
         
     }
     
-    
-        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-      
-                let heigth = calculateHeigthCell(for: indexPath)
-                return heigth
-        }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let heigth = calculateHeigthCell(for: indexPath)
+        return heigth
+    }
 }
 
 // MARK: - ErrorAlertPresenterDelegate
