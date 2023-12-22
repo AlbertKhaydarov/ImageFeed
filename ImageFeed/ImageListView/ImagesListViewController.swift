@@ -113,8 +113,9 @@ final class ImagesListViewController: UIViewController {
             self.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
         
-        guard let date = photos[indexPath.row].createdAt else {return}
-        cell.dateLabel.text = dateFormatter.string(from: date)
+        if let date = photos[indexPath.row].createdAt {
+            cell.dateLabel.text = dateFormatter.string(from: date)
+        }
         
         let isLiked = imagesListService.photos[indexPath.row].isLiked
         cell.setIsLiked(isLiked: isLiked)
