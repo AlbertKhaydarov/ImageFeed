@@ -12,5 +12,5 @@ protocol ErrorPresenterTwoButtonsProtocol {
 }
 
 protocol AlertPresenterTwoButtonsProtocol {
-    func showAlert(alertMessages: TwoButtonsAlertModel, on viewController: UIViewController)
+   static func showAlert(alertMessages: TwoButtonsAlertModel, on viewController: UIViewController)
 }

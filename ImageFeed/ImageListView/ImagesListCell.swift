@@ -49,12 +49,8 @@ final class ImagesListCell: UITableViewCell {
     }
     
     func setIsLiked(isLiked: Bool) {
-        let favoriteActiveImage: UIImage!
-        if isLiked == true {
-            favoriteActiveImage = UIImage(named: "favoriteActive")
-        } else {
-            favoriteActiveImage = UIImage(named: "favoriteNoActive")
-        }
+        var favoriteActiveImage: UIImage!
+        favoriteActiveImage = isLiked ? UIImage(named: "favoriteActive") : UIImage(named: "favoriteNoActive")
         self.favoriteActiveButton.setImage(favoriteActiveImage, for: .normal)
     }
     

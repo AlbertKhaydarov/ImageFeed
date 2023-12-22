@@ -29,7 +29,7 @@ final class ImagesListViewController: UIViewController {
     private var imagesListService = ImagesListService.shared
     private var imagesListServiceObserver: NSObjectProtocol?
     
-    lazy var loaderIndicatorBackImageView: UIImageView = {
+    private lazy var loaderIndicatorBackImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 8

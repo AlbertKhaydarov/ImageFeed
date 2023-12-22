@@ -10,8 +10,3 @@ protocol ErrorPresenterTwoButtonsDelegate: AnyObject {
     func showErrorAlert()
     func hideErrorViewController(_ errorAlertPresenter: ErrorAlertPresenterTwoButtons)
 }
-
-protocol AlertPresenterTwoButtonsDelegate: AnyObject {
-    func showAlert()
-    func cancelLogoutViewController(_ alertPresenter: AlertPresenterTwoButtons)
-}
