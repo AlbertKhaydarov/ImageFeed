@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class SingleImageViewController: UIViewController {
     
@@ -23,17 +24,22 @@ final class SingleImageViewController: UIViewController {
         }
     }
     
+    var fullImageUrlString: String? = nil
+    
     var sharingActivityPresenter: SharingActivityPresenterProtocol?
+    
+    //MARK: -  add ErrorPresenter
+    var errorPresenter: ErrorPresenterTwoButtonsProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        scrollView.minimumZoomScale = 0.1
-        scrollView.maximumZoomScale = 1.25
+        scrollView.minimumZoomScale = 1.0
+        scrollView.maximumZoomScale = 3.0
         
-        imageView.image = image
+        getSingleImage(for: imageView)
         
-        rescaleAndCenterImageInScrollView(image: image)
         sharingActivityPresenter = SharingActivityPresenter(delegate: self)
+        errorPresenter = ErrorAlertPresenterTwoButtons(delegate: self)
     }
     
     @IBAction private func backButtonTapped(_ sender: UIButton) {
@@ -45,19 +51,46 @@ final class SingleImageViewController: UIViewController {
         sharingActivityPresenter?.showSharingActivity(activityItems: objectsToShare, on: self)
     }
     
+    //MARK: - Dowload Image
+    private func getSingleImage(for imageView: UIImageView?) {
+        guard let imageView = imageView,
+              let url = fullImageUrlString
+        else {
+            self.showError()
+            return}
+        
+        let fullImageUrl = URL(string: url)
+        
+        UIBlockingProgressHUD.show()
+        imageView.kf.setImage(with: fullImageUrl) { [weak self] result in
+            UIBlockingProgressHUD.dismiss()
+            
+            guard let self = self else { return }
+            switch result {
+            case .success(let imageResult):
+                self.rescaleAndCenterImageInScrollView(image: imageResult.image)
+            case .failure:
+                self.showError()
+            }
+        }
+    }
+    
+    func showError() {
+        let errorModel = ErrorTwoButtonsAlertModel(
+            title: "Что-то пошло не так(",
+            message: "Попробовать ещё раз?",
+            hideActionButtonText: "Не надо",
+            retryActionButtonText: "Повторить")
+        {[weak self] in
+            guard let self = self else {return}
+            getSingleImage(for: imageView)
+        }
+        self.errorPresenter?.showErrorAlert(errorMessages: errorModel, on: self)
+    }
+    
     private func rescaleAndCenterImageInScrollView(image: UIImage) {
-        let minZoomScale = scrollView.minimumZoomScale
-        let maxZoomScale = scrollView.maximumZoomScale
-        view.layoutIfNeeded()
-        
         let visibleRectSize = scrollView.bounds.size
-        let imageSize = image.size
-        let hScale = visibleRectSize.width / imageSize.width
-        let vScale = visibleRectSize.height / imageSize.height
-        let scale = min(maxZoomScale, max(minZoomScale, max(hScale, vScale)))
-        scrollView.setZoomScale(scale, animated: false)
         scrollView.layoutIfNeeded()
-        
         let newContentSize = scrollView.contentSize
         let x = (newContentSize.width - visibleRectSize.width) / 2
         let y = (newContentSize.height - visibleRectSize.height) / 2
@@ -74,5 +107,12 @@ extension SingleImageViewController: UIScrollViewDelegate {
 extension SingleImageViewController: SharingActivityPresenterDelegate {
     func finishShowSharing(image: UIImage){
         rescaleAndCenterImageInScrollView(image: image)
+    }
+}
+
+extension SingleImageViewController: ErrorPresenterTwoButtonsDelegate {
+    func showErrorAlert() { }
+    func hideErrorViewController(_ errorAlertPresenter: ErrorAlertPresenterTwoButtons) {
+        dismiss(animated: true, completion: nil)
     }
 }

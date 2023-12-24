@@ -38,10 +38,9 @@ final class OAuth2TokenStorageSwiftKeychainWrapper: StorageProtocol {
             }
         }
     }
-    // MARK: - Todo add for logoutButton action in ProfileViewController
+    // MARK: - add for logoutButton action in ProfileViewController
     func removeToken() {
         let removeSuccessful = KeychainWrapper.standard.removeObject(forKey: StorageKeys.storageKey.rawValue)
-        
         guard removeSuccessful else {
             print("Error removeToken token")
             return

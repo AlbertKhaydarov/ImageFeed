@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ImagesListCell: UITableViewCell {
     static let reuseIdentifier = "ImagesListCell"
@@ -13,7 +14,7 @@ final class ImagesListCell: UITableViewCell {
     lazy var imageForCell: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "0")
+        imageView.contentMode = .scaleToFill
         return imageView
     }()
    
@@ -36,12 +37,32 @@ final class ImagesListCell: UITableViewCell {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
+    weak var delegate: ImagesListCellDelegate?
         
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.backgroundColor = .ypBlack
         setupSubview()
         layoutSetup()
+        favoriteActiveButton.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
+    }
+    
+    func setIsLiked(isLiked: Bool) {
+        var favoriteActiveImage: UIImage!
+        favoriteActiveImage = isLiked ? UIImage(named: "favoriteActive") : UIImage(named: "favoriteNoActive")
+        self.favoriteActiveButton.setImage(favoriteActiveImage, for: .normal)
+    }
+    
+    //MARK: - Like Button Clicked  function
+    @objc private func likeButtonClicked() {
+       delegate?.imageListCellDidTapLike(self)
+    }
+    
+    //MARK: - Cancel the Kingfisher operation when reusing
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageForCell.kf.cancelDownloadTask()
     }
     
     override func layoutSubviews() {
@@ -58,7 +79,7 @@ final class ImagesListCell: UITableViewCell {
         contentView.addSubview(imageForCell)
         imageForCell.addSubview(dateLabel)
         imageForCell.addSubview(backgroundDateLabelView)
-        imageForCell.addSubview(favoriteActiveButton)
+        contentView.insertSubview(favoriteActiveButton, aboveSubview: imageForCell)
     }
     
     private func layoutSetup() {

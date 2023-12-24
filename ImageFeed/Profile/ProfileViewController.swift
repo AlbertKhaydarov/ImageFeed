@@ -4,7 +4,7 @@
 //
 //  Created by Альберт Хайдаров on 19.10.2023.
 //
-
+import Foundation
 import UIKit
 import Kingfisher
 
@@ -55,6 +55,9 @@ final class ProfileViewController: UIViewController {
     
     //MARK: -  add protocol for storage
     private var storage: StorageProtocol?
+    
+    //MARK: -  add ErrorPresenter
+    var alertPresenter: AlertPresenterTwoButtonsProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,8 +117,30 @@ final class ProfileViewController: UIViewController {
     
     //MARK: - add switch after logout
     @objc private func logoutButtonTapped(_ sender: UIButton) {
-        storage?.removeToken()
-        print("please, after removeToken additional remove app from simulator for clear keychain")
+        showExitAlert()
+    }
+    
+    func showExitAlert() {
+        let alertModel = TwoButtonsAlertModel(
+            title: "Пока, пока!",
+            message: "Уверены, что хотите выйти?",
+            logOutActionButtonText: "Да",
+            cancelActionButtonText: "Нет")
+        {[weak self] in
+            guard let self = self else {return}
+            storage?.removeToken()
+            CleanCookieStorage.clean()
+            switchToSplashViewController()
+        }
+        AlertPresenterTwoButtons.showAlert(alertMessages: alertModel, on: self)
+    }
+    
+    private func switchToSplashViewController() {
+        guard let window = UIApplication.shared.windows.first else {
+            fatalError("Invalid Configuration")
+        }
+        let splashViewController = SplashViewController()
+        window.rootViewController = splashViewController
     }
     
     private func setupSubview() {
