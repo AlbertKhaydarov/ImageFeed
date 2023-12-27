@@ -11,6 +11,9 @@
 		7C1611532AE16743000E6B9E /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1611522AE16743000E6B9E /* SingleImageViewController.swift */; };
 		7C1611562AE2517B000E6B9E /* SharingActivityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1611552AE2517B000E6B9E /* SharingActivityPresenter.swift */; };
 		7C1611582AE25200000E6B9E /* SharingActivityPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1611572AE25200000E6B9E /* SharingActivityPresenterProtocol.swift */; };
+		7C51F7E12B3BFD440096784D /* ProfileViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C51F7E02B3BFD440096784D /* ProfileViewControllerProtocol.swift */; };
+		7C51F7E32B3BFD850096784D /* ProfileViewPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C51F7E22B3BFD850096784D /* ProfileViewPresenterProtocol.swift */; };
+		7C51F7E52B3C03740096784D /* ProfileViewPesenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C51F7E42B3C03740096784D /* ProfileViewPesenter.swift */; };
 		7C59F63B2B337B2E004C138F /* CleanCookieStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59F63A2B337B2E004C138F /* CleanCookieStorage.swift */; };
 		7C59F63D2B340F8C004C138F /* AlertPresenterTwoButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59F63C2B340F8C004C138F /* AlertPresenterTwoButtons.swift */; };
 		7C59F63F2B3410A2004C138F /* TwoButtonsAlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59F63E2B3410A2004C138F /* TwoButtonsAlertModel.swift */; };
@@ -95,6 +98,9 @@
 		7C1611522AE16743000E6B9E /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		7C1611552AE2517B000E6B9E /* SharingActivityPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingActivityPresenter.swift; sourceTree = "<group>"; };
 		7C1611572AE25200000E6B9E /* SharingActivityPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingActivityPresenterProtocol.swift; sourceTree = "<group>"; };
+		7C51F7E02B3BFD440096784D /* ProfileViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerProtocol.swift; sourceTree = "<group>"; };
+		7C51F7E22B3BFD850096784D /* ProfileViewPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewPresenterProtocol.swift; sourceTree = "<group>"; };
+		7C51F7E42B3C03740096784D /* ProfileViewPesenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewPesenter.swift; sourceTree = "<group>"; };
 		7C59F63A2B337B2E004C138F /* CleanCookieStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanCookieStorage.swift; sourceTree = "<group>"; };
 		7C59F63C2B340F8C004C138F /* AlertPresenterTwoButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenterTwoButtons.swift; sourceTree = "<group>"; };
 		7C59F63E2B3410A2004C138F /* TwoButtonsAlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoButtonsAlertModel.swift; sourceTree = "<group>"; };
@@ -192,6 +198,9 @@
 			isa = PBXGroup;
 			children = (
 				7C16114F2AE144BD000E6B9E /* ProfileViewController.swift */,
+				7C51F7E42B3C03740096784D /* ProfileViewPesenter.swift */,
+				7C51F7E02B3BFD440096784D /* ProfileViewControllerProtocol.swift */,
+				7C51F7E22B3BFD850096784D /* ProfileViewPresenterProtocol.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -247,6 +256,7 @@
 		7C5DD5CA2AFA22EC003F95B2 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				7C5DD5C62AF91083003F95B2 /* AuthConfiguration.swift */,
 				7C5DD5C82AFA22E5003F95B2 /* AuthViewController.swift */,
 				7C716FA22AFAB55000648C04 /* AuthViewControllerDelegate.swift */,
 				7C59F64E2B392EAD004C138F /* AuthHelperProtocol.swift */,
@@ -262,7 +272,6 @@
 				84F09AF72AFA86FF0052C19F /* OAuthTokenResponseBodyModel.swift */,
 				84F09AFB2AFA87780052C19F /* OAuth2Service.swift */,
 				7C8A57752B1CE97100DCBC45 /* StorageProtocol.swift */,
-				7C5DD5C62AF91083003F95B2 /* AuthConfiguration.swift */,
 				7C8A57772B1CE9DC00DCBC45 /* OAuth2TokenStorage.swift */,
 			);
 			path = Oauth2Service;
@@ -603,9 +612,11 @@
 				841BF5522AD70074001C919E /* GradientView.swift in Sources */,
 				84F09AF82AFA86FF0052C19F /* OAuthTokenResponseBodyModel.swift in Sources */,
 				84EC42692AD08AD5009BE44E /* ImagesListCell.swift in Sources */,
+				7C51F7E12B3BFD440096784D /* ProfileViewControllerProtocol.swift in Sources */,
 				7C8A57782B1CE9DC00DCBC45 /* OAuth2TokenStorage.swift in Sources */,
 				7C59F63B2B337B2E004C138F /* CleanCookieStorage.swift in Sources */,
 				7CF0ABCD2B1631D200920A87 /* ProfileModel.swift in Sources */,
+				7C51F7E32B3BFD850096784D /* ProfileViewPresenterProtocol.swift in Sources */,
 				7C1611502AE144BD000E6B9E /* ProfileViewController.swift in Sources */,
 				7C8105472B21EE2E001A4206 /* PhotosViewModel.swift in Sources */,
 				7C87CAF52B30D3EA009DE864 /* ErrorTwoButtonsAlertModel.swift in Sources */,
@@ -617,6 +628,7 @@
 				7C8A57762B1CE97100DCBC45 /* StorageProtocol.swift in Sources */,
 				7C1611562AE2517B000E6B9E /* SharingActivityPresenter.swift in Sources */,
 				7C81054D2B282B23001A4206 /* MyKFIndicator.swift in Sources */,
+				7C51F7E52B3C03740096784D /* ProfileViewPesenter.swift in Sources */,
 				844AEA0D2B18D0830021813E /* ErrorAlertPresenter.swift in Sources */,
 				7C8105492B21EEBA001A4206 /* ImagesListService.swift in Sources */,
 				7C5DD5C92AFA22E5003F95B2 /* AuthViewController.swift in Sources */,

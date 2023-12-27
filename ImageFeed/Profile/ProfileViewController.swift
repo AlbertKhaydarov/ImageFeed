@@ -8,7 +8,8 @@ import Foundation
 import UIKit
 import Kingfisher
 
-final class ProfileViewController: UIViewController {
+final class ProfileViewController: UIViewController & ProfileViewControllerProtocol {
+    var presenter: ProfileViewPresenterProtocol?
     
     private lazy var userProfileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -68,6 +69,8 @@ final class ProfileViewController: UIViewController {
         guard let profile = profileService.profile else {return}
         updateProfileDetails(profile: profile)
         
+        presenter = ProfileViewPesenter(viewController: self)
+        
         profileImageServiceObserver = NotificationCenter.default
             .addObserver(
                 forName: ProfileImageService.DidChangeNotification,
@@ -75,9 +78,12 @@ final class ProfileViewController: UIViewController {
                 queue: .main
             ) { [weak self] _ in
                 guard let self = self else { return }
-                self.updateAvatar()
+//                self.updateAvatar()
+                presenter?.updateAvatar()
             }
-        updateAvatar()
+        presenter?.updateAvatar()
+
+//        updateAvatar()
     }
     
     override func viewDidLayoutSubviews() {
@@ -92,22 +98,30 @@ final class ProfileViewController: UIViewController {
         updateProfileDetails(profile: profile)
     }
     
-    private func updateAvatar() {
-        guard
-            let profileImageURL = ProfileImageService.shared.avatarURL,
-            let url = URL(string: profileImageURL)
-        else { return }
-        
-        //MARK: -  download an image by Kingfisher and set the cache on the disk storage
-        let cache = ImageCache.default
-        cache.clearMemoryCache()
-        cache.clearDiskCache()
-        cache.diskStorage.config.sizeLimit = 1000 * 1000 * 100
+    func loadAvatarImageView(url: URL) {
         userProfileImageView.kf.indicatorType = .activity
         userProfileImageView.kf.setImage(with: url,
                                          placeholder: UIImage(named: "placeholder.jpeg"),
                                          options: [])
     }
+   
+    
+//    private func updateAvatar() {
+//        guard
+//            let profileImageURL = ProfileImageService.shared.avatarURL,
+//            let url = URL(string: profileImageURL)
+//        else { return }
+//        
+//        //MARK: -  download an image by Kingfisher and set the cache on the disk storage
+//        let cache = ImageCache.default
+////        cache.clearMemoryCache()
+////        cache.clearDiskCache()
+//        cache.diskStorage.config.sizeLimit = 1000 * 1000 * 100
+//        userProfileImageView.kf.indicatorType = .activity
+//        userProfileImageView.kf.setImage(with: url,
+//                                         placeholder: UIImage(named: "placeholder.jpeg"),
+//                                         options: [])
+//    }
     
     func updateProfileDetails(profile: Profile) {
         userNamelabel.text = profile.name
