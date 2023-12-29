@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import UIKit
 
 public protocol ProfileViewControllerProtocol: AnyObject {
     var presenter: ProfileViewPresenterProtocol? { get set }
-    func loadAvatarImageView(url: URL)
+    func updateAvatar(with image: UIImage)
+    func updateProfileDetails()
+    func switchToSplashViewController()
 }

@@ -50,8 +50,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "845A1CA52B3A93F000C2845F"
-               BuildableName = "ImageFeedTests.xctest"
-               BlueprintName = "ImageFeedTests"
+               BuildableName = "ProfileViewTests.xctest"
+               BlueprintName = "ProfileViewTests"
                ReferencedContainer = "container:ImageFeed.xcodeproj">
             </BuildableReference>
          </TestableReference>
