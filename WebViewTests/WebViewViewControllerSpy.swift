@@ -5,8 +5,9 @@
 //  Created by Admin on 26.12.2023.
 //
 
-import ImageFeed
 import Foundation
+import XCTest
+@testable import ImageFeed
 
 final class WebViewViewControllerSpy: WebViewViewControllerProtocol {
     var presenter: ImageFeed.WebViewPresenterProtocol?
@@ -18,10 +19,8 @@ final class WebViewViewControllerSpy: WebViewViewControllerProtocol {
     }
 
     func setProgressValue(_ newValue: Float) {
-
     }
 
     func setProgressHidden(_ isHidden: Bool) {
-
     }
 }

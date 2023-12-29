@@ -53,7 +53,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
     
     private var profileImageServiceObserver: NSObjectProtocol?
     
-    //    //MARK: -  add  router
+    //   MARK: -  add  router
     var profileViewRouter: ProfileViewRouterProtocol?
     
     override func viewDidLoad() {
@@ -100,7 +100,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         userProfileImageView.kf.indicatorType = .activity
         userProfileImageView.image = image
     }
-
+    
     func updateProfileDetails() {
         if let profileModel = presenter?.getProfileDetails() {
             userNamelabel.text = profileModel.userNamelabelText
@@ -111,8 +111,6 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
     
     //MARK: - add switch after logout
     @objc func logoutButtonTapped() {
-//        presenter?.showExitAlert()
-        
         if let alertMessage = presenter?.showExitAlert() {
             AlertPresenterTwoButtons.showAlert(alertMessages: alertMessage, on: self )
         }

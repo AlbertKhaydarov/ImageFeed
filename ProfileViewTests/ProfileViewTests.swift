@@ -9,7 +9,7 @@ import XCTest
 @testable import ImageFeed
 
 final class ProfileViewTests: XCTestCase {
-   
+    
     func testProfileViewControllerUpdateProfileDetails(){
         
         //MARK: - given
@@ -29,6 +29,7 @@ final class ProfileViewTests: XCTestCase {
         //MARK: - given
         let sut = ProfileViewController()
         let presenter = ProfileViewPresenterSpy()
+        presenter.viewController = sut
         sut.configure(presenter)
         
         //MARK: - when
@@ -37,28 +38,22 @@ final class ProfileViewTests: XCTestCase {
         //MARK: - then
         XCTAssertTrue(presenter.showExitAlertCalled)
     }
-   
-    var viewController: ProfileViewControllerProtocol?
-
-    func testProfileViewControllerRevoveToken(){
+    
+    func testProfileViewPresenterRemoveTokenCalled(){
         
         //MARK: - given
-            let sut = ProfileViewController()
-            let presenter = ProfileViewPresenterSpy()
-            sut.configure(presenter)
-
+        let sut = ProfileViewController()
+        let presenter = ProfileViewPresenterSpy()
+        sut.configure(presenter)
+        let mockStorage = MockStorage()
+        presenter.storage = mockStorage
         
         //MARK: - when
-        sut.logoutButtonTapped()
         
+        let action = presenter.showExitAlert()
+        action.alertButtonAction()
         
         //MARK: - then
-       
-        XCTAssertTrue(presenter.removeTokenFromStorageCalled)
-      
+        XCTAssertTrue(mockStorage.removeTokenFromStorageCalled, "removeTokenFromStorage должен быть вызван")
     }
-//    let profileModel = presenter.getProfileDetails()
-//    XCTAssertTrue((profileModel.userNamelabelText == "userNamelabelText"))
-//    XCTAssertTrue((profileModel.loginNameLabeText == "loginNameLabeText"))
-//    XCTAssertTrue((profileModel.descriptionLabelText == "descriptionLabelText"))
 }

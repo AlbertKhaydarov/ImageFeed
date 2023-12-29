@@ -28,7 +28,7 @@ final class AuthHelperTests: XCTestCase {
     }
     
     func testCodeFromURL() {
-
+        
         //MARK: - given
         let urlString = "https://unsplash.com/oauth/authorize/native"
         guard var urlComponents = URLComponents(string: urlString) else {return}

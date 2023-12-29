@@ -7,9 +7,7 @@
 
 import Foundation
 import XCTest
-import ImageFeed
 @testable import ImageFeed
-
 
 struct ProfileViewModelMock: ProfileViewModelProtocol {
     let userNamelabelText: String? = "userNamelabelText"
@@ -17,41 +15,36 @@ struct ProfileViewModelMock: ProfileViewModelProtocol {
     let descriptionLabelText: String? = "descriptionLabelText"
 }
 
-class ProfileViewPresenterSpy: ProfileViewPresenterProtocol  {
- 
+final class ProfileViewPresenterSpy: ProfileViewPresenterProtocol  {
+    
     var viewController: ProfileViewControllerProtocol?
+    
     var getProfileDetailsCalled: Bool = false
     var showExitAlertCalled: Bool = false
-    var removeTokenFromStorageCalled: Bool = false
     var storage: StorageProtocol?
-    var token = "oiewbf-wc"
     
     func updateAvatarImage() {
     }
     
-    func getProfileDetails() -> ProfileViewModelProtocol {
+    func getProfileDetails() ->  ProfileViewModelProtocol {
         getProfileDetailsCalled = true
         let viewModel = ProfileViewModelMock()
         return viewModel
     }
     
-    
-    func showExitAlert() -> ImageFeed.TwoButtonsAlertModel {
+    func showExitAlert() -> TwoButtonsAlertModel {
         showExitAlertCalled = true
-    
-        let alertModel = ImageFeed.TwoButtonsAlertModel(
+        
+        let alertModel = TwoButtonsAlertModel(
             title: "Пока, пока!",
             message: "Уверены, что хотите выйти?",
             logOutActionButtonText: "Да",
             cancelActionButtonText: "Нет")
         {[weak self] in
             guard let self = self else {return}
-          removeTokenFromStorage()
+            storage?.removeToken()
         }
-       return alertModel
-    }
-    
-    private func removeTokenFromStorage() {
-        removeTokenFromStorageCalled = true
+        return alertModel
     }
 }
+

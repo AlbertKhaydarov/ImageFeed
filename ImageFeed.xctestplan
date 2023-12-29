@@ -1,7 +1,7 @@
 {
   "configurations" : [
     {
-      "id" : "6116CAA7-B05B-49F8-A1FB-E82695EAD4A6",
+      "id" : "6ED1F4B2-E891-497A-B33D-F0989E4D5FDC",
       "name" : "Test Scheme Action",
       "options" : {
 
@@ -28,6 +28,13 @@
         "containerPath" : "container:ImageFeed.xcodeproj",
         "identifier" : "845A1CA52B3A93F000C2845F",
         "name" : "ProfileViewTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:ImageFeed.xcodeproj",
+        "identifier" : "7CA33F712B3F780800F25186",
+        "name" : "ImageListViewTests"
       }
     }
   ],

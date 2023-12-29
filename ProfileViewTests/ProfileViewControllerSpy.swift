@@ -7,30 +7,24 @@
 
 import Foundation
 import UIKit
-import ImageFeed
+@testable import ImageFeed
 
 final class ProfileViewControllerSpy: ProfileViewControllerProtocol {
-    func logoutButtonTapped() {
-    }
-    
+
     var presenter: ProfileViewPresenterProtocol?
-    var updateAvatarCalled: Bool = false
     
     func updateAvatar(with image: UIImage) {
-    updateAvatarCalled = true
     }
     
     func updateProfileDetails() {
-        
     }
     
     func switchToSplashViewController() {
-        
+    }
+    
+    func logoutButtonTapped() {
     }
     
     func configure(_ presenter: ProfileViewPresenterProtocol) {
-        
     }
-    
-    
 }

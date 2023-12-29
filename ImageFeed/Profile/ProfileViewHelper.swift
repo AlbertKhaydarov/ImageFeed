@@ -26,12 +26,5 @@ final class ProfileViewHelper: ProfileViewHelperProtocol {
         }
     }
 }
-//         imageView.kf.setImage(with: url,
-//                              placeholder: UIImage(named: "placeholder.jpeg"),
-//                              options: [])
-        
-//        let downloadTask = imageView.kf.setImage(with: url,
-//                                          placeholder: UIImage(named: "placeholder.jpeg"),
-//                                                 options: [])
-        
+
 

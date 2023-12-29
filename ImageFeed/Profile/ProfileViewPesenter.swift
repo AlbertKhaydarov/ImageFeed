@@ -33,7 +33,7 @@ final class ProfileViewPesenter: ProfileViewPresenterProtocol {
             let profileImageURL = ProfileImageService.shared.avatarURL,
             let url = URL(string: profileImageURL)
         else {
-            assertionFailure("Failed to create full URL \(NetworkError.invalidURL)", file: #file, line: #line)
+            print("Failed to create full URL \(NetworkError.invalidURL)")
             return
         }
         
@@ -55,47 +55,25 @@ final class ProfileViewPesenter: ProfileViewPresenterProtocol {
     func getProfileDetails() -> ProfileViewModelProtocol {
         let profile = profileService.profile
         let viewModel = ProfileViewModel(userNamelabelText: profile?.username,
-                                loginNameLabeText: profile?.loginName,
-                                descriptionLabelText: profile?.bio)        
+                                         loginNameLabeText: profile?.loginName,
+                                         descriptionLabelText: profile?.bio)
         return viewModel
     }
     
-   
-//    func showExitAlert() {
-//        let alertModel = TwoButtonsAlertModel(
-//            title: "Пока, пока!",
-//            message: "Уверены, что хотите выйти?",
-//            logOutActionButtonText: "Да",
-//            cancelActionButtonText: "Нет")
-//        {[weak self] in
-//            guard let self = self else {return}
-//            storage?.removeToken()
-//            CleanCookieStorage.clean()
-//            if let viewController = viewController {
-//                viewController.switchToSplashViewController()
-//            }
-//        }
-//        if let viewController = viewController as? ProfileViewController {
-//            AlertPresenterTwoButtons.showAlert(alertMessages: alertModel, on: viewController )
-//        }
-//    }
     func showExitAlert() -> TwoButtonsAlertModel {
-            let alertModel = TwoButtonsAlertModel(
-                title: "Пока, пока!",
-                message: "Уверены, что хотите выйти?",
-                logOutActionButtonText: "Да",
-                cancelActionButtonText: "Нет")
-            {[weak self] in
-                guard let self = self else {return}
-                storage?.removeToken()
-                CleanCookieStorage.clean()
-                if let viewController = viewController {
-                    viewController.switchToSplashViewController()
-                }
+        let alertModel = TwoButtonsAlertModel(
+            title: "Пока, пока!",
+            message: "Уверены, что хотите выйти?",
+            logOutActionButtonText: "Да",
+            cancelActionButtonText: "Нет")
+        {[weak self] in
+            guard let self = self else {return}
+            storage?.removeToken()
+            CleanCookieStorage.clean()
+            if let viewController = viewController {
+                viewController.switchToSplashViewController()
             }
-//            if let viewController = viewController as? ProfileViewController {
-//                AlertPresenterTwoButtons.showAlert(alertMessages: alertModel, on: viewController )
-//            }
-        return alertModel
         }
+        return alertModel
+    }
 }

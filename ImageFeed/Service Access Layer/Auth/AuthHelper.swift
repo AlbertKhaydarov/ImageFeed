@@ -7,7 +7,7 @@
 
 import Foundation
 
-class AuthHelper: AuthHelperProtocol {
+final class AuthHelper: AuthHelperProtocol {
     
     let configuration: AuthConfiguration
     
@@ -17,7 +17,7 @@ class AuthHelper: AuthHelperProtocol {
     
     func authRequest() -> URLRequest {
         let url = authURL()
-            return URLRequest(url: url)
+        return URLRequest(url: url)
     }
     
     func authURL() -> URL {
