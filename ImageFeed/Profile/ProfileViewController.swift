@@ -110,8 +110,12 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
     }
     
     //MARK: - add switch after logout
-    @objc private func logoutButtonTapped(_ sender: UIButton) {
-        presenter?.showExitAlert()
+    @objc func logoutButtonTapped() {
+//        presenter?.showExitAlert()
+        
+        if let alertMessage = presenter?.showExitAlert() {
+            AlertPresenterTwoButtons.showAlert(alertMessages: alertMessage, on: self )
+        }
     }
     
     func switchToSplashViewController() {

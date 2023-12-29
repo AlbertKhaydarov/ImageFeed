@@ -9,35 +9,56 @@ import XCTest
 @testable import ImageFeed
 
 final class ProfileViewTests: XCTestCase {
-
+   
     func testProfileViewControllerUpdateProfileDetails(){
         
-//        let profileModel = presenter?.getProfileDetails()
-//        
-//        presenter?.getProfileDetails()
-//        
-//        func updateProfileDetails() {
-//            if let profileModel = presenter?.getProfileDetails() {
-//                userNamelabel.text = profileModel.userNamelabelText
-//                loginNameLabel.text = profileModel.loginNameLabeText
-//                descriptionLabel.text = profileModel.descriptionLabelText
-//            }
-//        }
         //MARK: - given
-        let configuration = AuthConfiguration.standard
-        let authHelper = AuthHelper(configuration: configuration)
+        let sut = ProfileViewController()
+        let presenter = ProfileViewPresenterSpy()
+        sut.configure(presenter)
         
         //MARK: - when
-        let url = authHelper.authURL()
-        let urlString = url.absoluteString
+        sut.updateProfileDetails()
         
         //MARK: - then
-        XCTAssertTrue(urlString.contains(configuration.authURLString))
-        XCTAssertTrue(urlString.contains(configuration.accessKey))
-        XCTAssertTrue(urlString.contains(configuration.redirectURI))
-        XCTAssertTrue(urlString.contains("code"))
-        XCTAssertTrue(urlString.contains(configuration.accessScope))
+        XCTAssertTrue(presenter.getProfileDetailsCalled)
     }
     
-  
+    func testProfileViewControllerLogoutButtonTappedCalled(){
+        
+        //MARK: - given
+        let sut = ProfileViewController()
+        let presenter = ProfileViewPresenterSpy()
+        sut.configure(presenter)
+        
+        //MARK: - when
+        sut.logoutButtonTapped()
+        
+        //MARK: - then
+        XCTAssertTrue(presenter.showExitAlertCalled)
+    }
+   
+    var viewController: ProfileViewControllerProtocol?
+
+    func testProfileViewControllerRevoveToken(){
+        
+        //MARK: - given
+            let sut = ProfileViewController()
+            let presenter = ProfileViewPresenterSpy()
+            sut.configure(presenter)
+
+        
+        //MARK: - when
+        sut.logoutButtonTapped()
+        
+        
+        //MARK: - then
+       
+        XCTAssertTrue(presenter.removeTokenFromStorageCalled)
+      
+    }
+//    let profileModel = presenter.getProfileDetails()
+//    XCTAssertTrue((profileModel.userNamelabelText == "userNamelabelText"))
+//    XCTAssertTrue((profileModel.loginNameLabeText == "loginNameLabeText"))
+//    XCTAssertTrue((profileModel.descriptionLabelText == "descriptionLabelText"))
 }

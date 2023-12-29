@@ -51,6 +51,9 @@
 		7CA33F592B3EC23F00F25186 /* ProfileViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA33F582B3EC23F00F25186 /* ProfileViewRouter.swift */; };
 		7CA33F5B2B3EC26500F25186 /* ProfileViewRouterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA33F5A2B3EC26500F25186 /* ProfileViewRouterProtocol.swift */; };
 		7CA33F5D2B3ED06A00F25186 /* ProfileViewPresenterSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA33F5C2B3ED06A00F25186 /* ProfileViewPresenterSpy.swift */; };
+		7CA33F5F2B3F170C00F25186 /* ProfileViewControllerSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA33F5E2B3F170C00F25186 /* ProfileViewControllerSpy.swift */; };
+		7CA33F602B3F280300F25186 /* TwoButtonsAlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C59F63E2B3410A2004C138F /* TwoButtonsAlertModel.swift */; };
+		7CA33F622B3F40EA00F25186 /* ProfileViewStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA33F612B3F40EA00F25186 /* ProfileViewStorageTests.swift */; };
 		7CF0ABC62B162B3B00920A87 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF0ABC52B162B3B00920A87 /* UIBlockingProgressHUD.swift */; };
 		7CF0ABC82B162F4200920A87 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF0ABC72B162F4200920A87 /* ProfileService.swift */; };
 		7CF0ABCA2B162F8700920A87 /* JSONResultsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF0ABC92B162F8700920A87 /* JSONResultsModels.swift */; };
@@ -142,6 +145,8 @@
 		7CA33F582B3EC23F00F25186 /* ProfileViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewRouter.swift; sourceTree = "<group>"; };
 		7CA33F5A2B3EC26500F25186 /* ProfileViewRouterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewRouterProtocol.swift; sourceTree = "<group>"; };
 		7CA33F5C2B3ED06A00F25186 /* ProfileViewPresenterSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewPresenterSpy.swift; sourceTree = "<group>"; };
+		7CA33F5E2B3F170C00F25186 /* ProfileViewControllerSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerSpy.swift; sourceTree = "<group>"; };
+		7CA33F612B3F40EA00F25186 /* ProfileViewStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewStorageTests.swift; sourceTree = "<group>"; };
 		7CE0402F2B398D1E00DD3D76 /* WebViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WebViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CE040312B398D1E00DD3D76 /* WebViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewTests.swift; sourceTree = "<group>"; };
 		7CF0ABC52B162B3B00920A87 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
@@ -391,7 +396,9 @@
 			isa = PBXGroup;
 			children = (
 				845A1CA82B3A93F000C2845F /* ProfileViewTests.swift */,
+				7CA33F612B3F40EA00F25186 /* ProfileViewStorageTests.swift */,
 				7CA33F5C2B3ED06A00F25186 /* ProfileViewPresenterSpy.swift */,
+				7CA33F5E2B3F170C00F25186 /* ProfileViewControllerSpy.swift */,
 			);
 			path = ProfileViewTests;
 			sourceTree = "<group>";
@@ -616,8 +623,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CA33F5F2B3F170C00F25186 /* ProfileViewControllerSpy.swift in Sources */,
 				7CA33F5D2B3ED06A00F25186 /* ProfileViewPresenterSpy.swift in Sources */,
+				7CA33F622B3F40EA00F25186 /* ProfileViewStorageTests.swift in Sources */,
 				845A1CA92B3A93F000C2845F /* ProfileViewTests.swift in Sources */,
+				7CA33F602B3F280300F25186 /* TwoButtonsAlertModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

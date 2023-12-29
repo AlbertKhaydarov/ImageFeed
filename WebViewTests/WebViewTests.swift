@@ -10,6 +10,8 @@ import Foundation
 
 final class WebViewTests: XCTestCase {
     
+    
+    
     func testProgressHiddenWhenOne() {
         //MARK: - given
         let authHelper = AuthHelper()

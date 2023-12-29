@@ -8,9 +8,11 @@
 import Foundation
 import UIKit
 
-public protocol ProfileViewControllerProtocol: AnyObject {
+protocol ProfileViewControllerProtocol: AnyObject {
     var presenter: ProfileViewPresenterProtocol? { get set }
     func updateAvatar(with image: UIImage)
     func updateProfileDetails()
     func switchToSplashViewController()
+//    func configure(_ presenter: ProfileViewPresenterProtocol) 
+    func logoutButtonTapped()
 }

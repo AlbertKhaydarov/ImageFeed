@@ -22,6 +22,13 @@
         "identifier" : "7CE0402E2B398D1E00DD3D76",
         "name" : "WebViewTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:ImageFeed.xcodeproj",
+        "identifier" : "845A1CA52B3A93F000C2845F",
+        "name" : "ProfileViewTests"
+      }
     }
   ],
   "version" : 1

@@ -5,7 +5,6 @@
 //  Created by Альберт Хайдаров on 27.12.2023.
 //
 
-import Foundation
 import UIKit
 import Kingfisher
 
@@ -62,22 +61,41 @@ final class ProfileViewPesenter: ProfileViewPresenterProtocol {
     }
     
    
-    func showExitAlert() {
-        let alertModel = TwoButtonsAlertModel(
-            title: "Пока, пока!",
-            message: "Уверены, что хотите выйти?",
-            logOutActionButtonText: "Да",
-            cancelActionButtonText: "Нет")
-        {[weak self] in
-            guard let self = self else {return}
-            storage?.removeToken()
-            CleanCookieStorage.clean()
-            if let viewController = viewController {
-                viewController.switchToSplashViewController()
+//    func showExitAlert() {
+//        let alertModel = TwoButtonsAlertModel(
+//            title: "Пока, пока!",
+//            message: "Уверены, что хотите выйти?",
+//            logOutActionButtonText: "Да",
+//            cancelActionButtonText: "Нет")
+//        {[weak self] in
+//            guard let self = self else {return}
+//            storage?.removeToken()
+//            CleanCookieStorage.clean()
+//            if let viewController = viewController {
+//                viewController.switchToSplashViewController()
+//            }
+//        }
+//        if let viewController = viewController as? ProfileViewController {
+//            AlertPresenterTwoButtons.showAlert(alertMessages: alertModel, on: viewController )
+//        }
+//    }
+    func showExitAlert() -> TwoButtonsAlertModel {
+            let alertModel = TwoButtonsAlertModel(
+                title: "Пока, пока!",
+                message: "Уверены, что хотите выйти?",
+                logOutActionButtonText: "Да",
+                cancelActionButtonText: "Нет")
+            {[weak self] in
+                guard let self = self else {return}
+                storage?.removeToken()
+                CleanCookieStorage.clean()
+                if let viewController = viewController {
+                    viewController.switchToSplashViewController()
+                }
             }
+//            if let viewController = viewController as? ProfileViewController {
+//                AlertPresenterTwoButtons.showAlert(alertMessages: alertModel, on: viewController )
+//            }
+        return alertModel
         }
-        if let viewController = viewController as? ProfileViewController {
-            AlertPresenterTwoButtons.showAlert(alertMessages: alertModel, on: viewController )
-        }
-    }
 }

@@ -6,23 +6,52 @@
 //
 
 import Foundation
+import XCTest
 import ImageFeed
+@testable import ImageFeed
 
-final class ProfileViewPresenterSpy: ProfileViewPresenterProtocol  {
+
+struct ProfileViewModelMock: ProfileViewModelProtocol {
+    let userNamelabelText: String? = "userNamelabelText"
+    let loginNameLabeText: String? = "loginNameLabeText"
+    let descriptionLabelText: String? = "descriptionLabelText"
+}
+
+class ProfileViewPresenterSpy: ProfileViewPresenterProtocol  {
+ 
     var viewController: ProfileViewControllerProtocol?
+    var getProfileDetailsCalled: Bool = false
+    var showExitAlertCalled: Bool = false
+    var removeTokenFromStorageCalled: Bool = false
+    var storage: StorageProtocol?
+    var token = "oiewbf-wc"
     
-    var viewDidLoadCalled: Bool = false
-    
-    func updateAvatarImage() {}
+    func updateAvatarImage() {
+    }
     
     func getProfileDetails() -> ProfileViewModelProtocol {
-        let viewModel: ProfileViewModelProtocol?
-        viewModel?.userNamelabelText = "userNamelabelText"
-        viewModel.loginNameLabeText = "loginNameLabeText"
-        viewModel.descriptionLabelText = "descriptionLabelText")
+        getProfileDetailsCalled = true
+        let viewModel = ProfileViewModelMock()
         return viewModel
     }
-    func showExitAlert() {}
     
-   
+    
+    func showExitAlert() -> ImageFeed.TwoButtonsAlertModel {
+        showExitAlertCalled = true
+    
+        let alertModel = ImageFeed.TwoButtonsAlertModel(
+            title: "Пока, пока!",
+            message: "Уверены, что хотите выйти?",
+            logOutActionButtonText: "Да",
+            cancelActionButtonText: "Нет")
+        {[weak self] in
+            guard let self = self else {return}
+          removeTokenFromStorage()
+        }
+       return alertModel
+    }
+    
+    private func removeTokenFromStorage() {
+        removeTokenFromStorageCalled = true
+    }
 }
