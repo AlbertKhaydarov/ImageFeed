@@ -46,6 +46,7 @@ final class ImagesListCell: UITableViewCell {
         setupSubview()
         layoutSetup()
         favoriteActiveButton.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
+        favoriteActiveButton.accessibilityIdentifier = "likeButton"
     }
     
     func setIsLiked(isLiked: Bool) {

@@ -36,6 +36,13 @@
         "identifier" : "7CA33F712B3F780800F25186",
         "name" : "ImageListViewTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:ImageFeed.xcodeproj",
+        "identifier" : "7CA33F802B3F838400F25186",
+        "name" : "ImageFeedUITests"
+      }
     }
   ],
   "version" : 1

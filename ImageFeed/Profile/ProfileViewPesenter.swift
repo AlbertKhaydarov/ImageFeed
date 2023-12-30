@@ -54,7 +54,7 @@ final class ProfileViewPesenter: ProfileViewPresenterProtocol {
     
     func getProfileDetails() -> ProfileViewModelProtocol {
         let profile = profileService.profile
-        let viewModel = ProfileViewModel(userNamelabelText: profile?.username,
+        let viewModel = ProfileViewModel(userNamelabelText: profile?.name,
                                          loginNameLabeText: profile?.loginName,
                                          descriptionLabelText: profile?.bio)
         return viewModel

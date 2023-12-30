@@ -48,6 +48,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         button.setImage(UIImage(named: "exitButtonImage"), for: .normal)
         button.tintColor = UIColor.ypRed
         button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+        button.accessibilityIdentifier = "logoutButton"
         return button
     }()
     
