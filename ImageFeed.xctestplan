@@ -43,6 +43,13 @@
         "identifier" : "7CA33F802B3F838400F25186",
         "name" : "ImageFeedUITests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:ImageFeed.xcodeproj",
+        "identifier" : "7CA33FA32B44536B00F25186",
+        "name" : "ImageFeedUIlikedTests"
+      }
     }
   ],
   "version" : 1
