@@ -17,7 +17,7 @@ final class ImagesListCell: UITableViewCell {
         imageView.contentMode = .scaleToFill
         return imageView
     }()
-   
+    
     lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -35,18 +35,20 @@ final class ImagesListCell: UITableViewCell {
     lazy var favoriteActiveButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
+        button.isAccessibilityElement = true
+        button.accessibilityActivationPoint = CGPoint(x: favoriteActiveButton.bounds.midX, y: favoriteActiveButton.bounds.midY)
+        button.accessibilityIdentifier = "favoriteActiveButton"
         return button
     }()
     
     weak var delegate: ImagesListCellDelegate?
-        
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.backgroundColor = .ypBlack
         setupSubview()
         layoutSetup()
-        favoriteActiveButton.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
-        favoriteActiveButton.accessibilityIdentifier = "likeButton"
     }
     
     func setIsLiked(isLiked: Bool) {
@@ -57,7 +59,7 @@ final class ImagesListCell: UITableViewCell {
     
     //MARK: - Like Button Clicked  function
     @objc private func likeButtonClicked() {
-       delegate?.imageListCellDidTapLike(self)
+        delegate?.imageListCellDidTapLike(self)
     }
     
     //MARK: - Cancel the Kingfisher operation when reusing
@@ -80,7 +82,7 @@ final class ImagesListCell: UITableViewCell {
         contentView.addSubview(imageForCell)
         imageForCell.addSubview(dateLabel)
         imageForCell.addSubview(backgroundDateLabelView)
-        contentView.insertSubview(favoriteActiveButton, aboveSubview: imageForCell)
+        contentView.addSubview(favoriteActiveButton)
     }
     
     private func layoutSetup() {
@@ -101,7 +103,7 @@ final class ImagesListCell: UITableViewCell {
             
             favoriteActiveButton.heightAnchor.constraint(equalToConstant: 44),
             favoriteActiveButton.widthAnchor.constraint(equalToConstant: 44),
-            favoriteActiveButton.topAnchor.constraint(equalTo: imageForCell.topAnchor),
+            favoriteActiveButton.topAnchor.constraint(equalTo: imageForCell.topAnchor, constant: 4),
             favoriteActiveButton.trailingAnchor.constraint(equalTo: imageForCell.trailingAnchor)
         ])
     }

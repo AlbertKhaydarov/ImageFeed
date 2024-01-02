@@ -5,10 +5,9 @@
 //  Created by Альберт Хайдаров on 30.12.2023.
 //
 
-//import Foundation
-//import WebKit
+import Foundation
 import XCTest
-//@testable import ImageFeed
+@testable import ImageFeed
 
 final class ImageFeedUITests: XCTestCase {
     private let app = XCUIApplication()
@@ -49,36 +48,6 @@ final class ImageFeedUITests: XCTestCase {
         let cell = tablesQuery.children(matching: .cell).element(boundBy: 0)
         
         XCTAssertTrue(cell.waitForExistence(timeout: 5))
-    }
-    
-    func testFeed() throws {
-        
-        let tablesQuery = app.tables
-        
-        let cell = tablesQuery.children(matching: .cell).element(boundBy: 0)
-        cell.swipeUp()
-        
-        sleep(4)
-        
-        let cellToLike = tablesQuery.children(matching: .cell).element(boundBy: 1)
-        
-        cellToLike.buttons["likeButton"].tap()
-        sleep(4)
-        cellToLike.buttons["likeButton"].tap()
-        sleep(4)
-        
-        cell.tap()
-//        cellToLike.tap()
-        sleep(7)
-        
-        let image = app.scrollViews.images.element(boundBy: 0)
-        
-        image.pinch(withScale: 2, velocity: 1)
-        
-        image.pinch(withScale: 0.5, velocity: -1)
-        
-        let navBackButtonWhiteButton = app.buttons["navBackButton"]
-        navBackButtonWhiteButton.tap()
     }
     
     func testProfile() throws {

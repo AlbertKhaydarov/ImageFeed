@@ -9,6 +9,7 @@ import XCTest
 @testable import ImageFeed
 
 final class ImagesListPresenterSpy: ImagesListPresenterProtocol {
+    
     var viewController: ImagesListViewControllerProtocol?
     
     var photos: [ImageFeed.Photo] = []
@@ -39,6 +40,6 @@ final class ImagesListPresenterSpy: ImagesListPresenterProtocol {
         return photos
     }
     
-    func changeLikeService(photoId: String, isLike: Bool, _ completion: @escaping (Result<Void, Error>) -> Void) {
+    func changeLikeService(_ cell: ImageFeed.ImagesListCell, indexPath: IndexPath) {
     }
 }

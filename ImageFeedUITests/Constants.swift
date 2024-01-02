@@ -12,4 +12,9 @@ enum TestConstants {
     static let password = "albert23"
     static let fullName = "Albert Khaydarov"
     static let username = "@albertkh"
+    
+//    static let login = "khaydarov.a@gmail.com"
+//    static let password = "albert23"
+//    static let fullName = "Alberе"
+//    static let username = "@khalbert"
 }

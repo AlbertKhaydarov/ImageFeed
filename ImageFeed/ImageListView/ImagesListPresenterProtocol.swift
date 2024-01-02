@@ -14,5 +14,5 @@ protocol ImagesListPresenterProtocol: AnyObject  {
     func getNotification()
     func fetchPhotosNextPage()
     func getPhotosService() -> [Photo]
-    func changeLikeService(photoId: String, isLike: Bool, _ completion: @escaping (Result<Void, Error>) -> Void)
+    func changeLikeService(_ cell: ImagesListCell, indexPath: IndexPath)
 }

@@ -115,7 +115,7 @@ final class ImagesListViewController: UIViewController, ImagesListViewController
             cell.dateLabel.text = dateFormatter.string(from: date)
         }
         
-        if  let isLiked = presenter?.photos[indexPath.row].isLiked{
+        if let isLiked = presenter?.photos[indexPath.row].isLiked{
             cell.setIsLiked(isLiked: isLiked)
         }
     }
@@ -199,21 +199,6 @@ extension ImagesListViewController: ImagesListCellDelegate {
         guard let indexPath = tableView.indexPath(for: cell),
               let presenter = self.presenter
         else { return }
-        let photo = presenter.photos[indexPath.row]
-        UIBlockingProgressHUD.show()
-        let photoId = photo.id
-        let isLike = photo.isLiked
-        
-        presenter.changeLikeService(photoId: photoId, isLike: !isLike) { result in
-            switch result {
-            case .success:
-                let photos = presenter.photos
-                cell.setIsLiked(isLiked: photos[indexPath.row].isLiked)
-                UIBlockingProgressHUD.dismiss()
-            case .failure:
-                UIBlockingProgressHUD.dismiss()
-                self.showLikeTapError()
-            }
-        }
+        presenter.changeLikeService(cell, indexPath: indexPath)
     }
 }

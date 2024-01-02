@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 final class ImagesListPresenter: ImagesListPresenterProtocol {
+    
     weak var viewController: ImagesListViewControllerProtocol?
     
     var photos: [Photo] = []
@@ -22,14 +23,21 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
         fetchPhotosNextPage()
     }
     
-    func changeLikeService(photoId: String, isLike: Bool, _ completion: @escaping (Result<Void, Error>) -> Void) {
-        imagesListService.changeLike(photoId: photoId, isLike: isLike) { result in
+    func changeLikeService(_ cell: ImagesListCell, indexPath: IndexPath) {
+        let photo = photos[indexPath.row]
+        let photoId = photo.id
+        let isLike = photo.isLiked
+        UIBlockingProgressHUD.show()
+        imagesListService.changeLike(photoId: photoId, isLike: !isLike) { result in
             switch result {
             case .success():
                 self.photos = self.imagesListService.photos
-                completion(.success(()))
+                cell.setIsLiked(isLiked: self.photos[indexPath.row].isLiked)
+                UIBlockingProgressHUD.dismiss()
             case .failure(let error):
-                completion(.failure(error))
+                assertionFailure("Failed to change Like \(error)", file: #file, line: #line)
+                self.viewController?.showLikeTapError()
+                UIBlockingProgressHUD.dismiss()
             }
         }
     }

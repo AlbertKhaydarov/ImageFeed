@@ -28,6 +28,9 @@ final class ImageFeedUIlikedTests: XCTestCase {
         
         let cellToLike = tablesQuery.children(matching: .cell).element(boundBy: 1)
         let favoriteActiveButton = cellToLike.buttons["favoriteActiveButton"]
+        XCTAssertTrue(favoriteActiveButton.waitForExistence(timeout: 10))
+        XCTAssert(favoriteActiveButton.exists)
+        
         favoriteActiveButton.tap()
         sleep(5)
         favoriteActiveButton.tap()
