@@ -12,5 +12,4 @@ enum TestConstants {
     static let password = ""
     static let fullName = ""
     static let username = ""
-    
 }

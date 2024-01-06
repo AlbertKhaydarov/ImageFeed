@@ -18,6 +18,8 @@ final class ImageFeedUITests: XCTestCase {
         app.launch()
     }
     
+  //MARK: - login = "", password = "", fullName = "", username = "".  Please, input in file "TestConstants"
+    
     func testAuth() throws {
         app.buttons["Authenticate"].tap()
         

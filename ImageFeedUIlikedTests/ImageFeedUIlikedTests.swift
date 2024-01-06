@@ -13,26 +13,27 @@ final class ImageFeedUIlikedTests: XCTestCase {
     
     override func setUpWithError() throws {
         continueAfterFailure = false
-        
+        app.launchArguments = ["testMode"]
         app.launch()
     }
     
     func testFeed() throws {
-     
+        
         let tablesQuery = app.tables
-        let cell = tablesQuery.children(matching: .cell).element(boundBy: 0)
+        let cell = tablesQuery.descendants(matching: .cell).element(boundBy: 0)
+        
         sleep(8)
         cell.swipeUp()
         
         sleep(10)
         
-        let cellToLike = tablesQuery.children(matching: .cell).element(boundBy: 1)
+        let cellToLike = tablesQuery.descendants(matching: .cell).element(boundBy: 1)
         let favoriteActiveButton = cellToLike.buttons["favoriteActiveButton"]
         XCTAssertTrue(favoriteActiveButton.waitForExistence(timeout: 10))
-        XCTAssert(favoriteActiveButton.exists)
         
         favoriteActiveButton.tap()
         sleep(5)
+        
         favoriteActiveButton.tap()
         sleep(5)
         
@@ -44,6 +45,5 @@ final class ImageFeedUIlikedTests: XCTestCase {
         image.pinch(withScale: 0.5, velocity: -1)
         
         let navBackButton = app.buttons["navBackButton"]
-        
     }
 }
