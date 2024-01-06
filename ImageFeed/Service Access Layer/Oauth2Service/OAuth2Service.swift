@@ -73,13 +73,13 @@ extension OAuth2Service {
     private func authTokenRequest(code: String) -> URLRequest {
         URLRequest.makeHTTPRequest(
             path: "/oauth/token"
-            + "?client_id=\(AuthConsts.accessKey)"
-            + "&&client_secret=\(AuthConsts.secretKey)"
-            + "&&redirect_uri=\(AuthConsts.redirectURI)"
+            + "?client_id=\(AuthConfiguration.standard.accessKey)"
+            + "&&client_secret=\(AuthConfiguration.standard.secretKey)"
+            + "&&redirect_uri=\(AuthConfiguration.standard.redirectURI)"
             + "&&code=\(code)"
             + "&&grant_type=authorization_code",
             httpMethod: "POST",
-            baseUrl: AuthConsts.baseURL)
+            baseUrl: AuthConfiguration.standard.baseURL)
     }
 }
 
@@ -88,7 +88,7 @@ extension URLRequest {
     static func makeHTTPRequest(
         path: String,
         httpMethod: String,
-        baseUrl: URL? = AuthConsts.defaultBaseURL
+        baseUrl: URL? = AuthConfiguration.standard.defaultBaseURL
     ) -> URLRequest {
         
         //MARK: - Unwrap optional URL

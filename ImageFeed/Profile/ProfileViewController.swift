@@ -8,7 +8,9 @@ import Foundation
 import UIKit
 import Kingfisher
 
-final class ProfileViewController: UIViewController {
+final class ProfileViewController: UIViewController & ProfileViewControllerProtocol {
+    
+    var presenter: ProfileViewPresenterProtocol?
     
     private lazy var userProfileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -46,27 +48,25 @@ final class ProfileViewController: UIViewController {
         button.setImage(UIImage(named: "exitButtonImage"), for: .normal)
         button.tintColor = UIColor.ypRed
         button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+        button.accessibilityIdentifier = "logoutButton"
         return button
     }()
     
-    private let profileService = ProfileService.shared
-    
     private var profileImageServiceObserver: NSObjectProtocol?
     
-    //MARK: -  add protocol for storage
-    private var storage: StorageProtocol?
-    
-    //MARK: -  add ErrorPresenter
-    var alertPresenter: AlertPresenterTwoButtonsProtocol?
+    //   MARK: -  add  router
+    var profileViewRouter: ProfileViewRouterProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        storage = OAuth2TokenStorageSwiftKeychainWrapper.shared
         view.backgroundColor = UIColor.ypBlack
         setupSubview()
         layoutSubviews()
-        guard let profile = profileService.profile else {return}
-        updateProfileDetails(profile: profile)
+        updateProfileDetails()
+        
+        self.profileViewRouter = ProfileViewRouter()
+        
+        presenter = ProfileViewPesenter(viewController: self)
         
         profileImageServiceObserver = NotificationCenter.default
             .addObserver(
@@ -75,9 +75,9 @@ final class ProfileViewController: UIViewController {
                 queue: .main
             ) { [weak self] _ in
                 guard let self = self else { return }
-                self.updateAvatar()
+                presenter?.updateAvatarImage()
             }
-        updateAvatar()
+        presenter?.updateAvatarImage()
     }
     
     override func viewDidLayoutSubviews() {
@@ -88,59 +88,40 @@ final class ProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        guard let profile = profileService.profile else {return}
-        updateProfileDetails(profile: profile)
+        updateProfileDetails()
     }
     
-    private func updateAvatar() {
-        guard
-            let profileImageURL = ProfileImageService.shared.avatarURL,
-            let url = URL(string: profileImageURL)
-        else { return }
-        
-        //MARK: -  download an image by Kingfisher and set the cache on the disk storage
-        let cache = ImageCache.default
-        cache.clearMemoryCache()
-        cache.clearDiskCache()
-        cache.diskStorage.config.sizeLimit = 1000 * 1000 * 100
+    //MARK: - use for tests
+    func configure(_ presenter: ProfileViewPresenterProtocol) {
+        self.presenter = presenter
+        presenter.viewController = self
+    }
+    
+    func updateAvatar(with image: UIImage) {
         userProfileImageView.kf.indicatorType = .activity
-        userProfileImageView.kf.setImage(with: url,
-                                         placeholder: UIImage(named: "placeholder.jpeg"),
-                                         options: [])
+        userProfileImageView.image = image
     }
     
-    func updateProfileDetails(profile: Profile) {
-        userNamelabel.text = profile.name
-        loginNameLabel.text = profile.loginName
-        descriptionLabel.text = profile.bio
+    func updateProfileDetails() {
+        if let profileModel = presenter?.getProfileDetails() {
+            userNamelabel.text = profileModel.userNamelabelText
+            loginNameLabel.text = profileModel.loginNameLabeText
+            descriptionLabel.text = profileModel.descriptionLabelText
+        }
     }
     
     //MARK: - add switch after logout
-    @objc private func logoutButtonTapped(_ sender: UIButton) {
-        showExitAlert()
+    @objc func logoutButtonTapped() {
+        if let alertMessage = presenter?.showExitAlert() {
+            AlertPresenterTwoButtons.showAlert(alertMessages: alertMessage, on: self )
+        }
     }
     
-    func showExitAlert() {
-        let alertModel = TwoButtonsAlertModel(
-            title: "Пока, пока!",
-            message: "Уверены, что хотите выйти?",
-            logOutActionButtonText: "Да",
-            cancelActionButtonText: "Нет")
-        {[weak self] in
-            guard let self = self else {return}
-            storage?.removeToken()
-            CleanCookieStorage.clean()
-            switchToSplashViewController()
+    func switchToSplashViewController() {
+        if let profileViewRouter = profileViewRouter {
+            let splashViewController = SplashViewController()
+            profileViewRouter.switchToSplashViewController(to: splashViewController)
         }
-        AlertPresenterTwoButtons.showAlert(alertMessages: alertModel, on: self)
-    }
-    
-    private func switchToSplashViewController() {
-        guard let window = UIApplication.shared.windows.first else {
-            fatalError("Invalid Configuration")
-        }
-        let splashViewController = SplashViewController()
-        window.rootViewController = splashViewController
     }
     
     private func setupSubview() {
