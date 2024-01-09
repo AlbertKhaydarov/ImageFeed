@@ -12,7 +12,7 @@ final class ProfileViewPesenter: ProfileViewPresenterProtocol {
     
     weak var viewController: ProfileViewControllerProtocol?
     
-    var profileViewHelper: ProfileViewHelperProtocol?
+    private var profileViewHelper: ProfileViewHelperProtocol?
     
     private let profileService = ProfileService.shared
     

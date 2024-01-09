@@ -14,11 +14,11 @@ final class ImageFeedUITests: XCTestCase {
     
     override func setUpWithError() throws {
         continueAfterFailure = false
-        
+        app.launchArguments = ["testMode"]
         app.launch()
     }
     
-  //MARK: - login = "", password = "", fullName = "", username = "".  Please, input in file "TestConstants"
+    //MARK: - login = "", password = "", fullName = "", username = "".  Please, input in file "TestConstants"
     
     func testAuth() throws {
         app.buttons["Authenticate"].tap()
@@ -50,6 +50,36 @@ final class ImageFeedUITests: XCTestCase {
         let cell = tablesQuery.children(matching: .cell).element(boundBy: 0)
         
         XCTAssertTrue(cell.waitForExistence(timeout: 5))
+    }
+    
+    func testFeed() throws {
+        
+        let tablesQuery = app.tables
+        let cell = tablesQuery.descendants(matching: .cell).element(boundBy: 0)
+        
+        sleep(8)
+        cell.swipeUp()
+        
+        sleep(10)
+        
+        let cellToLike = tablesQuery.descendants(matching: .cell).element(boundBy: 1)
+        let favoriteActiveButton = cellToLike.buttons["favoriteActiveButton"]
+        XCTAssertTrue(favoriteActiveButton.waitForExistence(timeout: 10))
+        
+        favoriteActiveButton.tap()
+        sleep(5)
+        
+        favoriteActiveButton.tap()
+        sleep(5)
+        
+        cellToLike.tap()
+        sleep(5)
+        
+        let image = app.scrollViews.images.element(boundBy: 0)
+        image.pinch(withScale: 3, velocity: 1)
+        image.pinch(withScale: 0.5, velocity: -1)
+        
+        let navBackButton = app.buttons["navBackButton"]
     }
     
     func testProfile() throws {

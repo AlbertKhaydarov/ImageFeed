@@ -42,8 +42,8 @@ private enum AuthConsts {
     static let secretKey = "o3M5Ojegbskcb2p8YeBH8l5qVSjWA6RCEguxia0-iKE"
     
     // MARK: - second app  account
-    //    static let accessKey = "vVCXb0fd71SRmbyFJ7fcmcKD9jiumZ5lym6577JXVsw"
-    //    static let secretKey = "XvbeqMjO8H1fC6cIaV60yvRgYqqeYQhIrY8mi-0NMjQ"
+//        static let accessKey = "vVCXb0fd71SRmbyFJ7fcmcKD9jiumZ5lym6577JXVsw"
+//        static let secretKey = "XvbeqMjO8H1fC6cIaV60yvRgYqqeYQhIrY8mi-0NMjQ"
     
     static let redirectURI = "urn:ietf:wg:oauth:2.0:oob"
     static let accessScope = "public+read_user+write_likes"

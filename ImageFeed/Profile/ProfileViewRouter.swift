@@ -12,9 +12,9 @@ final class ProfileViewRouter: ProfileViewRouterProtocol {
     init() {}
     
     func switchToSplashViewController(to destimationVC: UIViewController) {
-            guard let window = UIApplication.shared.windows.first else {
-                fatalError("Invalid Configuration")
-            }
-            window.rootViewController = destimationVC
+        guard let window = UIApplication.shared.windows.first else {
+            fatalError("Invalid Configuration")
         }
+        window.rootViewController = destimationVC
+    }
 }
