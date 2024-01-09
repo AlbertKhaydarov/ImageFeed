@@ -29,21 +29,7 @@ struct UrlsResult: Decodable {
 struct User: Decodable {
     let id, username, name: String
     let portfolioURL: String?
-//    let bio: String?
-//    let location: String
-
-    
-//    let totalLikes, totalPhotos, totalCollections: Int
-//    let instagramUsername, twitterUsername: String
-//    let profileImage: ProfileImage
-//    let links: UserLinks
 }
-
-// MARK: - UserLinks
-//struct UserLinks: Decodable {
-//    let linksSelf, html, photos, likes: String
-//    let portfolio: String
-//}
 
 struct JSONGetIsLikeModel: Decodable {
     let photo: JsonPhoto
